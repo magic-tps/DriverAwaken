@@ -1,0 +1,52 @@
+# Workspace and datasets
+/Data/
+**/venv/
+**/.venv/
+**/__pycache__/
+**/.pytest_cache/
+**/.ruff_cache/
+
+# Flutter and build outputs
+**/.dart_tool/
+.dart-tool/
+.flutter
+.flutter_tool_state
+**/build/
+**/coverage/
+**/.flutter-plugins-dependencies
+
+# Secrets and signing
+**/key.properties
+**/*.jks
+**/*.keystore
+**/.env
+**/.env.*
+**/*.pem
+**/*.p12
+**/*.pfx
+**/local.properties
+**/google-services.json
+**/GoogleService-Info.plist
+
+# Large generated ML artifacts
+app_conductores_ml/data/raw/
+app_conductores_ml/data/processed/
+app_conductores_ml/data/features/
+app_conductores_ml/reports/dataset_inspection.csv
+app_conductores_ml/reports/product_*_false_*.csv
+app_conductores_ml/reports/unlabeled_videos.csv
+app_conductores_ml/models/*.joblib
+app_conductores_ml/models/*.keras
+app_conductores_ml/reports/*.png
+app_conductores_ml/reports/*.log
+
+# IDE and OS
+**/.idea/
+**/*.iml
+.DS_Store
+Thumbs.db
+/.agents/
+/.codex/
+**/*.apk
+**/*.aab
+**/*.log

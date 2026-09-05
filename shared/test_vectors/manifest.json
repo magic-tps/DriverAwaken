@@ -1,0 +1,15 @@
+{
+  "fixture_version": 1,
+  "contract_version": 1,
+  "description": "Vector numerico compartido para verificar orden, imputacion y escalado sin depender de una camara.",
+  "files": [
+    "frame_metrics.json",
+    "raw_features.json",
+    "expected_base_features.json",
+    "expected_temporal_features.json",
+    "expected_scaled_input.json",
+    "expected_probabilities.json"
+  ],
+  "detector_parity_covered": false,
+  "model_probability_parity_covered": false
+}

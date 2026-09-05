@@ -1,0 +1,4 @@
+storePassword=CHANGE_ME
+keyPassword=CHANGE_ME
+keyAlias=magicdrive_release
+storeFile=app/magicdrive-release-keystore.jks

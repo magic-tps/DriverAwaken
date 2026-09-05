@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "status": "pending_model_parity",
+  "values": null,
+  "reason": "El modelo se rechaza por incompatibilidad de extractor; publicar probabilidades golden sugeriría una paridad inexistente."
+}

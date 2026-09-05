@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "status": "pending_extractor_parity",
+  "reason": "El modelo histórico usa un extractor MediaPipe incompatible; no se inventan salidas temporales del extractor ML Kit."
+}

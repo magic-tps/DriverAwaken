@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "status": "covered_by_raw_features",
+  "fixture": "raw_features.json",
+  "feature_count": 181
+}

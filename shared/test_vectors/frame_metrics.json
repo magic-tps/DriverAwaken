@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "status": "not_available",
+  "reason": "No se proporcionaron métricas numéricas capturadas por el extractor Flutter actual. No se inventan mediciones de cámara."
+}

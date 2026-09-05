@@ -1,0 +1,1278 @@
+{
+  "schema_version": 1,
+  "extractor_version": "legacy-mediapipe-v1",
+  "status": "experimental_incompatible_with_flutter_mlkit",
+  "features": [
+    {
+      "index": 0,
+      "name": "face_ratio",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 1,
+      "name": "no_face_ratio",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 2,
+      "name": "ear_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 3,
+      "name": "ear_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 4,
+      "name": "ear_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 5,
+      "name": "ear_std",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 6,
+      "name": "mar_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 7,
+      "name": "mar_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 8,
+      "name": "mar_std",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 9,
+      "name": "perclos",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 10,
+      "name": "blink_count",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 11,
+      "name": "max_eye_closed_duration",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 12,
+      "name": "yawn_count",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 13,
+      "name": "yawn_ratio",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 14,
+      "name": "yaw_proxy_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 15,
+      "name": "yaw_proxy_max_abs",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 16,
+      "name": "pitch_proxy_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 17,
+      "name": "pitch_proxy_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 18,
+      "name": "valid_frame_count",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 19,
+      "name": "total_frame_count",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 20,
+      "name": "valid_frame_ratio",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 21,
+      "name": "invalid_frame_count",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 22,
+      "name": "ear_range",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 23,
+      "name": "ear_mean_to_min_gap",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 24,
+      "name": "ear_closed_intensity_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 25,
+      "name": "ear_closed_intensity_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 26,
+      "name": "ear_stability_ratio",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 27,
+      "name": "mar_open_intensity_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 28,
+      "name": "mar_open_intensity_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 29,
+      "name": "mar_activity_ratio",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 30,
+      "name": "blink_rate",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 31,
+      "name": "yawn_rate",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 32,
+      "name": "closed_duration_ratio",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 33,
+      "name": "closed_frames_estimated",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 34,
+      "name": "head_yaw_abs_mean_proxy",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 35,
+      "name": "head_pitch_abs_mean_proxy",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 36,
+      "name": "head_pose_intensity",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 37,
+      "name": "fatigue_eye_score",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 38,
+      "name": "fatigue_mouth_score",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 39,
+      "name": "fatigue_pose_score",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 40,
+      "name": "fatigue_combined_score",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 41,
+      "name": "perclos_x_yawn_ratio",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 42,
+      "name": "perclos_x_closed_duration",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 43,
+      "name": "perclos_x_head_pose",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 44,
+      "name": "mar_x_head_pose",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 45,
+      "name": "blink_per_valid_frame",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 46,
+      "name": "yawn_per_valid_frame",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 47,
+      "name": "ear_mean_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 48,
+      "name": "ear_mean_abs_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 49,
+      "name": "ear_min_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 50,
+      "name": "ear_min_abs_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 51,
+      "name": "mar_mean_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 52,
+      "name": "mar_mean_abs_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 53,
+      "name": "mar_max_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 54,
+      "name": "mar_max_abs_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 55,
+      "name": "perclos_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 56,
+      "name": "perclos_abs_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 57,
+      "name": "yaw_proxy_mean_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 58,
+      "name": "yaw_proxy_mean_abs_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 59,
+      "name": "pitch_proxy_mean_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 60,
+      "name": "pitch_proxy_mean_abs_diff1",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 61,
+      "name": "face_ratio_roll3_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 62,
+      "name": "face_ratio_roll3_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 63,
+      "name": "face_ratio_roll3_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 64,
+      "name": "no_face_ratio_roll3_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 65,
+      "name": "no_face_ratio_roll3_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 66,
+      "name": "no_face_ratio_roll3_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 67,
+      "name": "ear_mean_roll3_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 68,
+      "name": "ear_mean_roll3_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 69,
+      "name": "ear_mean_roll3_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 70,
+      "name": "ear_min_roll3_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 71,
+      "name": "ear_min_roll3_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 72,
+      "name": "ear_min_roll3_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 73,
+      "name": "ear_std_roll3_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 74,
+      "name": "ear_std_roll3_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 75,
+      "name": "ear_std_roll3_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 76,
+      "name": "mar_mean_roll3_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 77,
+      "name": "mar_mean_roll3_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 78,
+      "name": "mar_mean_roll3_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 79,
+      "name": "mar_max_roll3_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 80,
+      "name": "mar_max_roll3_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 81,
+      "name": "mar_max_roll3_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 82,
+      "name": "perclos_roll3_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 83,
+      "name": "perclos_roll3_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 84,
+      "name": "perclos_roll3_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 85,
+      "name": "max_eye_closed_duration_roll3_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 86,
+      "name": "max_eye_closed_duration_roll3_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 87,
+      "name": "max_eye_closed_duration_roll3_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 88,
+      "name": "yawn_ratio_roll3_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 89,
+      "name": "yawn_ratio_roll3_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 90,
+      "name": "yawn_ratio_roll3_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 91,
+      "name": "yaw_proxy_max_abs_roll3_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 92,
+      "name": "yaw_proxy_max_abs_roll3_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 93,
+      "name": "yaw_proxy_max_abs_roll3_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 94,
+      "name": "pitch_proxy_max_roll3_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 95,
+      "name": "pitch_proxy_max_roll3_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 96,
+      "name": "pitch_proxy_max_roll3_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 97,
+      "name": "blink_count_roll3_sum",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 98,
+      "name": "yawn_count_roll3_sum",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 99,
+      "name": "face_ratio_roll6_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 100,
+      "name": "face_ratio_roll6_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 101,
+      "name": "face_ratio_roll6_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 102,
+      "name": "no_face_ratio_roll6_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 103,
+      "name": "no_face_ratio_roll6_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 104,
+      "name": "no_face_ratio_roll6_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 105,
+      "name": "ear_mean_roll6_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 106,
+      "name": "ear_mean_roll6_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 107,
+      "name": "ear_mean_roll6_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 108,
+      "name": "ear_min_roll6_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 109,
+      "name": "ear_min_roll6_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 110,
+      "name": "ear_min_roll6_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 111,
+      "name": "ear_std_roll6_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 112,
+      "name": "ear_std_roll6_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 113,
+      "name": "ear_std_roll6_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 114,
+      "name": "mar_mean_roll6_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 115,
+      "name": "mar_mean_roll6_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 116,
+      "name": "mar_mean_roll6_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 117,
+      "name": "mar_max_roll6_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 118,
+      "name": "mar_max_roll6_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 119,
+      "name": "mar_max_roll6_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 120,
+      "name": "perclos_roll6_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 121,
+      "name": "perclos_roll6_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 122,
+      "name": "perclos_roll6_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 123,
+      "name": "max_eye_closed_duration_roll6_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 124,
+      "name": "max_eye_closed_duration_roll6_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 125,
+      "name": "max_eye_closed_duration_roll6_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 126,
+      "name": "yawn_ratio_roll6_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 127,
+      "name": "yawn_ratio_roll6_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 128,
+      "name": "yawn_ratio_roll6_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 129,
+      "name": "yaw_proxy_max_abs_roll6_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 130,
+      "name": "yaw_proxy_max_abs_roll6_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 131,
+      "name": "yaw_proxy_max_abs_roll6_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 132,
+      "name": "pitch_proxy_max_roll6_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 133,
+      "name": "pitch_proxy_max_roll6_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 134,
+      "name": "pitch_proxy_max_roll6_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 135,
+      "name": "blink_count_roll6_sum",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 136,
+      "name": "yawn_count_roll6_sum",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 137,
+      "name": "face_ratio_roll12_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 138,
+      "name": "face_ratio_roll12_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 139,
+      "name": "face_ratio_roll12_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 140,
+      "name": "no_face_ratio_roll12_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 141,
+      "name": "no_face_ratio_roll12_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 142,
+      "name": "no_face_ratio_roll12_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 143,
+      "name": "ear_mean_roll12_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 144,
+      "name": "ear_mean_roll12_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 145,
+      "name": "ear_mean_roll12_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 146,
+      "name": "ear_min_roll12_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 147,
+      "name": "ear_min_roll12_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 148,
+      "name": "ear_min_roll12_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 149,
+      "name": "ear_std_roll12_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 150,
+      "name": "ear_std_roll12_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 151,
+      "name": "ear_std_roll12_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 152,
+      "name": "mar_mean_roll12_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 153,
+      "name": "mar_mean_roll12_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 154,
+      "name": "mar_mean_roll12_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 155,
+      "name": "mar_max_roll12_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 156,
+      "name": "mar_max_roll12_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 157,
+      "name": "mar_max_roll12_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 158,
+      "name": "perclos_roll12_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 159,
+      "name": "perclos_roll12_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 160,
+      "name": "perclos_roll12_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 161,
+      "name": "max_eye_closed_duration_roll12_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 162,
+      "name": "max_eye_closed_duration_roll12_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 163,
+      "name": "max_eye_closed_duration_roll12_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 164,
+      "name": "yawn_ratio_roll12_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 165,
+      "name": "yawn_ratio_roll12_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 166,
+      "name": "yawn_ratio_roll12_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 167,
+      "name": "yaw_proxy_max_abs_roll12_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 168,
+      "name": "yaw_proxy_max_abs_roll12_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 169,
+      "name": "yaw_proxy_max_abs_roll12_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 170,
+      "name": "pitch_proxy_max_roll12_mean",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 171,
+      "name": "pitch_proxy_max_roll12_max",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 172,
+      "name": "pitch_proxy_max_roll12_min",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 173,
+      "name": "blink_count_roll12_sum",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 174,
+      "name": "yawn_count_roll12_sum",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 175,
+      "name": "perclos_minus_roll3",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 176,
+      "name": "perclos_minus_roll6",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 177,
+      "name": "ear_mean_minus_roll3",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 178,
+      "name": "mar_max_minus_roll3",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 179,
+      "name": "fatigue_accumulation_3",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    },
+    {
+      "index": 180,
+      "name": "fatigue_accumulation_6",
+      "dtype": "float32",
+      "unit": null,
+      "expected_range": null
+    }
+  ],
+  "limitations": [
+    "Las unidades y rangos confiables deben regenerarse con features exportadas por Android/ML Kit.",
+    "Este schema preserva el orden historico, pero no declara paridad del detector."
+  ]
+}

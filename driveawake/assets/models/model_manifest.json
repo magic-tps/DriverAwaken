@@ -1,0 +1,12 @@
+{
+  "model_version": "experimental-2026-05-23",
+  "extractor_version": "legacy-mediapipe-v1",
+  "compatible_flutter_extractor": "mlkit-flutter-v1",
+  "parity_verified": false,
+  "sha256": "e29e3b6017ad897a319afe7968b5bca3213f12a5551a3853b9e3cb5671f1c34f",
+  "input_shape": [1, 181],
+  "output_shape": [1, 3],
+  "class_order": ["despierto", "cansancio", "somnoliento"],
+  "feature_order_sha256": "023d2fb2f003bd57364bba4b7cf8bea7c5adcfbc83a34cf69e527a70448934d5",
+  "deployment_status": "disabled_by_default"
+}
