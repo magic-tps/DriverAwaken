@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import '../models/cloud_trip_report.dart';
 import '../models/trip_session_summary.dart';
 import 'account_session.dart';
+import '../l10n/locale_controller.dart';
 
 class CloudReportService implements AccountSession {
   CloudReportService._();
@@ -62,6 +63,9 @@ class CloudReportService implements AccountSession {
   @override
   Future<void> resetPassword(String email) async {
     await initialize();
+    await _auth!.setLanguageCode(
+      LocaleController.instance.effectiveLocale.languageCode,
+    );
     await _auth!.sendPasswordResetEmail(email: email.trim());
   }
 

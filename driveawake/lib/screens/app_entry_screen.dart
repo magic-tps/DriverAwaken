@@ -1,3 +1,4 @@
+import '../l10n/localized_text.dart';
 import 'package:flutter/material.dart';
 
 import '../services/account_session.dart';
@@ -66,10 +67,10 @@ class _AppEntryScreenState extends State<AppEntryScreen> {
               children: [
                 const CircularProgressIndicator(),
                 const SizedBox(height: 20),
-                const Text('Preparando tu cuenta…'),
+                const LocalizedText('Preparando tu cuenta…'),
                 TextButton(
                   onPressed: _enter,
-                  child: const Text('Continuar sin cuenta'),
+                  child: const LocalizedText('Continuar sin cuenta'),
                 ),
               ],
             ),

@@ -17,6 +17,14 @@ Inicia una sesión nueva, confirma que el panel técnico muestre FPS, P95, drops
 
 ## Matriz de pruebas
 
+### Idiomas
+
+- En login o Ajustes, elegir English: comprobar botones, formularios y mensajes en inglés.
+- Volver a Español y confirmar la traducción de la pantalla abierta, sin cerrar sesión.
+- Cerrar y reabrir la app: el idioma seleccionado debe conservarse.
+- Elegir Idioma del teléfono y comprobar la resolución automática de español/inglés.
+- Consultar un informe anterior y exportar un PDF/PNG en cada idioma: los textos cambian, las métricas y los datos guardados se conservan.
+
 ### Regresión de Inicio e informes
 
 - Abrir la app, iniciar sesión o continuar sin cuenta, y conceder permiso: la cámara debe iniciar en Inicio sin tocar Comprobar.

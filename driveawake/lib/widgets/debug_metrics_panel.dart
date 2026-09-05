@@ -1,3 +1,4 @@
+import '../l10n/localized_text.dart';
 import 'package:flutter/material.dart';
 
 import '../models/drowsiness_state.dart';
@@ -109,7 +110,7 @@ class DebugMetricsPanel extends StatelessWidget {
                     size: 18,
                   ),
                   const SizedBox(width: 8),
-                  Text(
+                  LocalizedText(
                     'Diagnostico en vivo',
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.86),
@@ -119,7 +120,7 @@ class DebugMetricsPanel extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  Text(
+                  LocalizedText(
                     '5 FPS',
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.42),
@@ -189,7 +190,7 @@ class _MetricTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
+          LocalizedText(
             metric.label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -201,7 +202,7 @@ class _MetricTile extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          Text(
+          LocalizedText(
             metric.value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

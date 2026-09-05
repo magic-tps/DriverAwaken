@@ -1,3 +1,5 @@
+import '../l10n/app_strings.dart';
+import '../l10n/localized_text.dart';
 import 'package:flutter/material.dart';
 
 import '../models/trip_session_summary.dart';
@@ -24,10 +26,10 @@ class _SavedTripsScreenState extends State<SavedTripsScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      title: const Text('Informes de viajes'),
+      title: const LocalizedText('Informes de viajes'),
       actions: [
         IconButton(
-          tooltip: 'Mis copias en la nube',
+          tooltip: context.tr('Mis copias en la nube'),
           icon: const Icon(Icons.cloud_outlined),
           onPressed: () => Navigator.of(context).push(
             MaterialPageRoute<void>(builder: (_) => const CloudReportsScreen()),
@@ -46,12 +48,12 @@ class _SavedTripsScreenState extends State<SavedTripsScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('No se pudieron cargar los informes.'),
+                const LocalizedText('No se pudieron cargar los informes.'),
                 TextButton(
                   onPressed: () => setState(() {
                     _trips = LocalHistoryService.instance.loadTrips();
                   }),
-                  child: const Text('Reintentar'),
+                  child: const LocalizedText('Reintentar'),
                 ),
               ],
             ),
@@ -62,7 +64,7 @@ class _SavedTripsScreenState extends State<SavedTripsScreen> {
           return const Center(
             child: Padding(
               padding: EdgeInsets.all(24),
-              child: Text(
+              child: LocalizedText(
                 'Todavía no hay informes. Al finalizar un viaje, su resumen se guarda aquí, incluso sin internet.',
                 textAlign: TextAlign.center,
               ),
@@ -84,8 +86,8 @@ class _SavedTripsScreenState extends State<SavedTripsScreen> {
             ).formatTimeOfDay(TimeOfDay.fromDateTime(date));
             return ListTile(
               leading: const Icon(Icons.route_rounded),
-              title: Text('$label · $time'),
-              subtitle: Text(
+              title: LocalizedText('$label · $time'),
+              subtitle: LocalizedText(
                 '${trip.drivingDuration.inMinutes} min · ${trip.warningAlerts + trip.dangerAlerts} alertas\n${trip.resultTitle}',
               ),
               isThreeLine: true,

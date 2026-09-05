@@ -1,3 +1,4 @@
+import '../l10n/localized_text.dart';
 import 'package:flutter/material.dart';
 
 import '../app/app_config.dart';
@@ -28,7 +29,7 @@ class TripSummaryScreen extends StatelessWidget {
     };
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Resumen del viaje')),
+      appBar: AppBar(title: const LocalizedText('Resumen del viaje')),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -48,7 +49,7 @@ class TripSummaryScreen extends StatelessWidget {
                   children: <Widget>[
                     Icon(Icons.route_rounded, color: color, size: 34),
                     const SizedBox(height: 14),
-                    Text(
+                    LocalizedText(
                       summary.resultTitle,
                       style: const TextStyle(
                         fontSize: 25,
@@ -57,7 +58,7 @@ class TripSummaryScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
+                    LocalizedText(
                       summary.resultMessage,
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.7),
@@ -75,10 +76,10 @@ class TripSummaryScreen extends StatelessWidget {
                     Icons.cloud_done_outlined,
                     color: Color(0xFF24D17E),
                   ),
-                  title: Text('Informe consultado desde la nube'),
+                  title: LocalizedText('Informe consultado desde la nube'),
                 )
               else ...[
-                const Text(
+                const LocalizedText(
                   'Guardado en este teléfono',
                   style: TextStyle(color: Colors.white70),
                 ),
@@ -91,13 +92,13 @@ class TripSummaryScreen extends StatelessWidget {
                     ),
                   ),
                   icon: const Icon(Icons.cloud_upload_outlined),
-                  label: const Text('Subir informe a la nube'),
+                  label: const LocalizedText('Subir informe a la nube'),
                 ),
               ],
               const SizedBox(height: 18),
               _SummaryGrid(summary: summary),
               const SizedBox(height: 18),
-              Text(
+              LocalizedText(
                 'Sistema preventivo de alerta temprana, no sustituye la responsabilidad del conductor ni una evaluacion medica.',
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.58),
@@ -111,7 +112,7 @@ class TripSummaryScreen extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: () => _shareTechnicalReport(context),
                   icon: const Icon(Icons.ios_share),
-                  label: const Text('Compartir reporte técnico'),
+                  label: const LocalizedText('Compartir reporte técnico'),
                 ),
                 const SizedBox(height: 10),
               ],
@@ -119,7 +120,7 @@ class TripSummaryScreen extends StatelessWidget {
                 onPressed: () =>
                     Navigator.of(context).popUntil((route) => route.isFirst),
                 icon: const Icon(Icons.home_rounded),
-                label: const Text('Volver al inicio'),
+                label: const LocalizedText('Volver al inicio'),
               ),
             ],
           ),
@@ -137,19 +138,19 @@ class TripSummaryScreen extends StatelessWidget {
           (await showDialog<bool>(
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text('Compartir reporte técnico'),
-              content: const Text(
+              title: const LocalizedText('Compartir reporte técnico'),
+              content: const LocalizedText(
                 'El JSON contiene métricas anónimas del dispositivo y la sesión. '
                 'Confirma que deseas compartirlo.',
               ),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: const Text('CANCELAR'),
+                  child: const LocalizedText('CANCELAR'),
                 ),
                 FilledButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text('COMPARTIR'),
+                  child: const LocalizedText('COMPARTIR'),
                 ),
               ],
             ),
@@ -252,7 +253,7 @@ class _SummaryTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
+          LocalizedText(
             item.label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -263,7 +264,7 @@ class _SummaryTile extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Text(
+          LocalizedText(
             item.value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

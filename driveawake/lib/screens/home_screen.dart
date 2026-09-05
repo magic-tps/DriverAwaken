@@ -1,3 +1,5 @@
+import '../l10n/app_strings.dart';
+import '../l10n/localized_text.dart';
 // ignore_for_file: unused_element
 
 import 'dart:async';
@@ -60,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('No se pudo recuperar el viaje anterior.'),
+            content: LocalizedText('No se pudo recuperar el viaje anterior.'),
           ),
         );
       }
@@ -79,19 +81,19 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text('Viaje incompleto encontrado'),
-        content: Text(
-          'Se encontrÃƒÂ³ un viaje iniciado el ${_formatDraftDate(draft)}. '
-          'La cÃƒÂ¡mara y las alarmas permanecerÃƒÂ¡n apagadas hasta que decidas reanudar.',
+        title: const LocalizedText('Viaje incompleto encontrado'),
+        content: LocalizedText(
+          'Se encontró un viaje iniciado el ${_formatDraftDate(draft)}. '
+          'La cámara y las alarmas permanecerán apagadas hasta que decidas reanudar.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Descartar'),
+            child: const LocalizedText('Descartar'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Recuperar'),
+            child: const LocalizedText('Recuperar'),
           ),
         ],
       ),
@@ -266,12 +268,12 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Text(
+                const LocalizedText(
                   'Como funciona',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
                 ),
                 const SizedBox(height: 12),
-                Text(
+                LocalizedText(
                   'DriverAwake usa la camara frontal, Google ML Kit, reglas criticas y un modelo TensorFlow Lite local. No graba video ni guarda imagenes: solo calcula senales de riesgo en tiempo real.',
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: 0.74),
@@ -281,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 18),
                 FilledButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Entendido'),
+                  child: const LocalizedText('Entendido'),
                 ),
               ],
             ),
@@ -397,7 +399,7 @@ class _DashboardTopBar extends StatelessWidget {
         children: <Widget>[
           _GlassIconButton(
             icon: Icons.menu_rounded,
-            tooltip: 'Privacidad',
+            tooltip: context.tr('Privacidad'),
             onPressed: onPrivacy,
           ),
           const Expanded(child: Center(child: _GradientTitle())),
@@ -406,7 +408,7 @@ class _DashboardTopBar extends StatelessWidget {
             children: <Widget>[
               _GlassIconButton(
                 icon: Icons.notifications_none_rounded,
-                tooltip: 'Ajustes',
+                tooltip: context.tr('Ajustes'),
                 onPressed: onSettings,
               ),
               Positioned(
@@ -521,7 +523,7 @@ class _IntroMonitoringPanel extends StatelessWidget {
               ),
               const SizedBox(width: 9),
               const Expanded(
-                child: Text(
+                child: LocalizedText(
                   'MONITOREO LISTO',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -532,7 +534,7 @@ class _IntroMonitoringPanel extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(
+              LocalizedText(
                 'Camara al iniciar viaje',
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.68),
@@ -594,7 +596,7 @@ class _IntroMonitoringPanel extends StatelessWidget {
                           ),
                           SizedBox(width: 8),
                           Expanded(
-                            child: Text(
+                            child: LocalizedText(
                               'El escaneo real empieza en modo viaje',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -722,7 +724,7 @@ class _ReadinessMetric extends StatelessWidget {
         children: <Widget>[
           Icon(icon, color: const Color(0xFF28C9FF), size: 22),
           const SizedBox(height: 6),
-          Text(
+          LocalizedText(
             label.toUpperCase(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -735,7 +737,7 @@ class _ReadinessMetric extends StatelessWidget {
           const SizedBox(height: 3),
           FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(
+            child: LocalizedText(
               value,
               style: const TextStyle(
                 color: Color(0xFF32E65F),
@@ -1062,7 +1064,7 @@ class _LiveMonitoringPanelState extends State<_LiveMonitoringPanel>
               ),
               const SizedBox(width: 9),
               const Expanded(
-                child: Text(
+                child: LocalizedText(
                   'MONITOREO EN VIVO',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -1073,7 +1075,7 @@ class _LiveMonitoringPanelState extends State<_LiveMonitoringPanel>
                   ),
                 ),
               ),
-              Text(
+              LocalizedText(
                 statusText,
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.68),
@@ -1330,7 +1332,7 @@ class _CameraPlaceholder extends StatelessWidget {
               size: 42,
             ),
             const SizedBox(height: 10),
-            Text(
+            LocalizedText(
               errorMessage ?? 'Camara detenida',
               textAlign: TextAlign.center,
               maxLines: 4,
@@ -1341,7 +1343,7 @@ class _CameraPlaceholder extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: onRetry,
               icon: const Icon(Icons.refresh_rounded),
-              label: Text(
+              label: LocalizedText(
                 errorMessage == null ? 'Comprobar camara' : 'Reintentar',
               ),
             ),
@@ -1377,7 +1379,7 @@ class _CameraChip extends StatelessWidget {
         children: <Widget>[
           Icon(icon, color: color, size: 15),
           const SizedBox(width: 6),
-          Text(
+          LocalizedText(
             label,
             style: TextStyle(
               color: color,
@@ -1411,7 +1413,7 @@ class _CameraAlertBanner extends StatelessWidget {
           Icon(Icons.warning_amber_rounded, color: color, size: 18),
           const SizedBox(width: 8),
           Expanded(
-            child: Text(
+            child: LocalizedText(
               message,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -1506,7 +1508,7 @@ class _InsightPill extends StatelessWidget {
       ),
       child: Column(
         children: <Widget>[
-          Text(
+          LocalizedText(
             label.toUpperCase(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -1519,7 +1521,7 @@ class _InsightPill extends StatelessWidget {
           const SizedBox(height: 3),
           FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(
+            child: LocalizedText(
               value,
               style: TextStyle(
                 color: color,
@@ -1635,7 +1637,7 @@ class _SignalStatus extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
+              LocalizedText(
                 label.toUpperCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -1646,7 +1648,7 @@ class _SignalStatus extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 3),
-              Text(
+              LocalizedText(
                 value,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -1708,14 +1710,14 @@ class _BreakCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Text(
+                const LocalizedText(
                   'Toma pausas regulares',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
                 ),
                 const SizedBox(height: 4),
-                Text(
+                LocalizedText(
                   'Sistema listo para detectar fatiga en tiempo real.',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -1772,7 +1774,7 @@ class _StartTripButton extends StatelessWidget {
             children: <Widget>[
               Icon(Icons.play_arrow_rounded, color: Colors.white, size: 30),
               SizedBox(width: 10),
-              Text(
+              LocalizedText(
                 'INICIAR VIAJE',
                 style: TextStyle(
                   color: Colors.white,
@@ -1835,7 +1837,7 @@ class _SecondaryButton extends StatelessWidget {
     return OutlinedButton.icon(
       onPressed: onPressed,
       icon: Icon(icon, color: const Color(0xFF93DFFF)),
-      label: FittedBox(fit: BoxFit.scaleDown, child: Text(label)),
+      label: FittedBox(fit: BoxFit.scaleDown, child: LocalizedText(label)),
       style: OutlinedButton.styleFrom(
         minimumSize: const Size.fromHeight(60),
         foregroundColor: Colors.white,
@@ -1936,7 +1938,7 @@ class _DockMetric extends StatelessWidget {
           children: <Widget>[
             Icon(icon, color: Colors.white.withValues(alpha: 0.9), size: 27),
             const SizedBox(height: 8),
-            Text(
+            LocalizedText(
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -1949,7 +1951,7 @@ class _DockMetric extends StatelessWidget {
             const SizedBox(height: 4),
             FittedBox(
               fit: BoxFit.scaleDown,
-              child: Text(
+              child: LocalizedText(
                 value,
                 maxLines: 1,
                 style: TextStyle(
@@ -2010,7 +2012,7 @@ class _PrivacyStrip extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: Text(
+                child: LocalizedText(
                   'IA local. No se guardan imagenes ni video.',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

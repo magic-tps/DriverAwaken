@@ -1,5 +1,15 @@
 # Registro técnico de mejoras
 
+## Inglés y español — 1.1.0+2 (2026-09-05)
+
+- Selector en login y Ajustes: español, inglés o idioma del teléfono, con preferencia persistida.
+- Traducción de pantallas, alertas, calibración, mensajes de nube, formularios, privacidad y exportaciones PDF/PNG.
+- Cambio de idioma sin cerrar sesión ni reiniciar la navegación; los informes existentes conservan sus datos originales.
+- Fechas localizadas y recuperación de contraseña en el idioma elegido.
+- Pruebas de persistencia, cambio de idioma, formularios, navegación, plantillas, pantallas estrechas y contenido de PDF.
+- Validación automática: `flutter analyze` sin incidencias y 95 pruebas aprobadas.
+- APK `1.1.0` (código 2) instalado mediante actualización en Samsung SM-S938U1. Comprobación en dispositivo del selector, login en inglés y opciones de retención traducidas; sin modificar credenciales ni informes.
+
 ## Acceso y nube visibles (2026-09-05)
 
 - Pantalla inicial dedicada a login/registro, recuperación de contraseña y opción de continuar sin cuenta.

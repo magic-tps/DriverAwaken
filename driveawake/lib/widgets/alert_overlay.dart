@@ -1,3 +1,4 @@
+import '../l10n/localized_text.dart';
 import 'package:flutter/material.dart';
 
 class AlertOverlay extends StatelessWidget {
@@ -75,7 +76,7 @@ class AlertOverlay extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(
+                                  LocalizedText(
                                     sustained
                                         ? 'DETENTE Y DESCANSA'
                                         : 'PELIGRO',
@@ -90,7 +91,7 @@ class AlertOverlay extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(height: 5),
-                                  Text(
+                                  LocalizedText(
                                     sustained
                                         ? 'Alerta sostenida de somnolencia'
                                         : 'Posible somnolencia detectada',
@@ -115,7 +116,7 @@ class AlertOverlay extends StatelessWidget {
                             child: FilledButton.icon(
                               onPressed: onAcknowledge,
                               icon: const Icon(Icons.check_circle_rounded),
-                              label: const Text('Estoy bien'),
+                              label: const LocalizedText('Estoy bien'),
                               style: FilledButton.styleFrom(
                                 backgroundColor: Colors.white,
                                 foregroundColor: Colors.black,

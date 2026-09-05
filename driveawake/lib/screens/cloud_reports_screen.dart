@@ -1,3 +1,5 @@
+import '../l10n/app_strings.dart';
+import '../l10n/localized_text.dart';
 import 'package:flutter/material.dart';
 
 import '../models/cloud_trip_report.dart';
@@ -64,16 +66,16 @@ class _CloudReportsScreenState extends State<CloudReportsScreen> {
       await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text(title),
-          content: Text(message),
+          title: LocalizedText(title),
+          content: LocalizedText(message),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancelar'),
+              child: const LocalizedText('Cancelar'),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Confirmar'),
+              child: const LocalizedText('Confirmar'),
             ),
           ],
         ),
@@ -114,29 +116,31 @@ class _CloudReportsScreenState extends State<CloudReportsScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Eliminar cuenta y copias'),
+        title: const LocalizedText('Eliminar cuenta y copias'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
+            const LocalizedText(
               'Se eliminarán tu cuenta y todos sus informes en la nube. Los informes locales se conservan. Introduce tu contraseña para confirmar.',
             ),
             TextField(
               controller: _password,
               obscureText: true,
               autocorrect: false,
-              decoration: const InputDecoration(labelText: 'Contraseña'),
+              decoration: const InputDecoration(
+                label: LocalizedText('Contraseña'),
+              ),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancelar'),
+            child: const LocalizedText('Cancelar'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Eliminar'),
+            child: const LocalizedText('Eliminar'),
           ),
         ],
       ),
@@ -170,17 +174,17 @@ class _CloudReportsScreenState extends State<CloudReportsScreen> {
     return PopScope(
       canPop: !_busy,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Mis copias en la nube')),
+        appBar: AppBar(title: const LocalizedText('Mis copias en la nube')),
         body: SafeArea(
           child: ListView(
             padding: const EdgeInsets.all(20),
             children: [
-              const Text(
+              const LocalizedText(
                 'Tus informes, también en tu cuenta',
                 style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              const Text(
+              const LocalizedText(
                 'La cámara y los viajes funcionan sin iniciar sesión. Aquí puedes guardar copias y consultarlas desde otro teléfono con la misma cuenta.',
               ),
               const SizedBox(height: 16),
@@ -188,7 +192,10 @@ class _CloudReportsScreenState extends State<CloudReportsScreen> {
               if (_message != null)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Text(_message!, key: const ValueKey('cloud-message')),
+                  child: LocalizedText(
+                    _message!,
+                    key: const ValueKey('cloud-message'),
+                  ),
                 ),
               if (!_ready && !_busy)
                 FilledButton(
@@ -197,7 +204,7 @@ class _CloudReportsScreenState extends State<CloudReportsScreen> {
                     _ready = true;
                     if (_service.user != null) await _refresh();
                   }),
-                  child: const Text('Reintentar conexión'),
+                  child: const LocalizedText('Reintentar conexión'),
                 ),
               if (_ready && user != null) ...[
                 const SizedBox(height: 12),
@@ -214,16 +221,16 @@ class _CloudReportsScreenState extends State<CloudReportsScreen> {
                               color: Color(0xFF24D17E),
                             ),
                             SizedBox(width: 8),
-                            Text('Sesión iniciada'),
+                            LocalizedText('Sesión iniciada'),
                           ],
                         ),
                         const SizedBox(height: 8),
-                        Text(
+                        LocalizedText(
                           user.email ?? '',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const Divider(),
-                        Text(
+                        LocalizedText(
                           _lastChecked == null
                               ? 'Aún no se ha confirmado el contenido de la nube.'
                               : '${_reports.length} informes encontrados en la nube',
@@ -233,7 +240,7 @@ class _CloudReportsScreenState extends State<CloudReportsScreen> {
                           ),
                         ),
                         if (_lastChecked != null)
-                          Text(
+                          LocalizedText(
                             'Última consulta al servidor: ${MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(_lastChecked!))}',
                           ),
                       ],
@@ -244,7 +251,7 @@ class _CloudReportsScreenState extends State<CloudReportsScreen> {
                 FilledButton.icon(
                   onPressed: _busy ? null : _backup,
                   icon: const Icon(Icons.cloud_upload_outlined),
-                  label: Text(
+                  label: LocalizedText(
                     _uploading
                         ? 'Subiendo informes…'
                         : widget.reportToUpload == null
@@ -259,25 +266,25 @@ class _CloudReportsScreenState extends State<CloudReportsScreen> {
                           await _refresh();
                         }),
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Comprobar nube'),
+                  label: const LocalizedText('Comprobar nube'),
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 12),
-                  child: Text(
+                  child: LocalizedText(
                     'Últimos 100 informes. Las copias se conservan hasta que las elimines aquí; la retención local no las borra.',
                   ),
                 ),
                 if (_lastChecked != null && _reports.isEmpty && !_busy)
-                  const Text('Aún no hay copias en esta cuenta.'),
+                  const LocalizedText('Aún no hay copias en esta cuenta.'),
                 for (final report in _reports)
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: Text(
+                    title: LocalizedText(
                       MaterialLocalizations.of(
                         context,
                       ).formatMediumDate(report.summary.startedAt.toLocal()),
                     ),
-                    subtitle: Text(
+                    subtitle: LocalizedText(
                       '${report.summary.drivingDuration.inMinutes} min · ${report.summary.warningAlerts + report.summary.dangerAlerts} alertas',
                     ),
                     onTap: _busy
@@ -291,7 +298,7 @@ class _CloudReportsScreenState extends State<CloudReportsScreen> {
                             ),
                           ),
                     trailing: IconButton(
-                      tooltip: 'Eliminar copia',
+                      tooltip: context.tr('Eliminar copia'),
                       icon: const Icon(Icons.delete_outline),
                       onPressed: _busy
                           ? null
@@ -319,11 +326,11 @@ class _CloudReportsScreenState extends State<CloudReportsScreen> {
                           _lastChecked = null;
                           _password.clear();
                         }),
-                  child: const Text('Cerrar sesión'),
+                  child: const LocalizedText('Cerrar sesión'),
                 ),
                 TextButton(
                   onPressed: _busy ? null : _deleteAccount,
-                  child: const Text('Eliminar cuenta y copias'),
+                  child: const LocalizedText('Eliminar cuenta y copias'),
                 ),
               ],
             ],

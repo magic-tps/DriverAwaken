@@ -1,3 +1,4 @@
+import '../l10n/localized_text.dart';
 import 'package:flutter/material.dart';
 
 import '../models/drowsiness_state.dart';
@@ -50,7 +51,7 @@ class StatusCard extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: Text(
+                          child: LocalizedText(
                             state.level.label,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -66,7 +67,7 @@ class StatusCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 4),
-                    Text(
+                    LocalizedText(
                       state.message,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -88,7 +89,7 @@ class StatusCard extends StatelessWidget {
           Row(
             children: <Widget>[
               Expanded(
-                child: Text(
+                child: LocalizedText(
                   state.riskReason,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -102,7 +103,7 @@ class StatusCard extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Flexible(
-                child: Text(
+                child: LocalizedText(
                   state.lowLight
                       ? 'Luz insuficiente'
                       : '${state.calibrationStatus} - Tier ${state.alertTier}',
@@ -166,7 +167,7 @@ class _RiskBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: color.withValues(alpha: 0.34)),
       ),
-      child: Text(
+      child: LocalizedText(
         '$value%',
         style: TextStyle(
           color: color,

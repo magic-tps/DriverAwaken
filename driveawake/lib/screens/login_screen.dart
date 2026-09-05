@@ -1,7 +1,10 @@
+import '../l10n/app_strings.dart';
+import '../l10n/localized_text.dart';
 import 'package:flutter/material.dart';
 
 import '../services/account_session.dart';
 import '../services/cloud_report_service.dart';
+import '../widgets/language_selector.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -111,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: widget.onGuest == null
-        ? AppBar(title: const Text('Tu cuenta'))
+        ? AppBar(title: const LocalizedText('Tu cuenta'))
         : null,
     body: SafeArea(
       child: Center(
@@ -125,11 +128,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    const LanguageSelector(),
+                    const SizedBox(height: 22),
                     Row(
                       children: [
                         Image.asset('assets/logo.png', width: 46, height: 46),
                         const SizedBox(width: 12),
-                        const Text(
+                        const LocalizedText(
                           'DriverAwaken',
                           style: TextStyle(
                             fontSize: 27,
@@ -140,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     const SizedBox(height: 26),
-                    Text(
+                    LocalizedText(
                       _register ? 'Crea tu cuenta' : 'Bienvenido de nuevo',
                       style: const TextStyle(
                         fontSize: 30,
@@ -148,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
+                    const LocalizedText(
                       'Guarda tus informes en tu cuenta y consúltalos cuando los necesites.',
                       style: TextStyle(color: Colors.white70, height: 1.4),
                     ),
@@ -157,9 +162,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       segments: const [
                         ButtonSegment(
                           value: false,
-                          label: Text('Iniciar sesión'),
+                          label: LocalizedText('Iniciar sesión'),
                         ),
-                        ButtonSegment(value: true, label: Text('Crear cuenta')),
+                        ButtonSegment(
+                          value: true,
+                          label: LocalizedText('Crear cuenta'),
+                        ),
                       ],
                       selected: {_register},
                       onSelectionChanged: _busy
@@ -173,6 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 22),
                     TextFormField(
+                      errorBuilder: (context, error) => LocalizedText(error),
                       key: const ValueKey('login-email'),
                       controller: _email,
                       enabled: !_busy,
@@ -181,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       autocorrect: false,
                       textInputAction: TextInputAction.next,
                       decoration: const InputDecoration(
-                        labelText: 'Correo electrónico',
+                        label: LocalizedText('Correo electrónico'),
                         prefixIcon: Icon(Icons.mail_outline),
                       ),
                       validator: (value) =>
@@ -193,6 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
+                      errorBuilder: (context, error) => LocalizedText(error),
                       key: const ValueKey('login-password'),
                       controller: _password,
                       enabled: !_busy,
@@ -208,12 +218,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (!_register) _submit();
                       },
                       decoration: InputDecoration(
-                        labelText: 'Contraseña',
+                        label: LocalizedText('Contraseña'),
                         prefixIcon: const Icon(Icons.lock_outline),
                         suffixIcon: IconButton(
                           tooltip: _obscure
-                              ? 'Mostrar contraseña'
-                              : 'Ocultar contraseña',
+                              ? context.tr('Mostrar contraseña')
+                              : context.tr('Ocultar contraseña'),
                           onPressed: () => setState(() {
                             _obscure = !_obscure;
                           }),
@@ -233,6 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (_register) ...[
                       const SizedBox(height: 16),
                       TextFormField(
+                        errorBuilder: (context, error) => LocalizedText(error),
                         key: const ValueKey('login-confirmation'),
                         controller: _confirmation,
                         enabled: !_busy,
@@ -240,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         enableSuggestions: false,
                         autocorrect: false,
                         decoration: const InputDecoration(
-                          labelText: 'Repite tu contraseña',
+                          label: LocalizedText('Repite tu contraseña'),
                           prefixIcon: Icon(Icons.lock_outline),
                         ),
                         validator: (value) => value == _password.text
@@ -248,7 +259,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             : 'Las contraseñas no coinciden.',
                       ),
                       const SizedBox(height: 14),
-                      const Text(
+                      const LocalizedText(
                         'Tu correo identifica tu cuenta. Los informes se suben solo cuando lo confirmas.',
                         style: TextStyle(color: Colors.white60, fontSize: 12),
                       ),
@@ -257,13 +268,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: _busy ? null : _reset,
-                          child: const Text('Olvidé mi contraseña'),
+                          child: const LocalizedText('Olvidé mi contraseña'),
                         ),
                       ),
                     if (_message != null)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: Text(
+                        child: LocalizedText(
                           _message!,
                           style: TextStyle(
                             color: _error
@@ -283,7 +294,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: CircularProgressIndicator(strokeWidth: 2),
                             )
                           : const Icon(Icons.arrow_forward),
-                      label: Text(
+                      label: LocalizedText(
                         _busy
                             ? 'Conectando…'
                             : _register
@@ -295,9 +306,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 14),
                       TextButton(
                         onPressed: _busy ? null : widget.onGuest,
-                        child: const Text('Continuar sin cuenta'),
+                        child: const LocalizedText('Continuar sin cuenta'),
                       ),
-                      const Text(
+                      const LocalizedText(
                         'Sin cuenta, tus viajes se guardan solo en este teléfono.',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white54, fontSize: 12),

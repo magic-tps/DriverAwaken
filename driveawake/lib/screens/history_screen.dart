@@ -1,4 +1,7 @@
+import '../l10n/app_strings.dart';
+import '../l10n/localized_text.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import '../models/drowsiness_event.dart';
 import '../models/drowsiness_state.dart';
@@ -16,7 +19,8 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   final LocalHistoryService _historyService = LocalHistoryService.instance;
-  final HistoryExportService _exportService = HistoryExportService();
+  HistoryExportService get _exportService =>
+      HistoryExportService(strings: AppStrings.of(context));
   DrowsinessLevel? _filter;
   late Future<List<DrowsinessEvent>> _eventsFuture;
   String? _exportingDayKey;
@@ -38,18 +42,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Borrar historial'),
-          content: const Text(
+          title: const LocalizedText('Borrar historial'),
+          content: const LocalizedText(
             'Se eliminaran los eventos y metricas locales. No hay imagenes ni videos guardados.',
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Cancelar'),
+              child: const LocalizedText('Cancelar'),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Borrar'),
+              child: const LocalizedText('Borrar'),
             ),
           ],
         );
@@ -66,12 +70,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Historial'),
+        title: const LocalizedText('Historial'),
         actions: <Widget>[
           IconButton(
             onPressed: _clearHistory,
             icon: const Icon(Icons.delete_outline_rounded),
-            tooltip: 'Borrar historial',
+            tooltip: context.tr('Borrar historial'),
           ),
         ],
       ),
@@ -80,8 +84,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
           children: <Widget>[
             ListTile(
               leading: const Icon(Icons.cloud_upload_outlined),
-              title: const Text('Subir y consultar informes en la nube'),
-              subtitle: const Text('Tu cuenta y copias confirmadas'),
+              title: const LocalizedText(
+                'Subir y consultar informes en la nube',
+              ),
+              subtitle: const LocalizedText('Tu cuenta y copias confirmadas'),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute<void>(
@@ -91,8 +97,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.summarize_outlined),
-              title: const Text('Informes de viajes'),
-              subtitle: const Text('Guardados en este dispositivo'),
+              title: const LocalizedText('Informes de viajes'),
+              subtitle: const LocalizedText('Guardados en este dispositivo'),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute<void>(
@@ -159,7 +165,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
+                LocalizedText(
                   _eventTitle(event.eventType),
                   style: const TextStyle(
                     fontSize: 22,
@@ -196,19 +202,19 @@ class _HistoryScreenState extends State<HistoryScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Exportar ${format.label}'),
-        content: const Text(
+        title: LocalizedText('Exportar ${format.label}'),
+        content: const LocalizedText(
           'El reporte contiene datos del historial. Al compartirlo, una aplicacion externa o el destinatario podra conservarlo.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancelar'),
+            child: const LocalizedText('Cancelar'),
           ),
           FilledButton.icon(
             onPressed: () => Navigator.of(context).pop(true),
             icon: const Icon(Icons.ios_share_rounded),
-            label: const Text('Continuar'),
+            label: const LocalizedText('Continuar'),
           ),
         ],
       ),
@@ -235,8 +241,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
       }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            'Reporte ${format.label} listo para ${_formatDayHeader(group.day)}',
+          content: LocalizedText(
+            'Reporte ${format.label} listo para ${_formatDayHeader(group.day, AppStrings.of(context).languageCode)}',
           ),
         ),
       );
@@ -245,7 +251,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
         return;
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No se pudo exportar el reporte')),
+        const SnackBar(
+          content: LocalizedText('No se pudo exportar el reporte'),
+        ),
       );
     } finally {
       if (mounted) {
@@ -318,14 +326,14 @@ class _FilterBar extends StatelessWidget {
         children: <Widget>[
           FilterChip(
             selected: selected == null,
-            label: const Text('Todos'),
+            label: const LocalizedText('Todos'),
             onSelected: (_) => onChanged(null),
           ),
           const SizedBox(width: 8),
           for (final level in DrowsinessLevel.values) ...<Widget>[
             FilterChip(
               selected: selected == level,
-              label: Text(level.label),
+              label: LocalizedText(level.label),
               onSelected: (_) => onChanged(level),
             ),
             const SizedBox(width: 8),
@@ -369,8 +377,11 @@ class _DaySection extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        _formatDayHeader(group.day),
+                      LocalizedText(
+                        _formatDayHeader(
+                          group.day,
+                          AppStrings.of(context).languageCode,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -379,7 +390,7 @@ class _DaySection extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 5),
-                      Text(
+                      LocalizedText(
                         '${group.events.length} eventos - Precaucion ${group.warningCount} - Peligro ${group.dangerCount} - Max ${group.maxRisk.toStringAsFixed(0)}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -478,7 +489,7 @@ class _EventTile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
+                    LocalizedText(
                       _eventTitle(event.eventType),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -488,8 +499,8 @@ class _EventTile extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    Text(
-                      '${_formatDate(event.dateTime)} - Riesgo ${event.riskScore.toStringAsFixed(0)}',
+                    LocalizedText(
+                      '${_formatDate(event.dateTime, AppStrings.of(context).languageCode)} - Riesgo ${event.riskScore.toStringAsFixed(0)}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -518,7 +529,7 @@ class _EmptyHistory extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
-        child: Text(
+        child: LocalizedText(
           'Aun no hay eventos guardados. El historial solo almacena metricas y alertas, nunca imagenes ni video.',
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -546,7 +557,7 @@ class _DetailRow extends StatelessWidget {
         children: <Widget>[
           SizedBox(
             width: 92,
-            child: Text(
+            child: LocalizedText(
               label,
               style: TextStyle(
                 color: Colors.white.withValues(alpha: 0.52),
@@ -555,7 +566,7 @@ class _DetailRow extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Text(
+            child: LocalizedText(
               value,
               style: const TextStyle(fontWeight: FontWeight.w800),
             ),
@@ -591,28 +602,17 @@ String _eventTitle(String type) {
   }
 }
 
-String _formatDate(DateTime dateTime) {
-  final local = dateTime.toLocal();
-  final day = local.day.toString().padLeft(2, '0');
-  final month = local.month.toString().padLeft(2, '0');
-  final hour = local.hour.toString().padLeft(2, '0');
-  final minute = local.minute.toString().padLeft(2, '0');
-  return '$day/$month $hour:$minute';
-}
+String _formatDate(DateTime dateTime, String languageCode) =>
+    DateFormat.MMMd(languageCode).add_Hm().format(dateTime.toLocal());
 
-String _formatDayHeader(DateTime dateTime) {
+String _formatDayHeader(DateTime dateTime, String languageCode) {
   final local = dateTime.toLocal();
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
   final day = DateTime(local.year, local.month, local.day);
-  final dateText =
-      '${local.day.toString().padLeft(2, '0')}/${local.month.toString().padLeft(2, '0')}/${local.year}';
-  if (day == today) {
-    return 'Hoy - $dateText';
-  }
-  if (day == today.subtract(const Duration(days: 1))) {
-    return 'Ayer - $dateText';
-  }
+  final dateText = DateFormat.yMMMd(languageCode).format(local);
+  if (day == today) return 'Hoy - $dateText';
+  if (day == today.subtract(const Duration(days: 1))) return 'Ayer - $dateText';
   return dateText;
 }
 

@@ -1,3 +1,4 @@
+import '../l10n/localized_text.dart';
 import 'package:flutter/material.dart';
 
 import '../models/app_settings.dart';
@@ -6,6 +7,7 @@ import '../services/device_telemetry_service.dart';
 import '../services/local_history_service.dart';
 import '../services/settings_service.dart';
 import 'privacy_policy_screen.dart';
+import '../widgets/language_selector.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -57,25 +59,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (!mounted) {
       return;
     }
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Calibracion restablecida')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: LocalizedText('Calibracion restablecida')),
+    );
   }
 
   Future<void> _clearHistory() async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Borrar historial'),
-        content: const Text('Esta accion no se puede deshacer.'),
+        title: const LocalizedText('Borrar historial'),
+        content: const LocalizedText('Esta accion no se puede deshacer.'),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancelar'),
+            child: const LocalizedText('Cancelar'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Borrar'),
+            child: const LocalizedText('Borrar'),
           ),
         ],
       ),
@@ -87,7 +89,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('Historial borrado')));
+    ).showSnackBar(const SnackBar(content: LocalizedText('Historial borrado')));
   }
 
   Future<void> _resetDefaults() async {
@@ -117,24 +119,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Ajustes')),
+      appBar: AppBar(title: const LocalizedText('Ajustes')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
           children: <Widget>[
+            const LanguageSelector(),
+            const SizedBox(height: 20),
             const _SectionTitle('Deteccion'),
             _SettingsCard(
               children: <Widget>[
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Conservar historial'),
+                  title: const LocalizedText('Conservar historial'),
                   trailing: DropdownButton<HistoryRetention>(
                     value: _settings.historyRetention,
                     items: HistoryRetention.values
                         .map(
                           (value) => DropdownMenuItem<HistoryRetention>(
                             value: value,
-                            child: Text(value.label),
+                            child: LocalizedText(value.label),
                           ),
                         )
                         .toList(),
@@ -147,15 +151,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Sensibilidad'),
-                  subtitle: Text(_settings.sensitivity.label),
+                  title: const LocalizedText('Sensibilidad'),
+                  subtitle: LocalizedText(_settings.sensitivity.label),
                   trailing: DropdownButton<SensitivityLevel>(
                     value: _settings.sensitivity,
                     items: SensitivityLevel.values
                         .map(
                           (level) => DropdownMenuItem<SensitivityLevel>(
                             value: level,
-                            child: Text(level.label),
+                            child: LocalizedText(level.label),
                           ),
                         )
                         .toList(),
@@ -169,22 +173,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Modelo IA local'),
-                  subtitle: const Text('Suma riesgo, no reemplaza reglas'),
+                  title: const LocalizedText('Modelo IA local'),
+                  subtitle: const LocalizedText(
+                    'Suma riesgo, no reemplaza reglas',
+                  ),
                   value: _settings.modelEnabled,
                   onChanged: (value) =>
                       _update(_settings.copyWith(modelEnabled: value)),
                 ),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Panel tecnico'),
+                  title: const LocalizedText('Panel tecnico'),
                   value: _settings.technicalPanelEnabled,
                   onChanged: (value) =>
                       _update(_settings.copyWith(technicalPanelEnabled: value)),
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Ventana PERCLOS'),
+                  title: const LocalizedText('Ventana PERCLOS'),
                   subtitle: Slider(
                     min: 10,
                     max: 90,
@@ -195,7 +201,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       _settings.copyWith(perclosWindowSeconds: value.round()),
                     ),
                   ),
-                  trailing: Text('${_settings.perclosWindowSeconds}s'),
+                  trailing: LocalizedText('${_settings.perclosWindowSeconds}s'),
                 ),
               ],
             ),
@@ -205,14 +211,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: <Widget>[
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Sonido'),
+                  title: const LocalizedText('Sonido'),
                   value: _settings.soundEnabled,
                   onChanged: (value) =>
                       _update(_settings.copyWith(soundEnabled: value)),
                 ),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Vibracion'),
+                  title: const LocalizedText('Vibracion'),
                   value: _settings.vibrationEnabled,
                   onChanged: (value) =>
                       _update(_settings.copyWith(vibrationEnabled: value)),
@@ -220,8 +226,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.volume_up_rounded),
-                  title: const Text('Probar alarma real'),
-                  subtitle: const Text('Reproduce el audio local de alerta'),
+                  title: const LocalizedText('Probar alarma real'),
+                  subtitle: const LocalizedText(
+                    'Reproduce el audio local de alerta',
+                  ),
                   onTap: _testAlarm,
                 ),
               ],
@@ -233,25 +241,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.restart_alt_rounded),
-                  title: const Text('Restablecer calibracion'),
+                  title: const LocalizedText('Restablecer calibracion'),
                   onTap: _resetCalibration,
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.delete_outline_rounded),
-                  title: const Text('Borrar historial'),
+                  title: const LocalizedText('Borrar historial'),
                   onTap: _clearHistory,
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.settings_backup_restore_rounded),
-                  title: const Text('Restablecer valores por defecto'),
+                  title: const LocalizedText('Restablecer valores por defecto'),
                   onTap: _resetDefaults,
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.privacy_tip_outlined),
-                  title: const Text('Politica de privacidad'),
+                  title: const LocalizedText('Politica de privacidad'),
                   onTap: _openPrivacy,
                 ),
               ],
@@ -272,7 +280,7 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
-      child: Text(
+      child: LocalizedText(
         text,
         style: TextStyle(
           color: Colors.white.withValues(alpha: 0.72),

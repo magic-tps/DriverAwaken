@@ -1,5 +1,7 @@
 # DriverAwaken
 
+La app está disponible en **español e inglés**. Puedes elegir el idioma en el login o en **Ajustes → Idioma / Language**, o usar el idioma del teléfono. La preferencia se conserva al reabrirla. Ver [documentación de idiomas](docs/localization.md).
+
 Aplicación Flutter experimental para detectar señales de somnolencia mediante cámara frontal, reglas temporales y un modelo TensorFlow Lite local desactivado por defecto hasta completar su validación.
 
 No es un sistema médico ni vehicular certificado y no sustituye la atención o responsabilidad del conductor. Úsese únicamente en desarrollo y pruebas internas controladas.

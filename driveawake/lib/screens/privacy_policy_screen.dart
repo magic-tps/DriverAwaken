@@ -1,4 +1,6 @@
+import '../l10n/localized_text.dart';
 import 'package:flutter/material.dart';
+import '../l10n/app_strings.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {
   const PrivacyPolicyScreen({super.key});
@@ -6,7 +8,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Privacidad')),
+      appBar: AppBar(title: const LocalizedText('Privacidad')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
@@ -80,12 +82,12 @@ class _PolicyHeader extends StatelessWidget {
           children: <Widget>[
             Icon(Icons.privacy_tip_outlined, size: 34),
             SizedBox(height: 14),
-            Text(
+            LocalizedText(
               'Aviso preliminar de privacidad',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
             ),
             SizedBox(height: 8),
-            Text('Ambito inicial: Peru · Revision legal pendiente'),
+            LocalizedText('Ambito inicial: Peru · Revision legal pendiente'),
           ],
         ),
       ),
@@ -101,8 +103,8 @@ class _NoticeCard extends StatelessWidget {
     return const Card(
       child: ListTile(
         leading: Icon(Icons.info_outline_rounded),
-        title: Text('No es una politica definitiva'),
-        subtitle: Text(
+        title: LocalizedText('No es una politica definitiva'),
+        subtitle: LocalizedText(
           'Debe completarse la identidad del responsable y recibir revision legal antes de una publicacion publica.',
         ),
       ),
@@ -119,7 +121,7 @@ class _PolicySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: '$title. $text',
+      label: '${context.tr(title)}. ${context.tr(text)}',
       child: Padding(
         padding: const EdgeInsets.only(bottom: 14),
         child: Card(
@@ -128,7 +130,7 @@ class _PolicySection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
+                LocalizedText(
                   title,
                   style: const TextStyle(
                     fontSize: 16,
@@ -136,7 +138,7 @@ class _PolicySection extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 7),
-                Text(text, style: const TextStyle(height: 1.4)),
+                LocalizedText(text, style: const TextStyle(height: 1.4)),
               ],
             ),
           ),

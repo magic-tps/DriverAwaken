@@ -1,3 +1,4 @@
+import '../l10n/localized_text.dart';
 import 'package:flutter/material.dart';
 
 class AccountCard extends StatelessWidget {
@@ -35,13 +36,13 @@ class AccountCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  LocalizedText(
                     email == null
                         ? 'Estás usando la app sin cuenta'
                         : 'Sesión iniciada',
                     style: const TextStyle(fontWeight: FontWeight.w800),
                   ),
-                  Text(
+                  LocalizedText(
                     email ?? 'Tus informes se guardan solo en este teléfono.',
                     style: const TextStyle(color: Colors.white70, fontSize: 12),
                   ),
@@ -55,18 +56,18 @@ class AccountCard extends StatelessWidget {
           FilledButton.icon(
             onPressed: onLogin,
             icon: const Icon(Icons.login),
-            label: const Text('Iniciar sesión / Crear cuenta'),
+            label: const LocalizedText('Iniciar sesión / Crear cuenta'),
           )
         else
           FilledButton.icon(
             onPressed: onCloud,
             icon: const Icon(Icons.cloud_upload_outlined),
-            label: const Text('Subir informes a la nube'),
+            label: const LocalizedText('Subir informes a la nube'),
           ),
         if (email != null)
           TextButton(
             onPressed: onCloud,
-            child: const Text('Ver informes guardados y mi cuenta'),
+            child: const LocalizedText('Ver informes guardados y mi cuenta'),
           ),
       ],
     ),

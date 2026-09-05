@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -11,18 +12,27 @@ import 'package:share_plus/share_plus.dart';
 
 import '../models/drowsiness_event.dart';
 import '../models/drowsiness_state.dart';
+import '../l10n/app_strings.dart';
+import '../l10n/locale_controller.dart';
 
 class HistoryExportService {
+  HistoryExportService({AppStrings? strings})
+    : _strings =
+          strings ??
+          AppStrings(LocaleController.instance.effectiveLocale.languageCode);
+  final AppStrings _strings;
   Future<void> shareDayAsPdf({
     required DateTime day,
     required List<DrowsinessEvent> events,
   }) async {
-    final bytes = await _buildPdf(day: day, events: events);
+    final bytes = await buildDayAsPdf(day: day, events: events);
     await _shareBytes(
       bytes: bytes,
       filename: '${_fileStem(day)}.pdf',
       mimeType: 'application/pdf',
-      text: 'Historial DriverAwake ${_formatDay(day)}',
+      text: _strings.translate(
+        'Historial DriverAwake ${_formatDay(day, _strings.languageCode)}',
+      ),
     );
   }
 
@@ -35,7 +45,9 @@ class HistoryExportService {
       bytes: bytes,
       filename: '${_fileStem(day)}.png',
       mimeType: 'image/png',
-      text: 'Historial DriverAwake ${_formatDay(day)}',
+      text: _strings.translate(
+        'Historial DriverAwake ${_formatDay(day, _strings.languageCode)}',
+      ),
     );
   }
 
@@ -62,7 +74,7 @@ class HistoryExportService {
     }
   }
 
-  Future<Uint8List> _buildPdf({
+  Future<Uint8List> buildDayAsPdf({
     required DateTime day,
     required List<DrowsinessEvent> events,
   }) async {
@@ -94,13 +106,13 @@ class HistoryExportService {
                     ),
                     pw.SizedBox(height: 4),
                     pw.Text(
-                      'Reporte diario de somnolencia',
+                      _strings.translate('Reporte diario de somnolencia'),
                       style: const pw.TextStyle(fontSize: 12),
                     ),
                   ],
                 ),
                 pw.Text(
-                  _formatDay(day),
+                  _formatDay(day, _strings.languageCode),
                   style: pw.TextStyle(
                     fontSize: 16,
                     fontWeight: pw.FontWeight.bold,
@@ -140,7 +152,7 @@ class HistoryExportService {
               ),
               cellStyle: const pw.TextStyle(fontSize: 8),
               cellPadding: const pw.EdgeInsets.all(5),
-              headers: const <String>[
+              headers: <String>[
                 'Hora',
                 'Nivel',
                 'Evento',
@@ -148,22 +160,24 @@ class HistoryExportService {
                 'PERCLOS',
                 'Duracion',
                 'Nota',
-              ],
+              ].map(_strings.translate).toList(),
               data: sorted.map((event) {
                 return <String>[
-                  _formatTime(event.dateTime),
-                  event.level.label,
-                  _eventTitle(event.eventType),
+                  _formatTime(event.dateTime, _strings.languageCode),
+                  _strings.translate(event.level.label),
+                  _strings.translate(_eventTitle(event.eventType)),
                   event.riskScore.toStringAsFixed(0),
                   event.perclos.toStringAsFixed(2),
                   '${event.durationSeconds.toStringAsFixed(1)} s',
-                  event.notes,
+                  _strings.translate(event.notes),
                 ];
               }).toList(),
             ),
             pw.SizedBox(height: 14),
             pw.Text(
-              'Reporte generado localmente. No contiene imagenes ni video.',
+              _strings.translate(
+                'Reporte generado localmente. No contiene imagenes ni video.',
+              ),
               style: pw.TextStyle(
                 fontSize: 9,
                 color: PdfColor.fromHex('#6B7680'),
@@ -189,7 +203,7 @@ class HistoryExportService {
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: <pw.Widget>[
           pw.Text(
-            label,
+            _strings.translate(label),
             style: pw.TextStyle(
               fontSize: 8,
               color: PdfColor.fromHex('#66717C'),
@@ -240,7 +254,7 @@ class HistoryExportService {
     );
     _drawText(
       canvas,
-      'Reporte diario - ${_formatDay(day)}',
+      'Reporte diario - ${_formatDay(day, _strings.languageCode)}',
       const Offset(56, 126),
       size: 26,
       weight: FontWeight.w700,
@@ -399,7 +413,7 @@ class HistoryExportService {
     );
     _drawText(
       canvas,
-      _formatTime(event.dateTime),
+      _formatTime(event.dateTime, _strings.languageCode),
       Offset(offset.dx + 54, offset.dy + 13),
       size: 22,
       weight: FontWeight.w900,
@@ -448,7 +462,7 @@ class HistoryExportService {
   }) {
     final painter = TextPainter(
       text: TextSpan(
-        text: text,
+        text: _strings.translate(text),
         style: TextStyle(
           color: color,
           fontSize: size,
@@ -554,16 +568,8 @@ String _eventTitle(String type) {
   }
 }
 
-String _formatDay(DateTime dateTime) {
-  final local = dateTime.toLocal();
-  final day = local.day.toString().padLeft(2, '0');
-  final month = local.month.toString().padLeft(2, '0');
-  return '$day/$month/${local.year}';
-}
+String _formatDay(DateTime dateTime, String languageCode) =>
+    DateFormat.yMMMd(languageCode).format(dateTime.toLocal());
 
-String _formatTime(DateTime dateTime) {
-  final local = dateTime.toLocal();
-  final hour = local.hour.toString().padLeft(2, '0');
-  final minute = local.minute.toString().padLeft(2, '0');
-  return '$hour:$minute';
-}
+String _formatTime(DateTime dateTime, String languageCode) =>
+    DateFormat.Hm(languageCode).format(dateTime.toLocal());

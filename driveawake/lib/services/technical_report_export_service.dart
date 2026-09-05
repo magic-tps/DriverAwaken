@@ -5,6 +5,8 @@ import 'package:share_plus/share_plus.dart';
 
 import '../app/app_config.dart';
 import '../models/technical_session_report.dart';
+import '../l10n/app_strings.dart';
+import '../l10n/locale_controller.dart';
 
 typedef ShareConfirmation = Future<bool> Function();
 
@@ -25,7 +27,9 @@ class TechnicalReportExportService {
     try {
       await SharePlus.instance.share(
         ShareParams(
-          text: 'Reporte técnico anónimo DriverAwake',
+          text: AppStrings(
+            LocaleController.instance.effectiveLocale.languageCode,
+          ).translate('Reporte técnico anónimo DriverAwake'),
           files: <XFile>[
             XFile(
               file.path,

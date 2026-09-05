@@ -1,3 +1,5 @@
+import '../l10n/app_strings.dart';
+import '../l10n/localized_text.dart';
 import 'dart:async';
 
 import 'package:camera/camera.dart';
@@ -95,7 +97,7 @@ class _DriveModeScreenState extends State<DriveModeScreen>
     await _controller.startCalibration();
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Calibracion guiada iniciada')),
+      const SnackBar(content: LocalizedText('Calibracion guiada iniciada')),
     );
   }
 
@@ -114,23 +116,23 @@ class _DriveModeScreenState extends State<DriveModeScreen>
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text('Finalizar viaje'),
-        content: const Text(
+        title: const LocalizedText('Finalizar viaje'),
+        content: const LocalizedText(
           'El monitoreo sigue activo. Puedes continuar, guardar el viaje o descartarlo.',
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () =>
                 Navigator.of(context).pop(_ExitAction.continueTrip),
-            child: const Text('CONTINUAR'),
+            child: const LocalizedText('CONTINUAR'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(_ExitAction.discard),
-            child: const Text('DESCARTAR'),
+            child: const LocalizedText('DESCARTAR'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(_ExitAction.finish),
-            child: const Text('GUARDAR'),
+            child: const LocalizedText('GUARDAR'),
           ),
         ],
       ),
@@ -142,18 +144,18 @@ class _DriveModeScreenState extends State<DriveModeScreen>
       final confirmed = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Descartar definitivamente'),
-          content: const Text(
+          title: const LocalizedText('Descartar definitivamente'),
+          content: const LocalizedText(
             'Se eliminaran el borrador y todos los eventos asociados a este viaje.',
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('CANCELAR'),
+              child: const LocalizedText('CANCELAR'),
             ),
             FilledButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('DESCARTAR'),
+              child: const LocalizedText('DESCARTAR'),
             ),
           ],
         ),
@@ -307,11 +309,11 @@ class _DriveTopBar extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
+              const LocalizedText(
                 'Modo conduccion',
                 style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
               ),
-              Text(
+              LocalizedText(
                 paused ? 'Viaje pausado' : 'Camara frontal - IA local',
                 style: const TextStyle(color: Colors.white54, fontSize: 12),
               ),
@@ -319,7 +321,7 @@ class _DriveTopBar extends StatelessWidget {
           ),
         ),
         IconButton.filledTonal(
-          tooltip: 'Ver metricas',
+          tooltip: context.tr('Ver metricas'),
           onPressed: onShowMetrics,
           icon: const Icon(Icons.monitor_heart_outlined),
         ),
@@ -382,7 +384,7 @@ class _CameraViewfinder extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(10),
                 color: Colors.black.withValues(alpha: 0.68),
-                child: Text(
+                child: LocalizedText(
                   state.faceDetected
                       ? state.message
                       : 'Alinea tu rostro dentro del marco',
@@ -435,7 +437,7 @@ class _Chip extends StatelessWidget {
       borderRadius: BorderRadius.circular(8),
       border: Border.all(color: color.withValues(alpha: 0.4)),
     ),
-    child: Text(
+    child: LocalizedText(
       label,
       style: TextStyle(color: color, fontWeight: FontWeight.w800),
     ),
@@ -460,9 +462,12 @@ class _MonitoringHealthBar extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(_label, style: const TextStyle(fontWeight: FontWeight.w900)),
+              LocalizedText(
+                _label,
+                style: const TextStyle(fontWeight: FontWeight.w900),
+              ),
               if (state.technicalReason != null)
-                Text(
+                LocalizedText(
                   state.technicalReason!,
                   style: const TextStyle(color: Colors.white70, fontSize: 12),
                 ),
@@ -513,7 +518,7 @@ class _ActionBar extends StatelessWidget {
         child: OutlinedButton.icon(
           onPressed: busy ? null : onCalibrate,
           icon: const Icon(Icons.tune),
-          label: const Text('Calibrar'),
+          label: const LocalizedText('Calibrar'),
         ),
       ),
       const SizedBox(width: 8),
@@ -521,7 +526,7 @@ class _ActionBar extends StatelessWidget {
         child: OutlinedButton.icon(
           onPressed: busy ? null : onPauseResume,
           icon: Icon(paused ? Icons.play_arrow : Icons.pause),
-          label: Text(paused ? 'Reanudar' : 'Pausar'),
+          label: LocalizedText(paused ? 'Reanudar' : 'Pausar'),
         ),
       ),
       const SizedBox(width: 8),
@@ -529,7 +534,7 @@ class _ActionBar extends StatelessWidget {
         child: FilledButton.icon(
           onPressed: busy ? null : onFinish,
           icon: const Icon(Icons.stop),
-          label: const Text('Finalizar'),
+          label: const LocalizedText('Finalizar'),
         ),
       ),
     ],
@@ -549,7 +554,10 @@ class _LoadingPanel extends StatelessWidget {
         else
           const Icon(Icons.videocam_off, size: 48, color: Color(0xFFFFA726)),
         const SizedBox(height: 12),
-        Text(message ?? 'Iniciando monitoreo', textAlign: TextAlign.center),
+        LocalizedText(
+          message ?? 'Iniciando monitoreo',
+          textAlign: TextAlign.center,
+        ),
       ],
     ),
   );
@@ -577,7 +585,7 @@ class _PausedOverlay extends StatelessWidget {
               size: 72,
             ),
             const SizedBox(height: 18),
-            Text(
+            LocalizedText(
               countdown == null
                   ? 'MONITOREO PAUSADO'
                   : 'REANUDANDO EN $countdown',
@@ -591,13 +599,13 @@ class _PausedOverlay extends StatelessWidget {
                   FilledButton.icon(
                     onPressed: onResume,
                     icon: const Icon(Icons.play_arrow),
-                    label: const Text('REANUDAR'),
+                    label: const LocalizedText('REANUDAR'),
                   ),
                   const SizedBox(width: 10),
                   OutlinedButton.icon(
                     onPressed: onFinish,
                     icon: const Icon(Icons.stop),
-                    label: const Text('FINALIZAR'),
+                    label: const LocalizedText('FINALIZAR'),
                   ),
                 ],
               ),
@@ -628,13 +636,13 @@ class _UnavailableOverlay extends StatelessWidget {
                 color: Color(0xFFFF3B30),
               ),
               const SizedBox(height: 18),
-              const Text(
+              const LocalizedText(
                 'MONITOREO NO DISPONIBLE',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
               ),
               const SizedBox(height: 12),
-              const Text(
+              const LocalizedText(
                 'No se están recibiendo datos confiables.\nDetente en un lugar seguro y revisa la cámara.',
                 textAlign: TextAlign.center,
               ),
@@ -642,7 +650,7 @@ class _UnavailableOverlay extends StatelessWidget {
               FilledButton.icon(
                 onPressed: onFinish,
                 icon: const Icon(Icons.stop),
-                label: const Text('FINALIZAR VIAJE'),
+                label: const LocalizedText('FINALIZAR VIAJE'),
               ),
             ],
           ),
@@ -671,7 +679,7 @@ class _CalibrationOverlay extends StatelessWidget {
                 color: Color(0xFF24D17E),
               ),
               const SizedBox(height: 18),
-              Text(
+              LocalizedText(
                 state.calibrationInstruction,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
@@ -705,7 +713,7 @@ class _MetricsSheet extends StatelessWidget {
         Row(
           children: <Widget>[
             const Expanded(
-              child: Text(
+              child: LocalizedText(
                 'Metricas tecnicas',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
               ),
@@ -743,16 +751,16 @@ class _TechnicalPerformance extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const Text(
+          const LocalizedText(
             'Observabilidad',
             style: TextStyle(fontWeight: FontWeight.w900),
           ),
           const SizedBox(height: 8),
-          Text('Salud: ${state.monitoringHealth.name}'),
-          Text('FPS real: ${state.actualFps.toStringAsFixed(1)}'),
-          Text('Frames descartados: ${state.framesDropped}'),
-          Text('P95 total: ${state.totalP95Ms.toStringAsFixed(1)} ms'),
-          Text('Intentos de recuperación: ${state.recoveryAttempts}'),
+          LocalizedText('Salud: ${state.monitoringHealth.name}'),
+          LocalizedText('FPS real: ${state.actualFps.toStringAsFixed(1)}'),
+          LocalizedText('Frames descartados: ${state.framesDropped}'),
+          LocalizedText('P95 total: ${state.totalP95Ms.toStringAsFixed(1)} ms'),
+          LocalizedText('Intentos de recuperación: ${state.recoveryAttempts}'),
         ],
       ),
     ),
@@ -770,9 +778,9 @@ class _ErrorView extends StatelessWidget {
       children: <Widget>[
         const Icon(Icons.error_outline, color: Color(0xFFFF3B30), size: 56),
         const SizedBox(height: 16),
-        Text(message, textAlign: TextAlign.center),
+        LocalizedText(message, textAlign: TextAlign.center),
         const SizedBox(height: 20),
-        FilledButton(onPressed: onBack, child: const Text('VOLVER')),
+        FilledButton(onPressed: onBack, child: const LocalizedText('VOLVER')),
       ],
     ),
   );
