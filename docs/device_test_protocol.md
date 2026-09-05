@@ -17,6 +17,18 @@ Inicia una sesión nueva, confirma que el panel técnico muestre FPS, P95, drops
 
 ## Matriz de pruebas
 
+### Regresión de Inicio e informes
+
+- Abrir la app, iniciar sesión o continuar sin cuenta, y conceder permiso: la cámara debe iniciar en Inicio sin tocar Comprobar.
+- Mantener Inicio visible más de 30 segundos: preview y landmarks continúan.
+- Denegar permiso, reintentar y concederlo: mensaje claro y un solo stream.
+- En Inicio, bloquear/desbloquear y alternar con otra app: cámara liberada fuera de Inicio y restaurada al volver.
+- Navegar a Ajustes/Historial y volver: sin cámara oculta ni sesiones duplicadas.
+- Con borrador incompleto: no abrir cámara antes de resolver Recuperar/Descartar. Recuperar conserva la pausa del viaje.
+- Finalizar viaje, incluso sin alertas, cerrar/reabrir app y abrir Historial > Informes de viajes: conservar métricas.
+- Borrar historial y verificar que desaparezcan los informes; comprobar también retención configurada.
+- Estas comprobaciones de Inicio no cambian la reanudación explícita del modo conducción.
+
 ### Prueba 1 — 30 minutos estable
 
 - Rostro visible y centrado.

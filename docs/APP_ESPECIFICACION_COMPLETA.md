@@ -7,7 +7,7 @@
 **Nombre público:** DriverAwake.  
 **Nombre del paquete Flutter:** `driveawake`.  
 **Versión:** `1.0.0+1`.  
-**Package ID Android heredado:** `com.magicdrive.alert`.  
+**Application ID Android:** `driver_.awaken` (desde la integración Firebase; antes `com.magicdrive.alert`).
 **Idioma configurado:** español (`es`).  
 **Mercado inicial previsto:** Perú; cualquier expansión latinoamericana requiere revisión legal por país.
 
@@ -187,17 +187,21 @@ La pantalla de inicio presenta:
 - accesos a `HISTORIAL` y `AJUSTES`;
 - indicadores de ojos, cabeza y alertas;
 - panel técnico resumido de batería, temperatura, modelo y calibración;
-- panel opcional de comprobación de cámara.
+- panel de cámara con inicio automático.
 
-La cámara **no se enciende al abrir Inicio**. El usuario debe pulsar `Comprobar camara`. Esa comprobación:
+La cámara se enciende al abrir Inicio después de resolver un posible borrador incompleto y conceder el permiso del sistema. La vista previa:
 
 - usa resolución media, igual que el modo conducción, para evitar combinaciones de superficies incompatibles en CameraX;
 - inicia ML Kit y muestra preview/landmarks;
 - procesa como máximo un frame a la vez;
-- se apaga automáticamente después de 25 segundos;
+- permanece activa mientras Inicio está visible, sin límite de 25 segundos;
 - se cancela al abandonar la pantalla;
-- solo se restaura después de una navegación si estaba activa antes de navegar.
+- se restaura al volver a Inicio o regresar del segundo plano;
+- serializa apertura/cierre y descarta resultados de operaciones anteriores;
+- muestra riesgo `--` cuando no hay cámara o rostro disponible;
 - libera cualquier controlador fallido antes de reintentar y no considera fatal que una cámara frontal no exponga control de flash.
+
+La vista previa no inicia un viaje ni activa alarmas. `HISTORIAL > Informes de viajes` permite abrir los resúmenes completos guardados en SQLite, incluso sin alertas. Respeta la retención configurada y el borrado del historial. El botón de nube permite crear una cuenta opcional y copiar resúmenes a Firebase tras confirmación; véase `firebase_setup.md`.
 
 Al iniciar la app, Inicio busca un borrador incompleto. Si existe, ofrece:
 
@@ -762,7 +766,7 @@ La alarma usa `MediaPlayer` con `res/raw/magicdrive_alarm.wav`, repite con `seek
 
 Keep-screen-on usa `FLAG_KEEP_SCREEN_ON` y siempre se limpia en destrucción.
 
-El nombre público Android es DriverAwake, pero namespace, application ID y channel mantienen `com.magicdrive.alert` por compatibilidad.
+El application ID Android es `driver_.awaken`, elegido para coincidir con la app registrada en Firebase. Namespace y canal mantienen `com.magicdrive.alert`. Se instala como una app diferente de la variante anterior.
 
 ## 19. Privacidad y seguridad
 

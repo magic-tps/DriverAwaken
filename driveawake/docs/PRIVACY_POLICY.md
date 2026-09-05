@@ -45,6 +45,21 @@ La app puede guardar eventos locales como:
 Este historial se guarda solo en el dispositivo y puede borrarse desde Ajustes
 o Historial.
 
+## Copias opcionales en Firebase (actualización técnica 2026-09-05)
+
+Desde Historial > Informes de viajes > nube se puede crear una cuenta opcional
+con correo y contraseña, gestionada por Firebase Authentication. Tras confirmar
+la copia, Cloud Firestore conserva los resúmenes: fechas, duraciones, alertas,
+riesgo y telemetría. No se envían imágenes, video ni frames.
+
+Las copias remotas se conservan hasta eliminarlas desde la pantalla de nube.
+También se puede eliminar la cuenta y todas sus copias tras volver a introducir
+la contraseña. El borrado y la retención del historial local no borran las copias
+remotas. La cámara y los viajes siguen funcionando sin iniciar sesión.
+
+Este documento histórico debe leerse junto con el aviso preliminar de la app y
+`docs/privacy_policy_template.md`; la identidad legal del responsable sigue pendiente.
+
 ## Procesamiento offline
 
 La deteccion facial, las reglas criticas y el modelo TensorFlow Lite se ejecutan

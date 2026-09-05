@@ -131,6 +131,28 @@ void main() {
       expect(await database.select(database.tripEvents).get(), hasLength(1));
     });
 
+    test(
+      'informes recuperan m?tricas sin incluir viajes activos y respetan borrado',
+      () async {
+        final old = _draft('old', DateTime(2026, 7, 16));
+        final recent = _draft('recent', DateTime(2026, 7, 17));
+        await repository.finishTrip(old, _summary(old));
+        await repository.finishTrip(recent, _summary(recent));
+        await repository.saveDraft(_draft('active', DateTime(2026, 7, 18)));
+        final reports = await DriftTripRepository(
+          database,
+        ).loadCompletedTrips();
+        expect(reports.map((report) => report.tripId), ['recent', 'old']);
+        expect(reports.first.averageRisk, 18);
+        expect(reports.first.closedEyeDuration, const Duration(seconds: 2));
+        expect(reports.first.warningAlerts, 1);
+        expect(reports.first.dominantLevel, DrowsinessLevel.normal);
+        await repository.clearHistory();
+        expect(await repository.loadCompletedTrips(), isEmpty);
+        expect((await repository.loadDraft())?.tripId, 'active');
+      },
+    );
+
     test('recupera borrador despues de recrear repositorio', () async {
       final draft = _draft('trip_recovery', DateTime(2026, 7, 17));
       await repository.saveDraft(draft);
@@ -176,11 +198,16 @@ void main() {
     final first = DriverAwakeDatabase(NativeDatabase(file));
     final draft = _draft('trip_restart', DateTime(2026, 7, 17));
     await DriftTripRepository(first).saveDraft(draft);
+    final completed = _draft('completed_restart', DateTime(2026, 7, 16));
+    await DriftTripRepository(first).finishTrip(completed, _summary(completed));
     await first.close();
 
     final second = DriverAwakeDatabase(NativeDatabase(file));
     final recovered = await DriftTripRepository(second).loadDraft();
     expect(recovered?.tripId, 'trip_restart');
+    final reports = await DriftTripRepository(second).loadCompletedTrips();
+    expect(reports.single.tripId, 'completed_restart');
+    expect(reports.single.averageRisk, 18);
     await second.close();
     await directory.delete(recursive: true);
   });

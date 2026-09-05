@@ -9,6 +9,7 @@ import '../models/device_telemetry_snapshot.dart';
 import '../models/drowsiness_state.dart';
 import '../models/trip_session_draft.dart';
 import '../services/camera_service.dart';
+import '../services/cloud_report_service.dart';
 import '../services/device_telemetry_service.dart';
 import '../services/drowsiness_service.dart';
 import '../services/face_detection_service.dart';
@@ -17,13 +18,19 @@ import '../services/trip_session_draft_service.dart';
 import '../utils/drowsiness_thresholds.dart';
 import '../utils/input_image_converter.dart';
 import '../widgets/face_landmark_overlay.dart';
+import '../widgets/account_card.dart';
 import 'drive_mode_screen.dart';
 import 'history_screen.dart';
 import 'privacy_policy_screen.dart';
 import 'settings_screen.dart';
+import 'cloud_reports_screen.dart';
+import 'login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.cameraService, this.drowsinessService});
+
+  final CameraService? cameraService;
+  final DrowsinessService? drowsinessService;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -35,14 +42,32 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<_LiveMonitoringPanelState> _liveMonitorKey =
       GlobalKey<_LiveMonitoringPanelState>();
   late final Future<DeviceTelemetrySnapshot?> _telemetryFuture;
+  bool _routeOpen = false;
 
   @override
   void initState() {
     super.initState();
     _telemetryFuture = _deviceTelemetryService.getBatteryThermalSnapshot();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      unawaited(_offerIncompleteTripRecovery());
+      unawaited(_initializeDashboard());
     });
+  }
+
+  Future<void> _initializeDashboard() async {
+    try {
+      await _offerIncompleteTripRecovery();
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No se pudo recuperar el viaje anterior.'),
+          ),
+        );
+      }
+    }
+    if (mounted && !_routeOpen) {
+      await _liveMonitorKey.currentState?.start();
+    }
   }
 
   Future<void> _offerIncompleteTripRecovery() async {
@@ -56,8 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Viaje incompleto encontrado'),
         content: Text(
-          'Se encontró un viaje iniciado el ${_formatDraftDate(draft)}. '
-          'La cámara y las alarmas permanecerán apagadas hasta que decidas reanudar.',
+          'Se encontrÃƒÂ³ un viaje iniciado el ${_formatDraftDate(draft)}. '
+          'La cÃƒÂ¡mara y las alarmas permanecerÃƒÂ¡n apagadas hasta que decidas reanudar.',
         ),
         actions: <Widget>[
           TextButton(
@@ -130,7 +155,32 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       const SizedBox(height: 14),
-                      _LiveMonitoringPanel(key: _liveMonitorKey),
+                      AccountCard(
+                        email: CloudReportService.instance.user?.email,
+                        onLogin: () => unawaited(
+                          _openRoute(
+                            MaterialPageRoute<void>(
+                              builder: (routeContext) => LoginScreen(
+                                onAuthenticated: () =>
+                                    Navigator.of(routeContext).pop(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        onCloud: () => unawaited(
+                          _openRoute(
+                            MaterialPageRoute<void>(
+                              builder: (_) => const CloudReportsScreen(),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      _LiveMonitoringPanel(
+                        key: _liveMonitorKey,
+                        cameraService: widget.cameraService,
+                        drowsinessService: widget.drowsinessService,
+                      ),
                       const SizedBox(height: 12),
                       const _BreakCard(),
                       const SizedBox(height: 14),
@@ -190,15 +240,16 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!mounted) {
       return;
     }
-    final shouldRestorePreview =
-        _liveMonitorKey.currentState?.isActive ?? false;
-    await _liveMonitorKey.currentState?.stop();
-    if (!mounted) {
-      return;
-    }
-    await Navigator.of(context).push(route);
-    if (mounted && shouldRestorePreview) {
-      unawaited(_liveMonitorKey.currentState?.start());
+    if (_routeOpen) return;
+    _routeOpen = true;
+    try {
+      await _liveMonitorKey.currentState?.stop();
+      if (!mounted) return;
+      await Navigator.of(context).push(route);
+    } finally {
+      _routeOpen = false;
+      if (mounted) setState(() {});
+      if (mounted) unawaited(_liveMonitorKey.currentState?.start());
     }
   }
 
@@ -700,7 +751,14 @@ class _ReadinessMetric extends StatelessWidget {
 }
 
 class _LiveMonitoringPanel extends StatefulWidget {
-  const _LiveMonitoringPanel({super.key});
+  const _LiveMonitoringPanel({
+    super.key,
+    this.cameraService,
+    this.drowsinessService,
+  });
+
+  final CameraService? cameraService;
+  final DrowsinessService? drowsinessService;
 
   @override
   State<_LiveMonitoringPanel> createState() => _LiveMonitoringPanelState();
@@ -708,9 +766,11 @@ class _LiveMonitoringPanel extends StatefulWidget {
 
 class _LiveMonitoringPanelState extends State<_LiveMonitoringPanel>
     with WidgetsBindingObserver {
-  final CameraService _cameraService = CameraService();
+  late final CameraService _cameraService =
+      widget.cameraService ?? CameraService();
   final FaceDetectionService _faceDetectionService = FaceDetectionService();
-  final DrowsinessService _drowsinessService = DrowsinessService();
+  late final DrowsinessService _drowsinessService =
+      widget.drowsinessService ?? DrowsinessService();
   final List<DateTime> _processedFrameTimes = <DateTime>[];
 
   DrowsinessState _state = DrowsinessState.initial();
@@ -720,10 +780,12 @@ class _LiveMonitoringPanelState extends State<_LiveMonitoringPanel>
   bool _isBusy = false;
   bool _starting = false;
   bool _previewVisible = false;
-  bool _resumeAfterLifecyclePause = false;
+  bool _enabled = false;
+  bool _foreground = true;
+  Future<void> _operation = Future<void>.value();
+  Future<void>? _frameTask;
   int _startToken = 0;
   String? _errorMessage;
-  Timer? _previewTimeout;
 
   bool get isActive => _starting || _previewVisible;
 
@@ -735,59 +797,69 @@ class _LiveMonitoringPanelState extends State<_LiveMonitoringPanel>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused ||
-        state == AppLifecycleState.inactive) {
-      _resumeAfterLifecyclePause = _resumeAfterLifecyclePause || isActive;
-      unawaited(stop());
-      return;
-    }
-    if (state == AppLifecycleState.resumed && _resumeAfterLifecyclePause) {
-      _resumeAfterLifecyclePause = false;
-      unawaited(start());
-    }
+    // Android permission dialogs temporarily make the app inactive. Let the
+    // pending permission request finish instead of launching a second one.
+    if (state == AppLifecycleState.inactive && _starting) return;
+    final foreground = state == AppLifecycleState.resumed;
+    if (_foreground == foreground) return;
+    _foreground = foreground;
+    unawaited(_reconcile());
   }
 
-  Future<void> start() async {
-    if (!mounted || _starting) {
-      return;
-    }
-    if (_cameraService.isInitialized) {
-      if (mounted) {
-        setState(() {
-          _previewVisible = true;
-        });
-      }
-      try {
-        await _cameraService.startImageStream(_processCameraImage);
-        _schedulePreviewTimeout();
-      } on CameraException catch (error) {
-        await _setError(_friendlyCameraError(error.description ?? error.code));
-      } catch (error) {
-        await _setError(_friendlyCameraError(error.toString()));
-      }
-      return;
-    }
+  Future<void> start() {
+    _enabled = true;
+    return _reconcile();
+  }
 
-    setState(() {
-      _initializing = true;
-      _previewVisible = false;
-      _errorMessage = null;
-    });
+  Future<void> stop() {
+    _enabled = false;
+    return _reconcile();
+  }
 
-    _starting = true;
+  Future<void> _reconcile() {
     final token = ++_startToken;
+    _operation = _operation.then((_) => _updateCamera(token));
+    return _operation;
+  }
+
+  Future<void> _updateCamera(int token) async {
+    if (!mounted || token != _startToken) return;
     try {
+      if (!_enabled || !_foreground) {
+        setState(() {
+          _initializing = false;
+          _previewVisible = false;
+          _overlayData = null;
+          _state = DrowsinessState.initial();
+        });
+        // Background apps do not receive frames; waiting for one would block
+        // camera release and every subsequent resume.
+        if (_foreground) await WidgetsBinding.instance.endOfFrame;
+        await _cameraService.dispose();
+        await _frameTask;
+        _processedFrameTimes.clear();
+        _drowsinessService.resetTemporalState();
+        return;
+      }
+      if (_previewVisible && _cameraService.isInitialized) return;
+      _starting = true;
+      setState(() {
+        _initializing = true;
+        _previewVisible = false;
+        _errorMessage = null;
+      });
       await _drowsinessService.initialize();
+      if (!mounted || token != _startToken) return;
       await _cameraService.initializeFrontCamera(
-        // ResolutionPreset.low fails to negotiate preview + image analysis on
-        // several CameraX devices. Drive mode already uses medium reliably.
         resolutionPreset: ResolutionPreset.medium,
       );
       if (!mounted || token != _startToken) {
         await _cameraService.dispose();
         return;
       }
-      await _cameraService.startImageStream(_processCameraImage);
+      await _cameraService.startImageStream((image) {
+        if (!_isBusy) _frameTask = _processCameraImage(image);
+      });
       if (!mounted || token != _startToken) {
         await _cameraService.dispose();
         return;
@@ -796,56 +868,27 @@ class _LiveMonitoringPanelState extends State<_LiveMonitoringPanel>
         _initializing = false;
         _previewVisible = true;
       });
-      _schedulePreviewTimeout();
     } on CameraException catch (error) {
-      await _setError(_friendlyCameraError(error.description ?? error.code));
+      if (mounted && token == _startToken) {
+        await _setError(
+          _friendlyCameraError('${error.code} ${error.description}'),
+        );
+      }
     } catch (error) {
-      await _setError(_friendlyCameraError(error.toString()));
+      if (mounted && token == _startToken) {
+        await _setError(_friendlyCameraError(error.toString()));
+      }
     } finally {
       _starting = false;
     }
   }
 
-  Future<void> stop() async {
-    _previewTimeout?.cancel();
-    _previewTimeout = null;
-    _startToken += 1;
-    if (mounted) {
-      setState(() {
-        _initializing = false;
-        _isBusy = false;
-        _starting = false;
-        _previewVisible = false;
-        _overlayData = null;
-      });
-      await WidgetsBinding.instance.endOfFrame;
-    }
-    await _cameraService.dispose();
-    _processedFrameTimes.clear();
-    if (!mounted) {
-      return;
-    }
-    setState(() {
-      _initializing = false;
-      _isBusy = false;
-      _starting = false;
-      _previewVisible = false;
-      _overlayData = null;
-    });
-  }
-
-  void _schedulePreviewTimeout() {
-    _previewTimeout?.cancel();
-    _previewTimeout = Timer(const Duration(seconds: 25), () {
-      if (mounted) {
-        unawaited(stop());
-      }
-    });
-  }
-
   Future<void> _processCameraImage(CameraImage image) async {
+    final token = _startToken;
     final now = DateTime.now();
-    if (_isBusy ||
+    if (!_enabled ||
+        !_foreground ||
+        _isBusy ||
         now.difference(_lastFrameAt) < DrowsinessThresholds.frameInterval) {
       return;
     }
@@ -870,6 +913,7 @@ class _LiveMonitoringPanelState extends State<_LiveMonitoringPanel>
       }
 
       final faces = await _faceDetectionService.detectFaces(inputImage);
+      if (!mounted || token != _startToken) return;
       final nextState = await _drowsinessService.analyze(
         faces: faces,
         timestamp: DateTime.now(),
@@ -878,7 +922,7 @@ class _LiveMonitoringPanelState extends State<_LiveMonitoringPanel>
         imageHeight: image.height,
         fps: _trackFps(now),
       );
-      if (!mounted) {
+      if (!mounted || token != _startToken) {
         return;
       }
       setState(() {
@@ -898,7 +942,11 @@ class _LiveMonitoringPanelState extends State<_LiveMonitoringPanel>
   }
 
   Future<void> _setError(String message) async {
-    await _cameraService.dispose();
+    try {
+      await _cameraService.dispose();
+    } catch (_) {
+      // Keep Retry usable even if the native camera already disconnected.
+    }
     if (!mounted) {
       return;
     }
@@ -916,7 +964,9 @@ class _LiveMonitoringPanelState extends State<_LiveMonitoringPanel>
         normalized.contains('cameraexception')) {
       return 'Tu celular no pudo abrir vista previa y escaneo a la vez. Toca Reintentar o inicia el viaje.';
     }
-    if (normalized.contains('permission') || normalized.contains('permiso')) {
+    if (normalized.contains('permission') ||
+        normalized.contains('permiso') ||
+        normalized.contains('accessdenied')) {
       return 'Activa el permiso de camara para usar el escaneo.';
     }
     return 'No se pudo iniciar la camara. Toca Reintentar.';
@@ -963,10 +1013,16 @@ class _LiveMonitoringPanelState extends State<_LiveMonitoringPanel>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _previewTimeout?.cancel();
-    unawaited(_cameraService.dispose());
-    unawaited(_faceDetectionService.close());
-    unawaited(_drowsinessService.close());
+    _enabled = false;
+    _startToken++;
+    unawaited(
+      _operation.whenComplete(() async {
+        await _cameraService.dispose();
+        await _frameTask;
+        await _faceDetectionService.close();
+        await _drowsinessService.close();
+      }),
+    );
     super.dispose();
   }
 
@@ -1037,7 +1093,7 @@ class _LiveMonitoringPanelState extends State<_LiveMonitoringPanel>
             onRetry: () => unawaited(start()),
           ),
           const SizedBox(height: 12),
-          _LiveInsightStrip(state: _state),
+          _LiveInsightStrip(state: _state, available: cameraReady),
           const SizedBox(height: 12),
           _SignalStatusList(state: _state),
         ],
@@ -1101,10 +1157,12 @@ class _LiveCameraCard extends StatelessWidget {
                   onRetry: onRetry,
                 ),
               Positioned.fill(
-                child: CustomPaint(
-                  painter: FaceLandmarkOverlayPainter(
-                    data: overlayData,
-                    color: color,
+                child: IgnorePointer(
+                  child: CustomPaint(
+                    painter: FaceLandmarkOverlayPainter(
+                      data: overlayData,
+                      color: color,
+                    ),
                   ),
                 ),
               ),
@@ -1115,7 +1173,11 @@ class _LiveCameraCard extends StatelessWidget {
                   icon: state.faceDetected
                       ? Icons.face_retouching_natural_rounded
                       : Icons.face_retouching_off_rounded,
-                  label: state.faceDetected ? 'Rostro OK' : 'Busca rostro',
+                  label: !ready
+                      ? 'Sin monitoreo'
+                      : state.faceDetected
+                      ? 'Rostro OK'
+                      : 'Busca rostro',
                   color: state.faceDetected
                       ? const Color(0xFF32E65F)
                       : const Color(0xFFFFA726),
@@ -1130,7 +1192,7 @@ class _LiveCameraCard extends StatelessWidget {
                   color: Color(0xFF28C9FF),
                 ),
               ),
-              if (alertMessage != null)
+              if (ready && alertMessage != null)
                 Positioned(
                   left: 10,
                   right: 10,
@@ -1368,9 +1430,10 @@ class _CameraAlertBanner extends StatelessWidget {
 }
 
 class _LiveInsightStrip extends StatelessWidget {
-  const _LiveInsightStrip({required this.state});
+  const _LiveInsightStrip({required this.state, required this.available});
 
   final DrowsinessState state;
+  final bool available;
 
   @override
   Widget build(BuildContext context) {
@@ -1379,15 +1442,19 @@ class _LiveInsightStrip extends StatelessWidget {
         Expanded(
           child: _InsightPill(
             label: 'Riesgo',
-            value: '${state.riskScore.round()}/100',
-            color: _riskColor(state.level),
+            value: available && state.faceDetected
+                ? '${state.riskScore.round()}/100'
+                : '--',
+            color: available && state.faceDetected
+                ? _riskColor(state.level)
+                : Colors.white54,
           ),
         ),
         const SizedBox(width: 8),
         Expanded(
           child: _InsightPill(
             label: 'Senal',
-            value: '${(state.signalQuality * 100).round()}%',
+            value: available ? '${(state.signalQuality * 100).round()}%' : '--',
             color: const Color(0xFF28C9FF),
           ),
         ),
@@ -1395,7 +1462,9 @@ class _LiveInsightStrip extends StatelessWidget {
         Expanded(
           child: _InsightPill(
             label: 'FPS',
-            value: state.fps == null ? '--' : state.fps!.toStringAsFixed(1),
+            value: !available || state.fps == null
+                ? '--'
+                : state.fps!.toStringAsFixed(1),
             color: const Color(0xFF8FE7FF),
           ),
         ),

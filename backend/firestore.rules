@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function owns(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+    function optionalNumber(value) {
+      return value == null || value is number;
+    }
+    function validReport(data) {
+      return data.keys().hasAll([
+          'schemaVersion', 'tripId', 'startedAtMs', 'endedAtMs',
+          'drivingDurationMs', 'warningAlerts', 'dangerAlerts', 'yawnCount',
+          'closedEyeDurationMs', 'noFaceEvents', 'averageRisk', 'maxRisk',
+          'dominantLevel', 'startBatteryLevel', 'endBatteryLevel',
+          'startTemperatureC', 'endTemperatureC', 'maxTemperatureC',
+          'isCharging', 'updatedAt'
+        ]) && data.keys().hasOnly([
+          'schemaVersion', 'tripId', 'startedAtMs', 'endedAtMs',
+          'drivingDurationMs', 'warningAlerts', 'dangerAlerts', 'yawnCount',
+          'closedEyeDurationMs', 'noFaceEvents', 'averageRisk', 'maxRisk',
+          'dominantLevel', 'startBatteryLevel', 'endBatteryLevel',
+          'startTemperatureC', 'endTemperatureC', 'maxTemperatureC',
+          'isCharging', 'updatedAt'
+        ])
+        && data.schemaVersion == 1
+        && data.tripId is string && data.tripId.size() > 0 && data.tripId.size() <= 200
+        && data.startedAtMs is int && data.startedAtMs >= 0
+        && data.endedAtMs is int && data.endedAtMs >= data.startedAtMs
+        && data.drivingDurationMs is int && data.drivingDurationMs >= 0
+        && data.closedEyeDurationMs is int && data.closedEyeDurationMs >= 0
+        && data.warningAlerts is int && data.warningAlerts >= 0
+        && data.dangerAlerts is int && data.dangerAlerts >= 0
+        && data.yawnCount is int && data.yawnCount >= 0
+        && data.noFaceEvents is int && data.noFaceEvents >= 0
+        && data.averageRisk is number && data.averageRisk >= 0 && data.averageRisk <= 100
+        && data.maxRisk is number && data.maxRisk >= 0 && data.maxRisk <= 100
+        && data.dominantLevel in ['normal', 'warning', 'danger']
+        && optionalNumber(data.startBatteryLevel)
+        && optionalNumber(data.endBatteryLevel)
+        && optionalNumber(data.startTemperatureC)
+        && optionalNumber(data.endTemperatureC)
+        && optionalNumber(data.maxTemperatureC)
+        && data.isCharging is bool
+        && data.updatedAt == request.time;
+    }
+    match /users/{uid}/reports/{reportId} {
+      allow read, delete: if owns(uid);
+      allow create, update: if owns(uid) && validReport(request.resource.data);
+    }
+  }
+}

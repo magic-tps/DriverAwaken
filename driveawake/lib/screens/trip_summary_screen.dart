@@ -5,16 +5,19 @@ import '../models/drowsiness_state.dart';
 import '../models/technical_session_report.dart';
 import '../models/trip_session_summary.dart';
 import '../services/technical_report_export_service.dart';
+import 'cloud_reports_screen.dart';
 
 class TripSummaryScreen extends StatelessWidget {
   const TripSummaryScreen({
     required this.summary,
     this.technicalReport,
+    this.isCloudCopy = false,
     super.key,
   });
 
   final TripSessionSummary summary;
   final TechnicalSessionReport? technicalReport;
+  final bool isCloudCopy;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +68,32 @@ class TripSummaryScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 18),
+              if (isCloudCopy)
+                const ListTile(
+                  leading: Icon(
+                    Icons.cloud_done_outlined,
+                    color: Color(0xFF24D17E),
+                  ),
+                  title: Text('Informe consultado desde la nube'),
+                )
+              else ...[
+                const Text(
+                  'Guardado en este teléfono',
+                  style: TextStyle(color: Colors.white70),
+                ),
+                const SizedBox(height: 8),
+                FilledButton.icon(
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) =>
+                          CloudReportsScreen(reportToUpload: summary),
+                    ),
+                  ),
+                  icon: const Icon(Icons.cloud_upload_outlined),
+                  label: const Text('Subir informe a la nube'),
+                ),
+              ],
               const SizedBox(height: 18),
               _SummaryGrid(summary: summary),
               const SizedBox(height: 18),

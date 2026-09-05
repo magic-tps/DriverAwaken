@@ -26,6 +26,8 @@ Si se distribuye en otros países latinoamericanos, se requiere una revisión se
 
 La versión actual procesa localmente la cámara frontal para obtener señales de somnolencia. No guarda imágenes ni vídeo y no transmite frames a un backend. Conserva localmente eventos, métricas de riesgo, calibración y telemetría técnica del dispositivo.
 
+Desde la integración Firebase del 2026-09-05 existe una cuenta opcional con correo/contraseña y copias manuales de resúmenes en Cloud Firestore. La copia requiere confirmación e incluye fechas, duraciones, alertas, riesgo y telemetría. No incluye imágenes ni frames. Las copias se conservan hasta que el usuario las borra en la pantalla de nube; también puede eliminar su cuenta y todas sus copias mediante reautenticación. La retención local no afecta a las copias remotas.
+
 Finalidades exactas: `[[DESCRIBIR Y VALIDAR]]`. Base jurídica y, cuando corresponda, mecanismo de consentimiento: `[[DEFINIR]]`.
 
 ## Conservación, eliminación y backup
@@ -40,7 +42,7 @@ La exportación exige confirmación explícita. El usuario elige la aplicación 
 
 ## Terceros y transferencias
 
-ML Kit y TensorFlow Lite se usan localmente en la versión actual. Analítica, crash reporting, servicios cloud, encargados, transferencias nacionales o internacionales: `[[CONFIRMAR O DECLARAR QUE NO EXISTEN]]`.
+ML Kit y TensorFlow Lite se usan localmente. Firebase Authentication y Cloud Firestore gestionan cuentas y copias opcionales; la base Firestore configurada está en `nam5`. No se añadieron Analytics ni Crashlytics. Encargados, condiciones de transferencias y demás obligaciones aplicables: `[[COMPLETAR Y VALIDAR]]`.
 
 ## Menores, incidentes y contacto
 

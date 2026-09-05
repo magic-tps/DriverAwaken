@@ -24,3 +24,6 @@ repositorio. Las métricas agregadas y los vectores de prueba sí se conservan.
 Consulte `docs/initial_audit.md`, `docs/phase_1_safety_report.md`, `docs/ml_validation_report.md` y `docs/architecture.md` antes de preparar pruebas.
 
 La referencia funcional y técnica exhaustiva del estado actual está en `docs/APP_ESPECIFICACION_COMPLETA.md`.
+
+La configuración Firebase y el uso de copias de informes están documentados en
+[`docs/firebase_setup.md`](docs/firebase_setup.md). Las funciones locales no requieren cuenta.

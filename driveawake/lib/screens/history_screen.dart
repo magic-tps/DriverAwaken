@@ -4,6 +4,8 @@ import '../models/drowsiness_event.dart';
 import '../models/drowsiness_state.dart';
 import '../services/history_export_service.dart';
 import '../services/local_history_service.dart';
+import 'saved_trips_screen.dart';
+import 'cloud_reports_screen.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -76,6 +78,28 @@ class _HistoryScreenState extends State<HistoryScreen> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
+            ListTile(
+              leading: const Icon(Icons.cloud_upload_outlined),
+              title: const Text('Subir y consultar informes en la nube'),
+              subtitle: const Text('Tu cuenta y copias confirmadas'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => const CloudReportsScreen(),
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.summarize_outlined),
+              title: const Text('Informes de viajes'),
+              subtitle: const Text('Guardados en este dispositivo'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => const SavedTripsScreen(),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
               child: _FilterBar(

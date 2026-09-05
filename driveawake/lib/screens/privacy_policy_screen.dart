@@ -22,27 +22,27 @@ class PrivacyPolicyScreen extends StatelessWidget {
             _PolicySection(
               title: 'Datos almacenados',
               text:
-                  'Se guardan localmente eventos, fechas, niveles de alerta, duraciones, PERCLOS, riesgo y telemetria tecnica del viaje. No se crean cuentas ni perfiles en un servidor.',
+                  'Se guardan localmente eventos, fechas, niveles de alerta, duraciones, PERCLOS, riesgo y telemetria del viaje. Si creas una cuenta opcional, Firebase Authentication gestiona tu correo y acceso. Solo al confirmar Copiar informes se envian resumenes a Cloud Firestore; nunca imagenes ni videos.',
             ),
             _PolicySection(
               title: 'Conservacion y eliminacion',
               text:
-                  'El usuario puede elegir 7, 30 o 90 dias, o conservar el historial sin borrado automatico. Ajustes permite eliminar el historial y la calibracion del dispositivo.',
+                  'El usuario puede elegir 7, 30 o 90 dias, o conservar el historial local sin borrado automatico. Las copias en la nube se conservan hasta borrarlas desde Mis copias en la nube, donde tambien puedes eliminar tu cuenta. Borrar datos locales no elimina las copias remotas.',
             ),
             _PolicySection(
               title: 'Exportacion',
               text:
-                  'Un reporte solo sale del dispositivo tras confirmacion. Desde ese momento, su tratamiento depende de la aplicacion o destinatario elegido por el usuario.',
+                  'Los informes se comparten o copian en la nube tras confirmacion. La copia en Firebase contiene fechas, duraciones, alertas, riesgo y telemetria. Las exportaciones a otras aplicaciones dependen del destinatario elegido.',
             ),
             _PolicySection(
               title: 'Permisos y terceros',
               text:
-                  'La camara se usa para deteccion en tiempo real; audio y vibracion para alertas. ML Kit y TensorFlow Lite se ejecutan localmente en esta version.',
+                  'La camara se usa para deteccion en tiempo real; audio y vibracion para alertas. ML Kit y TensorFlow Lite se ejecutan localmente. Firebase Authentication y Cloud Firestore, servicios de Google, gestionan la cuenta y las copias opcionales.',
             ),
             _PolicySection(
               title: 'Derechos en Peru',
               text:
-                  'La Ley N.° 29733 reconoce derechos de acceso, rectificacion, cancelacion y oposicion (ARCO). Como los datos actuales permanecen en el telefono, el usuario puede consultar o eliminar el historial desde la app. El canal formal del responsable debe definirse antes de publicar.',
+                  'Puedes consultar y borrar el historial local desde la app y eliminar las copias y tu cuenta desde Mis copias en la nube. El canal formal del responsable para solicitudes de privacidad debe definirse antes de publicar.',
             ),
             _PolicySection(
               title: 'Responsable pendiente',

@@ -1,5 +1,33 @@
 # Registro técnico de mejoras
 
+## Acceso y nube visibles (2026-09-05)
+
+- Pantalla inicial dedicada a login/registro, recuperación de contraseña y opción de continuar sin cuenta.
+- Restauración de sesión y tarjeta de cuenta visible antes de la cámara en Inicio.
+- Acceso con texto a la nube desde Historial y subida del informe seleccionado desde su resumen.
+- Conteo de informes y hora de última consulta confirmada por el servidor; el fallo de consulta no se muestra como ausencia de informes.
+- Pruebas de autenticación, invitado, validación de registro, fallo de red y tarjetas en pantallas estrechas.
+- Validación: `flutter analyze` sin incidencias y 87 pruebas aprobadas. APK debug actualizado e instalado en Samsung SM-S938U1 conservando datos.
+- Comprobación en dispositivo: sesión iniciada, consulta al servidor con 0 informes y botones de subida/consulta visibles. Inicio muestra tarjeta de cuenta, cámara activa y rostro detectado. No se subieron informes personales durante esta comprobación.
+
+## Firebase y cuentas opcionales (2026-09-05)
+
+- Integración Android del JSON suministrado y cambio autorizado del application ID a `driver_.awaken`.
+- Firebase Auth con correo/contraseña habilitado y reglas Firestore publicadas en `driverawaken`.
+- Pantalla de copias con registro, acceso, recuperación de contraseña, copia manual, consulta, borrado y eliminación de cuenta con reautenticación.
+- SQLite conserva el funcionamiento local; no se suben frames ni se interrumpe el monitoreo por errores de red.
+- Prueba remota con dos cuentas sintéticas: operaciones del propietario aceptadas y accesos ajenos rechazados; datos de prueba eliminados.
+
+## Inicio de cámara e informes guardados (2026-09-05)
+
+- Inicio activa la cámara después de resolver borradores; se elimina el temporizador de 25 segundos.
+- Apertura/cierre serializados, pausa en segundo plano y restauración al volver a Inicio.
+- El cierre en background no espera un fotograma de UI; los diálogos de permisos no duplican solicitudes.
+- Riesgo sin lectura válida representado por `--`.
+- La capa de landmarks ignora eventos táctiles para que Reintentar reciba los toques.
+- Historial permite abrir resúmenes SQLite sin depender de alertas ni de internet; se mantiene retención/borrado.
+- Pruebas de arranque, permisos, ciclo de vida y lectura de informes persistidos. Cámara física pendiente de probar en dispositivo.
+
 ## Observabilidad y resiliencia de monitoreo (2026-07-18)
 
 - Baseline Git creado antes de la iteración; artefactos locales de Flutter/Dart añadidos a exclusiones.
@@ -29,7 +57,7 @@
 
 ## Plataforma y calidad
 
-- Cámara de Inicio apagada por defecto con comprobación temporal de 25 segundos.
+- Comportamiento anterior: cámara de Inicio apagada por defecto con comprobación temporal de 25 segundos; sustituido el 2026-09-05.
 - Muestreo adaptativo con histéresis térmica y reducción por batería baja.
 - Nombre público canónico DriverAwake, tema central y colores semánticos.
 - Backup Android deshabilitado, exclusiones de secretos/datasets y CI con Gitleaks.
@@ -41,4 +69,4 @@
 - No se creó firma, secreto, identidad legal ni métrica de validación.
 - No se activó el modelo TFLite histórico.
 - No se hizo una migración Drift sin poder comprobar generación, rollback y compatibilidad en dispositivo.
-- No se renombró el package ID `com.magicdrive.alert` ni las claves internas existentes, para evitar pérdida de actualizaciones/datos.
+- Inicialmente se conservó `com.magicdrive.alert`; el 2026-09-05 se cambió el application ID a `driver_.awaken` por autorización del usuario para integrar su JSON de Firebase. Se conservaron namespace y claves internas.

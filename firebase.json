@@ -1,0 +1,11 @@
+{
+  "firestore": {
+    "rules": "backend/firestore.rules"
+  },
+  "emulators": {
+    "firestore": {"port": 8085},
+    "auth": {"port": 9098},
+    "ui": {"enabled": false},
+    "singleProjectMode": true
+  }
+}

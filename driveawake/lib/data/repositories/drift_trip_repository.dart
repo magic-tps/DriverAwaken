@@ -146,6 +146,50 @@ class DriftTripRepository {
     });
   }
 
+  Future<List<TripSessionSummary>> loadCompletedTrips() async {
+    final rows =
+        await (database.select(database.trips)
+              ..where(
+                (table) =>
+                    table.status.equals('completed') &
+                    table.endedAt.isNotNull(),
+              )
+              ..orderBy([(table) => OrderingTerm.desc(table.startedAt)]))
+            .get();
+    return rows
+        .map(
+          (row) => TripSessionSummary(
+            tripId: row.id,
+            startedAt: row.startedAt,
+            endedAt: row.endedAt!,
+            drivingDuration: Duration(milliseconds: row.drivingDurationMs),
+            warningAlerts: row.warningAlerts,
+            dangerAlerts: row.dangerAlerts,
+            yawnCount: row.yawnCount,
+            closedEyeDuration: Duration(milliseconds: row.closedEyeDurationMs),
+            noFaceEvents: row.noFaceEvents,
+            averageRisk: row.sampleCount == 0
+                ? 0
+                : row.riskSum / row.sampleCount,
+            maxRisk: row.maxRisk,
+            dominantLevel:
+                row.dangerSamples >= row.warningSamples &&
+                    row.dangerSamples >= row.normalSamples
+                ? DrowsinessLevel.danger
+                : row.warningSamples >= row.normalSamples
+                ? DrowsinessLevel.warning
+                : DrowsinessLevel.normal,
+            startBatteryLevel: row.startBatteryLevel,
+            endBatteryLevel: row.endBatteryLevel,
+            startTemperatureC: row.startTemperatureC,
+            endTemperatureC: row.endTemperatureC,
+            maxTemperatureC: row.maxTemperatureC,
+            isCharging: row.isCharging,
+          ),
+        )
+        .toList(growable: false);
+  }
+
   Future<void> discardTrip(String tripId) async {
     await database.transaction(() async {
       await (database.delete(

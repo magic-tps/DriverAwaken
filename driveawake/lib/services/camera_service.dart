@@ -112,10 +112,13 @@ class CameraService {
       return;
     }
 
-    if (controller.value.isInitialized && controller.value.isStreamingImages) {
-      await controller.stopImageStream();
+    try {
+      if (controller.value.isInitialized &&
+          controller.value.isStreamingImages) {
+        await controller.stopImageStream();
+      }
+    } finally {
+      await controller.dispose();
     }
-
-    await controller.dispose();
   }
 }

@@ -2,9 +2,17 @@
 
 ## Estado implementado
 
+`AppEntryScreen` restaura la sesión antes de entrar al dashboard. Sin sesión presenta `LoginScreen`, con registro, recuperación y acceso sin cuenta. La cámara solo se monta después de elegir entrar; Inicio conserva su activación automática al estar visible. La restauración pendiente no bloquea el acceso local.
+
 La sesión de conducción usa una arquitectura dirigida por estado. `DriveModeScreen` observa un único `DriveState`, renderiza la interfaz y envía acciones; no inicia streams, no activa alarmas y no persiste viajes. `DriveSessionController` es la única fuente de verdad para fase, transiciones, errores y finalización. La coordinación de recursos está encapsulada en `FlutterDriveSessionResources` y se accede mediante puertos inyectables.
 
 La persistencia principal es Drift sobre SQLite. `SharedPreferences` se conserva temporalmente solo como origen de migración y fallback cuando SQLite no puede abrirse.
+
+Inicio activa su vista previa después de resolver la recuperación del borrador. Las operaciones de cámara se serializan y los resultados obsoletos se descartan por generación. Al navegar o pasar a segundo plano se libera la cámara; al volver a Inicio se restaura la vista previa. Este comportamiento no inicia viajes ni modifica la reanudación explícita del modo conducción.
+
+`SavedTripsScreen`, accesible desde Historial, consulta los viajes completados mediante `LocalHistoryService` y `DriftTripRepository`. Reconstruye sus resúmenes desde SQLite y respeta la retención configurada. El almacenamiento local funciona sin internet.
+
+`CloudReportsScreen` añade cuentas opcionales Firebase Auth y copias manuales en Firestore mediante `CloudReportService`. Solo se envían resúmenes tras confirmación; las reglas limitan cada colección al UID autenticado y validan su esquema. No se enlaza este servicio al procesamiento de cámara ni a la finalización local del viaje. Las copias se consultan desde la nube y no se importan automáticamente a SQLite. Véase `firebase_setup.md`.
 
 ## Capas
 

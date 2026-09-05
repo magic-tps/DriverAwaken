@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/database/database_provider.dart';
 import '../data/repositories/drift_trip_repository.dart';
 import '../models/drowsiness_event.dart';
+import '../models/trip_session_summary.dart';
 import '../models/drowsiness_state.dart';
 import '../models/app_settings.dart';
 import 'settings_service.dart';
@@ -32,6 +33,16 @@ class LocalHistoryService {
     } catch (_) {
       return _loadLegacyFallback(level: level);
     }
+  }
+
+  Future<List<TripSessionSummary>> loadTrips() async {
+    await SettingsService.instance.initialize();
+    final retention =
+        SettingsService.instance.settings.historyRetention.duration;
+    if (retention != null) {
+      await _repository.applyRetention(DateTime.now().subtract(retention));
+    }
+    return _repository.loadCompletedTrips();
   }
 
   Future<void> addEvent(DrowsinessEvent event) async {

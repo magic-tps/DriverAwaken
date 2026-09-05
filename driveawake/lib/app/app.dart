@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import '../screens/home_screen.dart';
+import '../screens/app_entry_screen.dart';
 import 'app_config.dart';
 import 'app_theme.dart';
 
@@ -22,7 +22,7 @@ class AppConductoresApp extends StatelessWidget {
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       theme: AppTheme.dark(),
       highContrastTheme: AppTheme.dark(highContrast: true),
-      home: const HomeScreen(),
+      home: const AppEntryScreen(),
     );
   }
 }
