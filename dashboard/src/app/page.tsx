@@ -12,9 +12,9 @@ export default function Home() {
           <p className="landing-lead">DriverAwaken observa señales de somnolencia en el dispositivo, emite alertas locales y conecta los incidentes autorizados con una central de flota.</p>
           <div className="download-module" id="descargar">
             <div className="download-heading"><span className="download-icon"><Icon name="shield" size={23} /></span><div><span className="eyebrow">APLICACIÓN PARA CONDUCTORES</span><h2>Descarga DriverAwaken para Android</h2></div></div>
-            <a className="button primary download-button" href="https://github.com/magic-tps/DriverAwaken/releases/download/v1.1.1-debug.3/DriverAwaken-1.1.1-debug.apk">Descargar APK de prueba <Icon name="arrow" size={18} /></a>
+            <a className="button primary download-button" href="https://drive.google.com/drive/folders/1NjN0jGmj71hKqM0LcRYwEPFRaxBtJ92T?hl=es">Abrir APK en Google Drive <Icon name="arrow" size={18} /></a>
             <div className="download-meta"><span>Android</span><span>Versión 1.1.1+3</span><Badge tone="warning">Compilación debug / pruebas</Badge></div>
-            <p>Descarga alojada en el repositorio oficial de GitHub. Instala únicamente si confías en esta fuente. Android puede solicitar autorización para instalar un APK externo. Esta compilación es de prueba, no una publicación de tienda.</p>
+            <p>El botón abre la carpeta de Google Drive donde se alojará el APK. Instala únicamente si confías en esta fuente. Android puede solicitar autorización para instalar un APK externo. Esta compilación es de prueba, no una publicación de tienda.</p>
           </div>
           <Link href="/demo" className="landing-text-link">Conocer el flujo en la demo <Icon name="arrow" size={16} /></Link>
         </div>
