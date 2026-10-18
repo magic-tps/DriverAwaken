@@ -34,6 +34,7 @@ La configuración pública de Firebase web vive en variables `NEXT_PUBLIC_FIREBA
 - Configuración local: `driveawake/android/app/google-services.json`, copiada del archivo suministrado en la raíz. Ambos archivos están excluidos de Git.
 - Kotlin Gradle Plugin actualizado a `2.3.21` para los metadatos Kotlin 2.3 de Firebase Auth; compatible con Gradle 8.12 y AGP 8.9.1 según la [matriz oficial](https://kotlinlang.org/docs/gradle-configure-project.html).
 - Firebase Authentication: correo/contraseña habilitados en el proyecto.
+- Dominio `magic-tps.github.io` autorizado para la web pública de GitHub Pages desde el 18 de octubre de 2026.
 - Cloud Firestore: base `(default)` existente en `nam5`, con reglas publicadas desde `backend/firestore.rules`.
 - No se añadieron Analytics ni carga de imágenes, video o frames.
 

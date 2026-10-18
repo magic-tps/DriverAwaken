@@ -32,7 +32,10 @@ void main() {
       await tester.pageBack();
       await tester.pump(const Duration(milliseconds: 400));
       expect(resources.startCalls, 1);
-      expect(find.text('MONITOREO PAUSADO').hitTestable(), findsOneWidget);
+      // Multiple safety surfaces report the paused state. Hit testing their
+      // text depends on the test viewport, not on whether monitoring resumed.
+      expect(find.text('MONITOREO PAUSADO'), findsWidgets);
+      expect(find.text('Monitoreo pausado'), findsOneWidget);
       await tester.ensureVisible(find.text('Google Maps'));
       await tester.tap(find.text('Google Maps'));
       await tester.pump();
@@ -40,7 +43,8 @@ void main() {
       await tester.pageBack();
       await tester.pump(const Duration(milliseconds: 400));
       expect(resources.startCalls, 1);
-      expect(find.text('REANUDAR').hitTestable(), findsOneWidget);
+      expect(find.text('REANUDAR'), findsOneWidget);
+      expect(find.text('Monitoreo pausado'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
     },

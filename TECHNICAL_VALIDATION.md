@@ -2,7 +2,7 @@
 
 Actualización móvil posterior: [correcciones del 18 de octubre](docs/mobile_fixes_2026-10-18.md), con la solución del bloqueo de pausa, simplificación del GPS y comandos de voz. El resto de este documento conserva la comprobación del día 17.
 
-Revisión: 17 de octubre de 2026, America/Lima. El workspace ya contenía trabajo Guardian sin commit; se preservó. Este informe separa implementación, comprobación automática, servicios externos y pruebas físicas. No se ejecutaron push, despliegue, cambios de facturación ni entrega oficial.
+Revisión histórica: 17 de octubre de 2026, America/Lima. El workspace ya contenía trabajo Guardian sin commit; se preservó. Este informe separa implementación, comprobación automática, servicios externos y pruebas físicas. La publicación posterior del 18 de octubre se documenta en [DEPLOYMENT.md](DEPLOYMENT.md); no se cambió la facturación ni se hizo entrega oficial a una competencia.
 
 ## 1. Resumen ejecutivo
 
@@ -102,7 +102,7 @@ Dashboard, demo y pitch: **sin despliegue ni URL pública verificada**. La expor
 
 ## 11. Firebase
 
-[Configuración Firebase](docs/firebase_setup.md) y [despliegue](DEPLOYMENT.md). Se conservan los reportes personales. Bootstrap requiere Admin autorizado fuera del navegador; el dashboard requiere configuración pública web, Auth y membresía ADMIN/OPERATOR. Las reglas locales fueron comprobadas; no se desplegaron en producción.
+[Configuración Firebase](docs/firebase_setup.md) y [despliegue](DEPLOYMENT.md). Se conservan los reportes personales. Bootstrap requiere Admin autorizado fuera del navegador; el dashboard requiere configuración pública web, Auth y membresía ADMIN/OPERATOR. Las reglas locales fueron comprobadas y se publicaron posteriormente, el 18 de octubre de 2026.
 
 ## 12. Costos potenciales
 

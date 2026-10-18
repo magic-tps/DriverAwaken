@@ -1,6 +1,6 @@
 # Despliegue de DriverAwaken Guardian
 
-No se ha publicado un despliegue durante esta ejecución. No hay URL pública verificada. Los comandos que escriben en Firebase o entregan a la competencia requieren autorización explícita del propietario. No se ejecutaron push, deploy ni submit.
+Estado del 18 de octubre de 2026: la web está publicada en [GitHub Pages](https://magic-tps.github.io/DriverAwaken/) y el [APK universal de prueba](https://github.com/magic-tps/DriverAwaken/releases/tag/v1.1.1-debug.3) está disponible en GitHub Releases. La portada, `/dashboard/`, `/driver/`, `/demo/` y `/pitch/` respondieron HTTP 200; se comprobó la pantalla de acceso de ambos paneles en un navegador. Las reglas Firestore se publicaron en `driverawaken` y `magic-tps.github.io` quedó autorizado en Firebase Auth. No se probaron sesiones reales de administrador/conductor ni entrega push de extremo a extremo. El envío push automático sigue desactivado porque Cloud Functions requiere el plan Blaze; no se cambió la facturación ni se hizo entrega a una competencia.
 
 ## Requisitos
 
@@ -37,7 +37,7 @@ node scripts/bootstrap.mjs --project=ID_PROYECTO --org=ID_FLOTA --name="NOMBRE_A
 
 La escritura privilegiada requiere añadir `--apply=true` y contar con autorización. El script verifica la existencia del usuario y se niega a sobrescribir una organización existente. No se ejecutó contra un proyecto real.
 
-5. Tras autorización para publicar las reglas y el sitio, desde la raíz:
+5. Publicación web actual: `.github/workflows/pages.yml` exporta `dashboard/` y despliega GitHub Pages desde `main`. La configuración pública de Firebase está en variables del repositorio GitHub; no se guarda una clave de servicio en el código. Las reglas Firestore ya se publicaron. Firebase Hosting se conserva como configuración alternativa, pero el plan Spark bloquea servir archivos `.apk`:
 
 ```powershell
 firebase deploy --only firestore:rules --project ID_PROYECTO
@@ -47,7 +47,7 @@ cd ..
 firebase deploy --only hosting --project ID_PROYECTO
 ```
 
-`firebase.json` sirve `dashboard/out`, conserva los reportes personales y añade cabeceras básicas. No hay rewrite que sustituya todas las rutas por la landing. Verificar la URL devuelta en una ventana privada: `/`, `/demo/`, `/pitch/`, y denegación de `/dashboard/` sin sesión/membresía. Registrar la URL y la fecha reales después de comprobarlas.
+`firebase.json` sirve `dashboard/out` si se usa Firebase Hosting y añade cabeceras básicas. El sitio público actual usa GitHub Pages; la descarga Android se aloja en GitHub Releases. Las cuentas y membresías reales siguen siendo necesarias para entrar a los paneles privados.
 
 6. En `/dashboard/settings/`, ADMIN añade membresías usando UIDs de cuentas existentes. En Flota crea vehículos y en Viajes crea un viaje asignado a DRIVER; la asignación al vehículo se escribe antes del viaje. OPERATOR consulta incidentes y anexa acciones.
 7. En Android iniciar sesión, abrir «Vincular flota», introducir ID de organización, consultar viajes y otorgar consentimiento explícito. Elegir el viaje antes de iniciar el modo conducción. Probar cámara/señales solamente en entorno estacionario o simulado.
