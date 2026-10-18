@@ -54,7 +54,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
             _PolicySection(
               title: 'Voz y contacto de emergencia',
               text:
-                  'Las indicaciones habladas usan una voz instalada que declare no necesitar red. Los comandos de voz activan el micrófono solo al pulsar Escuchar comando y usan el servicio de reconocimiento de Android, que puede procesar audio por Internet. La app no guarda grabaciones ni transcripciones en el historial o Firebase. Cerrar el panel o enviar la app a segundo plano cancela la escucha. El contacto opcional del panel SOS se guarda localmente y se elimina dejando el campo vacío. Abrir el marcador requiere confirmación y no realiza una llamada automática; el registro manual opcional queda en el historial local.',
+                  'Las alertas habladas están activadas inicialmente y usan una voz instalada que declare no necesitar red. Puedes desactivarlas en el panel del copiloto. Al pulsar Conversa conmigo, el micrófono escucha por turnos después de cada respuesta; el silencio, terminar la conversación, cerrar el panel o salir de la app cancela la escucha. Android puede procesar el reconocimiento por Internet. La conversación se conserva solo en memoria mientras el panel está abierto y se borra al cerrarlo; no se envía a Firebase ni se guarda audio. El contacto SOS se guarda localmente y se elimina dejando el campo vacío. Abrir el marcador requiere confirmación y no realiza llamadas automáticas.',
             ),
             _PolicySection(
               title: 'Descansos declarados',

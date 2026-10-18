@@ -22,6 +22,8 @@ import 'navigation_screen.dart';
 import 'settings_screen.dart';
 import '../services/emergency_service.dart';
 import '../services/voice_command_service.dart';
+import '../navigation/conversation_engine.dart';
+import '../widgets/copilot_panel.dart';
 
 class DriveModeScreen extends StatefulWidget {
   const DriveModeScreen({
@@ -47,6 +49,7 @@ class _DriveModeScreenState extends State<DriveModeScreen>
   final VoiceCommandService _commands = VoiceCommandService.instance;
   bool _openingNavigation = false;
   bool _backgroundedDuringStart = false;
+  bool _voicePanelOpen = false;
 
   DriveState get _driveState => _controller.state;
   DrowsinessState get _monitoring => _driveState.monitoring;
@@ -151,142 +154,46 @@ class _DriveModeScreenState extends State<DriveModeScreen>
   }
 
   Future<void> _voiceControls() async {
-    final nav = SmartNavigation.instance;
-    final command = await showModalBottomSheet<String>(
+    if (_voicePanelOpen) return;
+    _voicePanelOpen = true;
+    final command = await showModalBottomSheet<VoiceCommand>(
       context: context,
       showDragHandle: true,
       isScrollControlled: true,
-      builder: (sheetContext) => StatefulBuilder(
-        builder: (sheetContext, update) => SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SwitchListTile(
-                  title: const LocalizedText('Asistente de voz breve'),
-                  subtitle: const LocalizedText(
-                    'Las alarmas críticas siguen disponibles.',
-                  ),
-                  value: nav.voice.enabled,
-                  onChanged: (value) => update(() => nav.voice.enabled = value),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: LocalizedText(nav.voice.status),
-                ),
-                const Text(
-                  'Di: “pausar”, “reanudar”, “necesito descansar”, “estado”, “abrir mapa” o “SOS”.',
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'El micrófono se activa al pulsar. Android puede usar Internet para reconocer la voz.',
-                  style: TextStyle(fontSize: 12),
-                ),
-                const SizedBox(height: 16),
-                ListenableBuilder(
-                  listenable: _commands,
-                  builder: (context, _) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(_commands.status),
-                      const SizedBox(height: 12),
-                      FilledButton.icon(
-                        onPressed: _commands.busy
-                            ? null
-                            : () {
-                                unawaited(nav.voice.stop());
-                                unawaited(
-                                  _commands.listen(
-                                    onCommand: (words) {
-                                      if (sheetContext.mounted &&
-                                          ModalRoute.of(
-                                                sheetContext,
-                                              )?.isCurrent ==
-                                              true) {
-                                        Navigator.of(sheetContext).pop(words);
-                                      }
-                                    },
-                                  ),
-                                );
-                              },
-                        icon: Icon(_commands.busy ? Icons.hearing : Icons.mic),
-                        label: Text(
-                          _commands.busy ? 'Escuchando…' : 'Escuchar comando',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+      builder: (sheetContext) => CopilotPanel(
+        contextProvider: () => ConversationContext(
+          monitoring: _monitoring,
+          paused: _driveState.paused,
+          reliable:
+              _driveState.monitoringHealth == MonitoringHealth.healthy &&
+              _monitoring.faceDetected &&
+              _monitoring.signalQuality >= .32,
+          driving: SmartNavigation.instance.driving,
         ),
+        onAction: (action) async {
+          switch (action) {
+            case VoiceCommand.pause:
+              await _controller.pause();
+            case VoiceCommand.resume:
+              await _controller.resume();
+            case VoiceCommand.rest:
+              SmartNavigation.instance.requestRest();
+            case VoiceCommand.map:
+            case VoiceCommand.sos:
+              if (sheetContext.mounted) Navigator.pop(sheetContext, action);
+            case VoiceCommand.silence:
+            case VoiceCommand.repeat:
+            case VoiceCommand.status:
+              break;
+          }
+        },
       ),
     );
+    _voicePanelOpen = false;
     await _commands.stop();
-    if (mounted && command != null) _handleVoiceCommand(command);
-  }
-
-  void _handleVoiceCommand(String command) {
     if (!mounted) return;
-    switch (parseVoiceCommand(command)) {
-      case VoiceCommand.pause:
-        unawaited(_controller.pause());
-        _voiceFeedback(
-          'Monitoreo en pausa. Reanúdalo explícitamente al estar listo.',
-        );
-      case VoiceCommand.resume:
-        unawaited(_controller.resume());
-        _voiceFeedback('Reanudando monitoreo.');
-      case VoiceCommand.map:
-        unawaited(_openNavigation());
-      case VoiceCommand.sos:
-        unawaited(_sos());
-      case VoiceCommand.rest:
-        SmartNavigation.instance.requestRest();
-        _voiceFeedback(
-          'Detente en un lugar seguro. La búsqueda de paradas requiere tu acción cuando estés detenido.',
-        );
-      case VoiceCommand.silence:
-        SmartNavigation.instance.voice.enabled = false;
-        _voiceFeedback(
-          'Voz desactivada. Las alertas visuales, sonoras y vibratorias continúan.',
-        );
-      case VoiceCommand.repeat:
-        if (SmartNavigation.instance.voice.enabled) {
-          unawaited(SmartNavigation.instance.voice.repeatLast(DateTime.now()));
-        } else {
-          _voiceFeedback(
-            'Activa el asistente de voz para repetir el último mensaje.',
-          );
-        }
-      case VoiceCommand.status:
-        _voiceFeedback(
-          _driveState.paused
-              ? 'Monitoreo pausado. Reanúdalo cuando estés listo.'
-              : _driveState.monitoringHealth == MonitoringHealth.healthy
-              ? 'Monitoreo activo. Estado actual: ${_monitoring.level.name}.'
-              : 'La señal del monitoreo no es fiable. Revisa la cámara al detenerte.',
-        );
-      case null:
-        break;
-    }
-  }
-
-  void _voiceFeedback(String message) {
-    if (!mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
-    unawaited(
-      SmartNavigation.instance.voice.say(
-        'voice_command_${DateTime.now().microsecondsSinceEpoch}',
-        message,
-        DateTime.now(),
-      ),
-    );
+    if (command == VoiceCommand.map) await _openNavigation();
+    if (command == VoiceCommand.sos) await _sos();
   }
 
   Future<void> _openNavigation() async {
@@ -1026,7 +933,7 @@ class _ActionBar extends StatelessWidget {
       _control(
         context,
         Icons.mic_none_rounded,
-        'Alertas / Voz',
+        'Copiloto',
         const Color(0xFF23D18B),
         onVoice,
       ),
@@ -1145,7 +1052,7 @@ class _PausedOverlay extends StatelessWidget {
                 TextButton.icon(
                   onPressed: onVoice,
                   icon: const Icon(Icons.mic),
-                  label: const Text('Comandos de voz'),
+                  label: const LocalizedText('Copiloto'),
                 ),
                 TextButton.icon(
                   onPressed: onFinish,

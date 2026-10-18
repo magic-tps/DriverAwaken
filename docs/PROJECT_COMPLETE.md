@@ -68,6 +68,10 @@ No se envían vídeo, fotografías, landmarks ni embeddings a la central.
 
 ## 5. Smart Rest, alertas y emergencia
 
+La versión 1.1.2+4 incorpora [el copiloto conversacional local](conversational_copilot.md): diálogo por turnos con contexto inmediato, 100 intervenciones editables y alertas habladas activadas inicialmente. El micrófono y el altavoz se alternan; una alerta tiene prioridad sobre la charla. Las transcripciones solo se mantienen temporalmente en memoria.
+
+La conversación mantiene el tema, recuerda temporalmente el último detalle contado y ofrece seguimiento para preferencias, recuerdos o un día difícil. Las alertas tienen variantes breves según la señal y conservan sus intervalos de repetición. La voz instalada se elige por disponibilidad sin conexión, acento y calidad; el timbre real requiere una prueba en Android. Se trata de un motor de diálogo local de alcance limitado, sin un modelo generativo de conversación abierta.
+
 - La alarma local del conductor no depende de Internet.
 - Los incidentes `WARNING` y `CRITICAL` pueden persistirse cuando existe viaje activo y consentimiento.
 - La central muestra riesgo, señal, hora de detección y estado del viaje.

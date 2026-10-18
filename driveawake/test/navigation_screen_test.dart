@@ -1,6 +1,7 @@
 import 'package:driveawake/app/app_theme.dart';
 import 'package:driveawake/models/drowsiness_state.dart';
 import 'package:driveawake/navigation/smart_navigation.dart';
+import 'package:driveawake/navigation/voice_assistant.dart';
 import 'package:driveawake/screens/navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,7 +11,11 @@ void main() {
   testWidgets('sustained fatigue displays a Smart Rest recommendation', (
     tester,
   ) async {
-    final nav = SmartNavigation(launcher: (_, _) async => true);
+    final output = _VoiceOutput();
+    final nav = SmartNavigation(
+      launcher: (_, _) async => true,
+      voice: VoiceAssistant(output: output, language: () => 'es'),
+    );
     final warning = DrowsinessState.initial().copyWith(
       faceDetected: true,
       signalQuality: .9,
@@ -29,6 +34,7 @@ void main() {
     await tester.pump();
     expect(find.text('SMART REST'), findsOneWidget);
     expect(find.textContaining('señales sostenidas'), findsOneWidget);
+    expect(output.spoken.single, contains('cansancio'));
   });
 
   testWidgets('external search requires stopped confirmation and warning', (
@@ -104,4 +110,14 @@ void main() {
       'Terminal terrestre Arequipa',
     );
   });
+}
+
+class _VoiceOutput implements VoiceOutput {
+  final spoken = <String>[];
+  @override
+  Future<bool> configure(String language) async => true;
+  @override
+  Future<void> speak(String message) async => spoken.add(message);
+  @override
+  Future<void> stop() async {}
 }

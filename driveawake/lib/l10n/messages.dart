@@ -1,5 +1,66 @@
 // Display catalog. Numeric slots preserve dynamic report values.
 const englishMessages = <String, String>{
+  'Instala una voz sin conexión en Ajustes de Android → Texto a voz y vuelve a probar.':
+      'Install an offline voice in Android Settings → Text-to-speech, then try again.',
+  'Tu copiloto': 'Your copilot',
+  'Copiloto': 'Copilot',
+  'Tú': 'You',
+  'Alertas habladas': 'Spoken alerts',
+  'Alertas habladas activadas': 'Spoken alerts enabled',
+  'Te aviso con voz cuando detecto señales de cansancio.':
+      'I will speak when I detect signs of tiredness.',
+  'Probar voz': 'Test voice',
+  'Conversa conmigo': 'Talk with me',
+  'Terminar conversación': 'End conversation',
+  'Cuando quieras, conversemos.': 'Let us talk whenever you are ready.',
+  'Hablando contigo…': 'Speaking to you…',
+  'Preparando escucha…': 'Getting ready to listen…',
+  'Preparando micrófono…': 'Preparing microphone…',
+  'Escuchando…': 'Listening…',
+  'Micrófono apagado': 'Microphone off',
+  'Escuchando: {0}': 'Listening: {0}',
+  'Te escuché: {0}': 'I heard: {0}',
+  'Escucha la alerta de seguridad.': 'Listen to the safety alert.',
+  'Conversación terminada. Las alertas siguen activas.':
+      'Conversation ended. Alerts stay active.',
+  'No te escuché. Cuando quieras, vuelve a pulsar el micrófono.':
+      'I did not hear you. Tap the microphone when ready.',
+  'No confirmé lo que dijiste. Puedes volver a intentarlo.':
+      'I could not confirm what you said. You can try again.',
+  'Autoriza el micrófono antes de iniciar el viaje o desde los ajustes de Android.':
+      'Allow the microphone before starting the trip or in Android settings.',
+  'Reconocimiento no disponible. Revisa el micrófono y el servicio de voz de Android.':
+      'Speech recognition is unavailable. Check the microphone and Android speech service.',
+  'Instala español en el servicio de voz de Android.':
+      'Install Spanish in Android speech recognition.',
+  'No se pudo reconocer la voz. Revisa el permiso de micrófono y el servicio de voz de Android.':
+      'Speech recognition failed. Check microphone permission and the Android speech service.',
+  'No se pudo iniciar el reconocimiento de voz. Inténtalo de nuevo.':
+      'Speech recognition could not start. Try again.',
+  'No pude completar la acción. Puedes usar los botones de la pantalla.':
+      'I could not complete the action. You can use the on-screen buttons.',
+  'Podemos hablar de tu día, viajes o curiosidades. También puedes decir: cómo voy, necesito descansar, pausar o SOS.':
+      'We can talk about your day, travel or interesting facts. You can also say: status, I need a break, pause or emergency.',
+  'Al iniciar, el micrófono escucha por turnos. El silencio o cerrar este panel termina la escucha. Android puede usar Internet para reconocer tu voz. La charla se borra al cerrar.':
+      'Once started, the microphone listens in turns. Silence or closing this panel ends listening. Android may use the Internet for recognition. The chat is cleared on closing.',
+  'Hola, soy tu copiloto. Estoy aquí para escucharte y avisarte si detecto señales de cansancio.':
+      'Hello, I am your copilot. I am here to listen and tell you if I detect signs of tiredness.',
+  'Atención. Tus ojos llevan demasiado tiempo cerrados. Detente en un lugar seguro tan pronto como sea posible.':
+      'Attention. Your eyes have been closed for too long. Stop in a safe place as soon as possible.',
+  'Atención. Estoy detectando señales fuertes de somnolencia. Detente en un lugar seguro y descansa.':
+      'Attention. I am detecting strong signs of drowsiness. Stop in a safe place and rest.',
+  'No puedo ver bien tu rostro. Revisa la cámara cuando estés detenido en un lugar seguro.':
+      'I cannot see your face clearly. Check the camera when parked in a safe place.',
+  'He observado varios bostezos. ¿Te sientes cansado? Busca un lugar seguro para descansar.':
+      'I have noticed several yawns. Do you feel tired? Find a safe place to rest.',
+  'He notado que apartas la cabeza. Mantén la atención en el camino y detente si necesitas descansar.':
+      'I have noticed your head turning away. Keep your attention on the road and stop if you need rest.',
+  'He observado señales de cansancio. Lo más seguro es detenerte en un lugar apropiado para descansar.':
+      'I have noticed signs of tiredness. The safest choice is to stop in a suitable place to rest.',
+  'Detente en un lugar seguro tan pronto como sea posible.':
+      'Stop in a safe place as soon as possible.',
+  'Las alertas habladas están activadas inicialmente y usan una voz instalada que declare no necesitar red. Puedes desactivarlas en el panel del copiloto. Al pulsar Conversa conmigo, el micrófono escucha por turnos después de cada respuesta; el silencio, terminar la conversación, cerrar el panel o salir de la app cancela la escucha. Android puede procesar el reconocimiento por Internet. La conversación se conserva solo en memoria mientras el panel está abierto y se borra al cerrarlo; no se envía a Firebase ni se guarda audio. El contacto SOS se guarda localmente y se elimina dejando el campo vacío. Abrir el marcador requiere confirmación y no realiza llamadas automáticas.':
+      'Spoken alerts are initially enabled and use an installed voice that reports no network requirement. You can disable them in the copilot panel. When you tap Talk with me, the microphone listens in turns after each response; silence, ending the conversation, closing the panel or leaving the app cancels listening. Android may use the Internet for recognition. The conversation is held only in memory while the panel is open and cleared on closing; no transcript is sent to Firebase and no audio is stored. The SOS contact is stored locally and cleared by emptying the field. Opening the dialer requires confirmation and never places an automatic call.',
   'Google Maps externo': 'External Google Maps',
   'DriverAwaken no solicita ubicación ni carga mapas internos. Solo después de tu confirmación abre una URL oficial de búsqueda o navegación en Google Maps o en un navegador compatible. El texto de búsqueda o destino se comparte con esa aplicación. Al salir, el monitoreo se pausa y requiere reanudación explícita al regresar.':
       'DriverAwaken does not request location or load internal maps. Only after your confirmation, it opens an official search or navigation URL in Google Maps or a compatible browser. The search text or destination is shared with that application. Monitoring pauses when you leave and requires explicit resumption when you return.',

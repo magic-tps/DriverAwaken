@@ -20,14 +20,15 @@ typedef ExternalUrlLauncher = Future<bool> Function(Uri uri, LaunchMode mode);
 ///
 /// This service intentionally has no GPS, tile, geocoding or places provider.
 class SmartNavigation extends ChangeNotifier {
-  SmartNavigation({ExternalUrlLauncher? launcher})
-    : _launcher = launcher ?? _defaultLauncher;
+  SmartNavigation({ExternalUrlLauncher? launcher, VoiceAssistant? voice})
+    : _launcher = launcher ?? _defaultLauncher,
+      voice = voice ?? VoiceAssistant();
 
   static final instance = SmartNavigation();
 
   final ExternalUrlLauncher _launcher;
   final restEngine = RestRecommendationEngine();
-  final voice = VoiceAssistant();
+  final VoiceAssistant voice;
 
   List<RestSessionRow> rests = [];
   RestRecommendation? recommendation;
@@ -50,6 +51,7 @@ class SmartNavigation extends ChangeNotifier {
   Future<void> load() async {
     try {
       final prefs = await SharedPreferences.getInstance();
+      voice.enabled = prefs.getBool('guardian_spoken_alerts_enabled') ?? true;
       drivingLimit = Duration(
         minutes: (prefs.getInt('guardian_rest_interval_minutes') ?? 120).clamp(
           15,
@@ -80,6 +82,9 @@ class SmartNavigation extends ChangeNotifier {
 
   void observe(DrowsinessState state, DateTime now, Duration elapsed) {
     driving = elapsed;
+    if (SettingsService.instance.settings.soundEnabled) {
+      voice.observeSafety(state, now);
+    }
     final next = restEngine.evaluate(
       state,
       now,
@@ -92,7 +97,10 @@ class SmartNavigation extends ChangeNotifier {
     }
     if (next?.reason == recommendation?.reason) return;
     recommendation = next;
-    if (next != null && SettingsService.instance.settings.soundEnabled) {
+    if (next != null &&
+        SettingsService.instance.settings.soundEnabled &&
+        state.level == DrowsinessLevel.normal &&
+        !state.noFaceTooLong) {
       unawaited(
         voice.say(
           next.reason,
@@ -101,10 +109,17 @@ class SmartNavigation extends ChangeNotifier {
               : next.message,
           now,
           critical: next.critical,
+          safety: true,
         ),
       );
     }
     notifyListeners();
+  }
+
+  Future<void> setVoiceEnabled(bool enabled) async {
+    voice.enabled = enabled;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('guardian_spoken_alerts_enabled', enabled);
   }
 
   void requestRest() {

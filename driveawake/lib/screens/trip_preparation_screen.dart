@@ -124,10 +124,10 @@ class _TripPreparationScreenState extends State<TripPreparationScreen>
           ),
           ListTile(
             leading: const Icon(Icons.mic_none),
-            title: const Text('Comandos de voz'),
+            title: const Text('Copiloto y alertas habladas'),
             subtitle: Text(
               _microphone
-                  ? 'Micrófono autorizado · escucha solo al pulsar'
+                  ? 'Micrófono autorizado · conversación al iniciarla'
                   : 'Opcional: puedes continuar sin micrófono',
             ),
           ),
