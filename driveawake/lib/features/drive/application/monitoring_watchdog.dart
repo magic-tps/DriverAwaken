@@ -112,11 +112,11 @@ class MonitoringWatchdog {
         'La tasa real de procesamiento es baja.',
       );
     }
-    if (performance.framesReceived >= 5 &&
-        performance.dropRatio > config.maximumDropRatio) {
+    if (performance.framesAccepted + performance.framesDroppedBusy >= 5 &&
+        performance.busyDropRatio > config.maximumDropRatio) {
       return const MonitoringAssessment(
         MonitoringHealth.degraded,
-        'Se están descartando demasiados frames.',
+        'La cámara no alcanza el ritmo de análisis. Revisa el teléfono al detenerte.',
       );
     }
     if (performance.totalP95Ms > config.maximumTotalP95Ms) {

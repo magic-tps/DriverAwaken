@@ -64,6 +64,7 @@ void main() {
       expect(snapshot.framesDroppedScheduler, 1);
       expect(snapshot.framesDropped, 2);
       expect(snapshot.dropRatio, 1);
+      expect(snapshot.busyDropRatio, 1);
     });
 
     test('negative out-of-order latency is ignored', () {

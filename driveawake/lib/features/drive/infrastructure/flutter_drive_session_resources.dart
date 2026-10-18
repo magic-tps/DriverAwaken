@@ -277,12 +277,12 @@ class FlutterDriveSessionResources extends ChangeNotifier
       _performance.frameDroppedScheduler();
       return;
     }
-    if (_processing) {
-      _performance.frameDroppedBusy();
-      return;
-    }
     if (now.difference(_lastFrameAt) < interval) {
       _performance.frameDroppedScheduler();
+      return;
+    }
+    if (_processing) {
+      _performance.frameDroppedBusy();
       return;
     }
     final controller = _camera.controller;
@@ -297,7 +297,6 @@ class FlutterDriveSessionResources extends ChangeNotifier
       ),
     );
     final totalStarted = _performance.nowMicros();
-    _emit(_state.copyWith(processingStatus: DriveProcessingStatus.processing));
     try {
       final input = _performance.measureSync(
         ProcessingStage.imageConversion,
@@ -609,7 +608,8 @@ class FlutterDriveSessionResources extends ChangeNotifier
     if (image.planes.isEmpty) return null;
     final bytes = image.planes.first.bytes;
     if (bytes.isEmpty) return null;
-    final step = (bytes.length ~/ 800).clamp(1, 80);
+    // Sample roughly 800 luminance bytes regardless of camera resolution.
+    final step = (bytes.length ~/ 800).clamp(1, 10000);
     var total = 0.0;
     var count = 0;
     for (var index = 0; index < bytes.length; index += step) {

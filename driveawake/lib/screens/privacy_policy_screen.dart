@@ -32,9 +32,34 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   'El usuario puede elegir 7, 30 o 90 dias, o conservar el historial local sin borrado automatico. Las copias en la nube se conservan hasta borrarlas desde Mis copias en la nube, donde tambien puedes eliminar tu cuenta. Borrar datos locales no elimina las copias remotas.',
             ),
             _PolicySection(
+              title: 'Guardian: vinculacion voluntaria a una flota',
+              text:
+                  'El modo personal no comparte incidentes con empresas. Con una cuenta, membresia activa y consentimiento especifico, Guardian comparte identificadores de viaje y conductor, tipo de incidente, fechas de deteccion y recepcion, severidad, score heuristico y calidad/salud del monitoreo. No comparte imagenes, landmarks, embeddings, ubicacion continua ni datos medicos. El score no es una probabilidad de accidente.',
+            ),
+            _PolicySection(
+              title: 'Cola offline y datos empresariales',
+              text:
+                  'Los mensajes autorizados se guardan en SQLite y se reintentan con limites. La retencion local elegida tambien se aplica a esta cola. Desvincular la flota, cerrar sesion o eliminar la cuenta borra la cola local y detiene futuros envios; una transaccion ya enviada puede completarse. Los eventos ya recibidos y las acciones de la central no se borran desde el cliente. Solicita su eliminacion al responsable de la flota. La identidad y el canal de ese responsable, la retencion remota y el procedimiento de eliminacion deben definirse antes del piloto con personas reales.',
+            ),
+            _PolicySection(
               title: 'Exportacion',
               text:
                   'Los informes se comparten o copian en la nube tras confirmacion. La copia en Firebase contiene fechas, duraciones, alertas, riesgo y telemetria. Las exportaciones a otras aplicaciones dependen del destinatario elegido.',
+            ),
+            _PolicySection(
+              title: 'Google Maps externo',
+              text:
+                  'DriverAwaken no solicita ubicación ni carga mapas internos. Solo después de tu confirmación abre una URL oficial de búsqueda o navegación en Google Maps o en un navegador compatible. El texto de búsqueda o destino se comparte con esa aplicación. Al salir, el monitoreo se pausa y requiere reanudación explícita al regresar.',
+            ),
+            _PolicySection(
+              title: 'Voz y contacto de emergencia',
+              text:
+                  'Las indicaciones habladas usan una voz instalada que declare no necesitar red. Los comandos de voz activan el micrófono solo al pulsar Escuchar comando y usan el servicio de reconocimiento de Android, que puede procesar audio por Internet. La app no guarda grabaciones ni transcripciones en el historial o Firebase. Cerrar el panel o enviar la app a segundo plano cancela la escucha. El contacto opcional del panel SOS se guarda localmente y se elimina dejando el campo vacío. Abrir el marcador requiere confirmación y no realiza una llamada automática; el registro manual opcional queda en el historial local.',
+            ),
+            _PolicySection(
+              title: 'Descansos declarados',
+              text:
+                  'Los intervalos de descanso se guardan localmente al confirmarlos. Si autorizas el viaje de flota, sus datos de tiempo e identificadores pueden sincronizarse con la organización. El registro no demuestra recuperación fisiológica ni se inicia por pulsar Navegar.',
             ),
             _PolicySection(
               title: 'Permisos y terceros',

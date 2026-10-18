@@ -24,6 +24,12 @@ Si se distribuye en otros países latinoamericanos, se requiere una revisión se
 
 ## Tratamiento actual
 
+### Ampliación Guardian (2026-10-17, todavía sin publicación)
+
+La vinculación voluntaria exige cuenta, membresía y consentimiento específico por flota/viaje. Comparte identificadores de conductor/viaje, tipo y severidad del incidente, score heurístico, calidad/salud del monitoreo y fechas de detección/recepción. No añade imágenes, landmarks, embeddings, datos médicos ni ubicación continua. Las acciones del operador se registran aparte. La demo pública usa datos ficticios aislados.
+
+La cola SQLite y los registros empresariales locales respetan la retención elegida, incluso si aún no fueron enviados. Desvincular, cerrar sesión o eliminar cuenta borra la cola local y detiene nuevos envíos; una transacción ya enviada puede completarse. Los datos remotos empresariales requieren procedimiento del responsable; el cliente no los borra silenciosamente. La eliminación de cuenta personal no implica eliminación automática de incidentes recibidos por una flota. Antes de un piloto deben definirse `[[RESPONSABLE DE FLOTA]]`, `[[CANAL DE SOLICITUD]]`, `[[RETENCION REMOTA]]` y `[[PROCEDIMIENTO DE ELIMINACION]]`. No se completan con identidades inventadas.
+
 La versión actual procesa localmente la cámara frontal para obtener señales de somnolencia. No guarda imágenes ni vídeo y no transmite frames a un backend. Conserva localmente eventos, métricas de riesgo, calibración y telemetría técnica del dispositivo.
 
 Desde la integración Firebase del 2026-09-05 existe una cuenta opcional con correo/contraseña y copias manuales de resúmenes en Cloud Firestore. La copia requiere confirmación e incluye fechas, duraciones, alertas, riesgo y telemetría. No incluye imágenes ni frames. Las copias se conservan hasta que el usuario las borra en la pantalla de nube; también puede eliminar su cuenta y todas sus copias mediante reautenticación. La retención local no afecta a las copias remotas.

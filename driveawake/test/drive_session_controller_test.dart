@@ -9,6 +9,61 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  test('background during preparation prevents late camera startup', () async {
+    final resources = _FakeResources()..prepareGate = Completer<void>();
+    final controller = DriveSessionController(resources: resources);
+    final start = controller.start();
+    final paused = controller.appMovedToBackground();
+    resources.prepareGate!.complete();
+    await Future.wait([start, paused]);
+    expect(resources.startCalls, 0);
+    expect(controller.state.phase, DriveSessionPhase.paused);
+    controller.dispose();
+  });
+  test('pause waits for camera startup then releases its stream', () async {
+    final resources = _FakeResources()..startGate = Completer<void>();
+    final controller = DriveSessionController(resources: resources);
+    final start = controller.start();
+    await Future<void>.delayed(Duration.zero);
+    expect(resources.startCalls, 1);
+    final paused = controller.appMovedToBackground();
+    expect(resources.pauseCalls, 0);
+    resources.startGate!.complete();
+    await Future.wait([start, paused]);
+    expect(resources.pauseCalls, 1);
+    expect(controller.state.phase, DriveSessionPhase.paused);
+    expect(controller.state.streamStatus, DriveStreamStatus.stopped);
+    controller.dispose();
+  });
+  test('redundant pause cannot prevent later pause after resuming', () async {
+    final resources = _FakeResources();
+    final controller = DriveSessionController(
+      resources: resources,
+      delay: (_) async {},
+    );
+    await controller.start();
+    await controller.pause();
+    await controller.pause();
+    await controller.resume();
+    await controller.pause();
+    expect(resources.pauseCalls, 2);
+    expect(controller.state.phase, DriveSessionPhase.paused);
+    controller.dispose();
+  });
+  test('resume while active does not prevent later valid resume', () async {
+    final resources = _FakeResources();
+    final controller = DriveSessionController(
+      resources: resources,
+      delay: (_) async {},
+    );
+    await controller.start();
+    await controller.resume();
+    await controller.pause();
+    await controller.resume();
+    expect(resources.startCalls, 2);
+    expect(controller.state.phase, DriveSessionPhase.active);
+    controller.dispose();
+  });
   test('inicia una sesion y activa monitoreo', () async {
     final resources = _FakeResources();
     final controller = DriveSessionController(resources: resources);
@@ -36,7 +91,9 @@ void main() {
     );
     controller.addListener(() {
       final value = controller.state.resumeCountdown;
-      if (value != null) countdowns.add(value);
+      if (value != null && (countdowns.isEmpty || countdowns.last != value)) {
+        countdowns.add(value);
+      }
     });
     await controller.start(recoveredDraft: _draft());
     await Future.wait(<Future<void>>[controller.resume(), controller.resume()]);
@@ -120,6 +177,8 @@ class _FakeResources extends ChangeNotifier implements DriveSessionResources {
   int finishCalls = 0;
   int discardCalls = 0;
   Object? startError;
+  Completer<void>? prepareGate;
+  Completer<void>? startGate;
 
   @override
   DriveState get resourceState => _state;
@@ -127,12 +186,14 @@ class _FakeResources extends ChangeNotifier implements DriveSessionResources {
   @override
   Future<void> prepare({TripSessionDraft? recoveredDraft}) async {
     prepareCalls += 1;
+    await prepareGate?.future;
     _state = _state.copyWith(draft: recoveredDraft);
   }
 
   @override
   Future<void> startMonitoring() async {
     startCalls += 1;
+    await startGate?.future;
     final error = startError;
     if (error != null) throw error;
     _state = _state.copyWith(

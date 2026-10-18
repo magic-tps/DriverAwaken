@@ -15,16 +15,25 @@ import '../widgets/alert_overlay.dart';
 import '../widgets/debug_metrics_panel.dart';
 import '../widgets/status_card.dart';
 import 'trip_summary_screen.dart';
+import '../navigation/rest_recommendation_engine.dart';
+import '../navigation/smart_navigation.dart';
+import '../services/device_telemetry_service.dart';
+import 'navigation_screen.dart';
+import 'settings_screen.dart';
+import '../services/emergency_service.dart';
+import '../services/voice_command_service.dart';
 
 class DriveModeScreen extends StatefulWidget {
   const DriveModeScreen({
     super.key,
     this.recoveredDraft,
     this.sessionResources,
+    this.resumeRecovered = false,
   });
 
   final TripSessionDraft? recoveredDraft;
   final DriveSessionResources? sessionResources;
+  final bool resumeRecovered;
 
   @override
   State<DriveModeScreen> createState() => _DriveModeScreenState();
@@ -35,6 +44,9 @@ class _DriveModeScreenState extends State<DriveModeScreen>
   late final DriveSessionResources _resources;
   late final DriveSessionController _controller;
   bool _completionHandled = false;
+  final VoiceCommandService _commands = VoiceCommandService.instance;
+  bool _openingNavigation = false;
+  bool _backgroundedDuringStart = false;
 
   DriveState get _driveState => _controller.state;
   DrowsinessState get _monitoring => _driveState.monitoring;
@@ -46,14 +58,27 @@ class _DriveModeScreenState extends State<DriveModeScreen>
     _resources = widget.sessionResources ?? FlutterDriveSessionResources();
     _controller = DriveSessionController(resources: _resources)
       ..addListener(_onControllerChanged);
-    unawaited(_controller.start(recoveredDraft: widget.recoveredDraft));
+    unawaited(_startPreparedTrip());
+  }
+
+  Future<void> _startPreparedTrip() async {
+    await _controller.start(recoveredDraft: widget.recoveredDraft);
+    unawaited(SmartNavigation.instance.load());
+    if (mounted &&
+        widget.resumeRecovered &&
+        !_backgroundedDuringStart &&
+        _driveState.paused &&
+        WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed) {
+      await _controller.resume();
+    }
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.inactive ||
-        state == AppLifecycleState.paused) {
+    if (state == AppLifecycleState.paused) {
+      _backgroundedDuringStart = true;
       unawaited(_controller.appMovedToBackground());
+      unawaited(_commands.stop());
     }
   }
 
@@ -107,8 +132,282 @@ class _DriveModeScreenState extends State<DriveModeScreen>
       isScrollControlled: true,
       useSafeArea: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => _MetricsSheet(driveState: _driveState),
+      builder: (context) => _MetricsSheet(
+        driveState: _driveState,
+        onCalibrate: () {
+          Navigator.pop(context);
+          unawaited(_startCalibration());
+        },
+      ),
     );
+  }
+
+  Future<void> _openSettings() async {
+    if (!_driveState.paused) await _controller.pause();
+    if (!mounted) return;
+    await Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const SettingsScreen()));
+  }
+
+  Future<void> _voiceControls() async {
+    final nav = SmartNavigation.instance;
+    final command = await showModalBottomSheet<String>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (sheetContext) => StatefulBuilder(
+        builder: (sheetContext, update) => SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SwitchListTile(
+                  title: const LocalizedText('Asistente de voz breve'),
+                  subtitle: const LocalizedText(
+                    'Las alarmas críticas siguen disponibles.',
+                  ),
+                  value: nav.voice.enabled,
+                  onChanged: (value) => update(() => nav.voice.enabled = value),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: LocalizedText(nav.voice.status),
+                ),
+                const Text(
+                  'Di: “pausar”, “reanudar”, “necesito descansar”, “estado”, “abrir mapa” o “SOS”.',
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'El micrófono se activa al pulsar. Android puede usar Internet para reconocer la voz.',
+                  style: TextStyle(fontSize: 12),
+                ),
+                const SizedBox(height: 16),
+                ListenableBuilder(
+                  listenable: _commands,
+                  builder: (context, _) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(_commands.status),
+                      const SizedBox(height: 12),
+                      FilledButton.icon(
+                        onPressed: _commands.busy
+                            ? null
+                            : () {
+                                unawaited(nav.voice.stop());
+                                unawaited(
+                                  _commands.listen(
+                                    onCommand: (words) {
+                                      if (sheetContext.mounted &&
+                                          ModalRoute.of(
+                                                sheetContext,
+                                              )?.isCurrent ==
+                                              true) {
+                                        Navigator.of(sheetContext).pop(words);
+                                      }
+                                    },
+                                  ),
+                                );
+                              },
+                        icon: Icon(_commands.busy ? Icons.hearing : Icons.mic),
+                        label: Text(
+                          _commands.busy ? 'Escuchando…' : 'Escuchar comando',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    await _commands.stop();
+    if (mounted && command != null) _handleVoiceCommand(command);
+  }
+
+  void _handleVoiceCommand(String command) {
+    if (!mounted) return;
+    switch (parseVoiceCommand(command)) {
+      case VoiceCommand.pause:
+        unawaited(_controller.pause());
+        _voiceFeedback(
+          'Monitoreo en pausa. Reanúdalo explícitamente al estar listo.',
+        );
+      case VoiceCommand.resume:
+        unawaited(_controller.resume());
+        _voiceFeedback('Reanudando monitoreo.');
+      case VoiceCommand.map:
+        unawaited(_openNavigation());
+      case VoiceCommand.sos:
+        unawaited(_sos());
+      case VoiceCommand.rest:
+        SmartNavigation.instance.requestRest();
+        _voiceFeedback(
+          'Detente en un lugar seguro. La búsqueda de paradas requiere tu acción cuando estés detenido.',
+        );
+      case VoiceCommand.silence:
+        SmartNavigation.instance.voice.enabled = false;
+        _voiceFeedback(
+          'Voz desactivada. Las alertas visuales, sonoras y vibratorias continúan.',
+        );
+      case VoiceCommand.repeat:
+        if (SmartNavigation.instance.voice.enabled) {
+          unawaited(SmartNavigation.instance.voice.repeatLast(DateTime.now()));
+        } else {
+          _voiceFeedback(
+            'Activa el asistente de voz para repetir el último mensaje.',
+          );
+        }
+      case VoiceCommand.status:
+        _voiceFeedback(
+          _driveState.paused
+              ? 'Monitoreo pausado. Reanúdalo cuando estés listo.'
+              : _driveState.monitoringHealth == MonitoringHealth.healthy
+              ? 'Monitoreo activo. Estado actual: ${_monitoring.level.name}.'
+              : 'La señal del monitoreo no es fiable. Revisa la cámara al detenerte.',
+        );
+      case null:
+        break;
+    }
+  }
+
+  void _voiceFeedback(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+    unawaited(
+      SmartNavigation.instance.voice.say(
+        'voice_command_${DateTime.now().microsecondsSinceEpoch}',
+        message,
+        DateTime.now(),
+      ),
+    );
+  }
+
+  Future<void> _openNavigation() async {
+    if (_openingNavigation || _driveState.transitionInProgress) return;
+    _openingNavigation = true;
+    try {
+      if (!_driveState.paused) {
+        final stopped = await showDialog<bool>(
+          context: context,
+          builder: (dialogContext) => AlertDialog(
+            title: const Text('¿Vehículo detenido?'),
+            content: const Text(
+              'Consulta paradas únicamente después de detenerte en un '
+              'lugar seguro. DriverAwaken pausará el monitoreo al continuar.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(dialogContext, false),
+                child: const Text('Seguir monitoreando'),
+              ),
+              FilledButton(
+                onPressed: () => Navigator.pop(dialogContext, true),
+                child: const Text('Estoy detenido'),
+              ),
+            ],
+          ),
+        );
+        if (!mounted || stopped != true) return;
+      }
+      if (!_driveState.paused) await _controller.pause();
+      if (!mounted) return;
+      await Navigator.of(
+        context,
+      ).push(MaterialPageRoute<void>(builder: (_) => const NavigationScreen()));
+    } finally {
+      _openingNavigation = false;
+    }
+  }
+
+  Future<void> _sos() async {
+    final emergency = EmergencyService();
+    final savedContact = await emergency.contact();
+    if (!mounted) return;
+    var phone = savedContact;
+    var record = false;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, update) => AlertDialog(
+          title: const Text('SOS · abrir teléfono'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Se abrirá el marcador para que elijas a quién llamar. No envía ubicación ni contacta automáticamente a emergencias. El monitoreo quedará pausado.',
+                ),
+                TextFormField(
+                  initialValue: savedContact,
+                  keyboardType: TextInputType.phone,
+                  maxLength: 16,
+                  onChanged: (value) => update(() => phone = value.trim()),
+                  decoration: const InputDecoration(
+                    labelText: 'Contacto de emergencia (opcional)',
+                    helperText: 'Solo se guarda en este dispositivo.',
+                  ),
+                ),
+                CheckboxListTile(
+                  value: record,
+                  onChanged: (value) => update(() => record = value ?? false),
+                  title: const Text(
+                    'Registrar solicitud manual en el historial local',
+                  ),
+                ),
+                if (_driveState.draft != null)
+                  Text('Viaje: ${_driveState.draft!.tripId}'),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancelar'),
+            ),
+            FilledButton(
+              onPressed:
+                  phone.isEmpty || RegExp(r'^\+?[0-9]{6,15}$').hasMatch(phone)
+                  ? () => Navigator.pop(context, true)
+                  : null,
+              child: const Text('Abrir marcador'),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (confirmed != true) return;
+    await _controller.pause();
+    try {
+      await emergency.saveContact(phone);
+      if (record) {
+        await emergency.recordManualIncident(tripId: _driveState.draft?.tripId);
+      }
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No se pudo guardar el contacto o registro local.'),
+          ),
+        );
+      }
+    }
+    final opened = await DeviceTelemetryService().openDialer(number: phone);
+    if (!opened && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'No se pudo abrir el marcador. Usa la función Teléfono del dispositivo.',
+          ),
+        ),
+      );
+    }
   }
 
   Future<void> _confirmExit() async {
@@ -118,7 +417,7 @@ class _DriveModeScreenState extends State<DriveModeScreen>
       builder: (context) => AlertDialog(
         title: const LocalizedText('Finalizar viaje'),
         content: const LocalizedText(
-          'El monitoreo sigue activo. Puedes continuar, guardar el viaje o descartarlo.',
+          'Puedes continuar, guardar el viaje o descartarlo.',
         ),
         actions: <Widget>[
           TextButton(
@@ -169,11 +468,100 @@ class _DriveModeScreenState extends State<DriveModeScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    unawaited(_commands.stop());
     _controller
       ..removeListener(_onControllerChanged)
       ..dispose();
     super.dispose();
   }
+
+  Widget _buildMonitoringMap(
+    DriveState state,
+    CameraController? camera,
+    bool cameraReady,
+  ) => LayoutBuilder(
+    builder: (context, constraints) => Column(
+      children: [
+        if (constraints.maxHeight > 390)
+          _MonitoringMetrics(state: _monitoring, driveState: state),
+        const SizedBox(height: 8),
+        Expanded(
+          child: RepaintBoundary(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                if (cameraReady && camera != null)
+                  _CameraViewfinder(controller: camera, state: _monitoring)
+                else
+                  _LoadingPanel(message: state.recoverableError),
+                if (!state.paused &&
+                    state.phase != DriveSessionPhase.resuming &&
+                    state.monitoringHealth != MonitoringHealth.healthy)
+                  Positioned(
+                    top: 58,
+                    left: 8,
+                    right: 8,
+                    child: _MonitoringHealthBar(state: state),
+                  ),
+                if (_monitoring.level != DrowsinessLevel.normal &&
+                    constraints.maxHeight > 510 &&
+                    state.monitoringHealth == MonitoringHealth.healthy &&
+                    !state.paused)
+                  Positioned(
+                    top: 58,
+                    left: 8,
+                    right: 8,
+                    child: StatusCard(state: _monitoring),
+                  ),
+                if (!state.paused &&
+                    SmartNavigation.instance.recommendation != null &&
+                    SmartNavigation.instance.recommendation!.reason !=
+                        'SIGNAL_UNAVAILABLE')
+                  Positioned(
+                    left: 8,
+                    right: 8,
+                    bottom: 8,
+                    child: _SmartRestCard(
+                      recommendation: SmartNavigation.instance.recommendation!,
+                      onOpen: () => unawaited(_openNavigation()),
+                    ),
+                  ),
+                if (state.paused ||
+                    state.phase == DriveSessionPhase.resuming ||
+                    state.phase == DriveSessionPhase.recoverableError)
+                  Positioned(
+                    left: 8,
+                    right: 8,
+                    bottom: 8,
+                    child: _PausedOverlay(
+                      countdown: state.resumeCountdown,
+                      onResume: () => unawaited(_controller.resume()),
+                      onFinish: () => unawaited(_confirmExit()),
+                      onNavigation: () => unawaited(_openNavigation()),
+                      onVoice: () => unawaited(_voiceControls()),
+                    ),
+                  ),
+                if (!state.paused &&
+                    state.phase != DriveSessionPhase.resuming &&
+                    state.phase != DriveSessionPhase.recoverableError)
+                  Positioned(
+                    right: 10,
+                    top: 10,
+                    child: IconButton.filledTonal(
+                      tooltip: context.tr('Pausar'),
+                      onPressed: state.transitionInProgress
+                          ? null
+                          : () => unawaited(_togglePause()),
+                      icon: const Icon(Icons.pause),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -205,34 +593,24 @@ class _DriveModeScreenState extends State<DriveModeScreen>
                           _DriveTopBar(
                             paused: state.paused,
                             onShowMetrics: () => unawaited(_showMetrics()),
+                            onSettings: () => unawaited(_openSettings()),
+                            onSos: () => unawaited(_sos()),
                           ),
                           const SizedBox(height: 10),
-                          if (state.monitoringHealth !=
-                                  MonitoringHealth.unavailable &&
-                              state.monitoringHealth !=
-                                  MonitoringHealth.recovering)
-                            StatusCard(state: _monitoring),
-                          const SizedBox(height: 8),
-                          _MonitoringHealthBar(state: state),
-                          const SizedBox(height: 12),
                           Expanded(
-                            child: cameraReady
-                                ? _CameraViewfinder(
-                                    controller: controller,
-                                    state: _monitoring,
-                                  )
-                                : _LoadingPanel(
-                                    message: state.recoverableError,
-                                  ),
+                            child: _buildMonitoringMap(
+                              state,
+                              controller,
+                              cameraReady,
+                            ),
                           ),
                           const SizedBox(height: 10),
                           _ActionBar(
                             paused: state.paused,
                             busy: state.transitionInProgress,
-                            onCalibrate: () => unawaited(_startCalibration()),
-                            onPauseResume: () => unawaited(_togglePause()),
-                            onFinish: () =>
-                                unawaited(_controller.finish(discard: false)),
+                            onMap: () => unawaited(_openNavigation()),
+                            onVoice: () => unawaited(_voiceControls()),
+                            onFinish: () => unawaited(_confirmExit()),
                           ),
                         ],
                       ),
@@ -240,12 +618,6 @@ class _DriveModeScreenState extends State<DriveModeScreen>
             ),
             if (_monitoring.calibrationInProgress)
               _CalibrationOverlay(state: _monitoring),
-            if (state.paused || state.phase == DriveSessionPhase.resuming)
-              _PausedOverlay(
-                countdown: state.resumeCountdown,
-                onResume: () => unawaited(_controller.resume()),
-                onFinish: () => unawaited(_controller.finish(discard: false)),
-              ),
             AlertOverlay(
               visible:
                   state.phase == DriveSessionPhase.active &&
@@ -256,11 +628,6 @@ class _DriveModeScreenState extends State<DriveModeScreen>
               tier: _monitoring.alertTier,
               onAcknowledge: () => unawaited(_controller.acknowledgeDanger()),
             ),
-            if (state.phase == DriveSessionPhase.active &&
-                state.monitoringHealth == MonitoringHealth.unavailable)
-              _UnavailableOverlay(
-                onFinish: () => unawaited(_controller.finish(discard: false)),
-              ),
           ],
         ),
       ),
@@ -279,9 +646,9 @@ class _DriveBackdrop extends StatelessWidget {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: <Color>[
-          Color(0xFF081114),
-          Color(0xFF050708),
-          Color(0xFF0C0E11),
+          Color(0xFF0B1020),
+          Color(0xFF050A16),
+          Color(0xFF101D36),
         ],
       ),
     ),
@@ -289,43 +656,180 @@ class _DriveBackdrop extends StatelessWidget {
 }
 
 class _DriveTopBar extends StatelessWidget {
-  const _DriveTopBar({required this.paused, required this.onShowMetrics});
+  const _DriveTopBar({
+    required this.paused,
+    required this.onShowMetrics,
+    required this.onSettings,
+    required this.onSos,
+  });
   final bool paused;
   final VoidCallback onShowMetrics;
+  final VoidCallback onSettings, onSos;
 
   @override
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
     decoration: BoxDecoration(
       color: Colors.black.withValues(alpha: 0.44),
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(20),
       border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
     ),
     child: Row(
       children: <Widget>[
-        const Icon(Icons.health_and_safety_rounded, color: Color(0xFF24D17E)),
+        Image.asset('assets/logo.png', width: 30, height: 30),
         const SizedBox(width: 10),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               const LocalizedText(
-                'Modo conduccion',
+                'DriverAwaken',
                 style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
               ),
               LocalizedText(
-                paused ? 'Viaje pausado' : 'Camara frontal - IA local',
+                paused ? 'Monitoreo pausado' : 'Conduce seguro, llega siempre',
                 style: const TextStyle(color: Colors.white54, fontSize: 12),
               ),
             ],
           ),
         ),
+        TextButton(
+          onPressed: onSos,
+          child: const Text(
+            'SOS',
+            style: TextStyle(
+              color: Color(0xFFF06A76),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        IconButton(
+          tooltip: 'Configuración y navegación',
+          onPressed: onSettings,
+          icon: const Icon(Icons.settings_outlined),
+        ),
         IconButton.filledTonal(
           tooltip: context.tr('Ver metricas'),
           onPressed: onShowMetrics,
-          icon: const Icon(Icons.monitor_heart_outlined),
+          icon: const Icon(Icons.more_vert),
         ),
       ],
+    ),
+  );
+}
+
+class _MonitoringMetrics extends StatelessWidget {
+  const _MonitoringMetrics({required this.state, required this.driveState});
+
+  final DrowsinessState state;
+  final DriveState driveState;
+
+  @override
+  Widget build(BuildContext context) {
+    final elapsed = SmartNavigation.instance.driving;
+    final time =
+        '${elapsed.inHours}:${(elapsed.inMinutes % 60).toString().padLeft(2, '0')}';
+    return SizedBox(
+      height: 68,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          _item(
+            'OJOS',
+            state.faceDetected
+                ? (state.eyesClosed ? 'Cerrados' : 'Abiertos')
+                : 'Sin rostro',
+          ),
+          _item('BOSTEZOS', state.yawnCountWindow.toString()),
+          _item(
+            'PERCLOS',
+            state.perclosReady
+                ? '${(state.perclos * 100).round()}%'
+                : 'Calibrando',
+          ),
+          _item(
+            'CABEZA',
+            state.headDown
+                ? 'Inclinada'
+                : state.distracted
+                ? 'Desviada'
+                : 'Alineada',
+          ),
+          _item('SEÑAL', '${(state.signalQuality * 100).round()}%'),
+          _item(
+            'RIESGO',
+            state.faceDetected && state.signalQuality >= .32
+                ? '${state.riskScore.round()}/100'
+                : 'Sin señal',
+          ),
+          _item('TIEMPO', time),
+        ],
+      ),
+    );
+  }
+
+  Widget _item(String label, String value) => Container(
+    width: 94,
+    margin: const EdgeInsets.only(right: 6),
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+    decoration: BoxDecoration(
+      color: const Color(0xCC101A2B),
+      borderRadius: BorderRadius.circular(14),
+      border: Border.all(color: Colors.white12),
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+        ),
+        const SizedBox(height: 3),
+        Text(label, style: const TextStyle(color: Colors.white54, fontSize: 9)),
+      ],
+    ),
+  );
+}
+
+class _SmartRestCard extends StatelessWidget {
+  const _SmartRestCard({required this.recommendation, required this.onOpen});
+
+  final RestRecommendation recommendation;
+  final VoidCallback onOpen;
+
+  @override
+  Widget build(BuildContext context) => Material(
+    color: recommendation.critical
+        ? const Color(0xF039131B)
+        : const Color(0xF02B2412),
+    borderRadius: BorderRadius.circular(16),
+    child: Padding(
+      padding: const EdgeInsets.all(12),
+      child: Row(
+        children: [
+          Icon(
+            recommendation.critical
+                ? Icons.warning_rounded
+                : Icons.hotel_rounded,
+            color: recommendation.critical
+                ? const Color(0xFFFF6875)
+                : const Color(0xFFFFC857),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              recommendation.message,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+            ),
+          ),
+          if (!recommendation.critical)
+            TextButton(onPressed: onOpen, child: const Text('BUSCAR PARADA')),
+        ],
+      ),
     ),
   );
 }
@@ -345,37 +849,31 @@ class _CameraViewfinder extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.black,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(20),
         border: Border.all(color: color.withValues(alpha: 0.8), width: 1.6),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(7),
+        borderRadius: BorderRadius.circular(19),
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
             _CameraPreviewCover(controller: controller),
             Center(
-              child: Container(
-                width: 190,
-                height: 240,
-                decoration: BoxDecoration(
-                  border: Border.all(color: color, width: 2),
-                  borderRadius: BorderRadius.circular(100),
+              child: FractionallySizedBox(
+                widthFactor: .65,
+                heightFactor: .65,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: color, width: 2),
+                    borderRadius: BorderRadius.circular(28),
+                  ),
                 ),
               ),
             ),
             Positioned(
               left: 12,
               top: 12,
-              child: _Chip(label: 'Frontal', color: Colors.white),
-            ),
-            Positioned(
-              right: 12,
-              top: 12,
-              child: _Chip(
-                label: state.faceDetected ? 'Rostro OK' : 'Sin rostro',
-                color: state.faceDetected ? color : const Color(0xFFFFA726),
-              ),
+              child: _Chip(label: 'Cámara frontal', color: Colors.white),
             ),
             Positioned(
               left: 12,
@@ -386,10 +884,17 @@ class _CameraViewfinder extends StatelessWidget {
                 color: Colors.black.withValues(alpha: 0.68),
                 child: LocalizedText(
                   state.faceDetected
-                      ? state.message
+                      ? '${state.eyesClosed ? 'Ojos cerrados' : 'Ojos abiertos'} · ${state.headDown
+                            ? 'Cabeza inclinada'
+                            : state.distracted
+                            ? 'Desvío de cabeza'
+                            : 'Cabeza alineada'}\nCalidad de señal: ${(state.signalQuality * 100).round()} / 100'
                       : 'Alinea tu rostro dentro del marco',
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontWeight: FontWeight.w800),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 10,
+                  ),
                 ),
               ),
             ),
@@ -434,12 +939,12 @@ class _Chip extends StatelessWidget {
     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
     decoration: BoxDecoration(
       color: Colors.black.withValues(alpha: 0.7),
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(20),
       border: Border.all(color: color.withValues(alpha: 0.4)),
     ),
     child: LocalizedText(
       label,
-      style: TextStyle(color: color, fontWeight: FontWeight.w800),
+      style: TextStyle(color: color, fontWeight: FontWeight.w800, fontSize: 10),
     ),
   );
 }
@@ -452,7 +957,7 @@ class _MonitoringHealthBar extends StatelessWidget {
     padding: const EdgeInsets.all(10),
     decoration: BoxDecoration(
       color: Colors.black.withValues(alpha: 0.52),
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(20),
     ),
     child: Row(
       children: <Widget>[
@@ -482,7 +987,7 @@ class _MonitoringHealthBar extends StatelessWidget {
     MonitoringHealth.healthy => 'Monitoreo disponible',
     MonitoringHealth.degraded => 'Precisión posiblemente reducida',
     MonitoringHealth.recovering => 'Recuperando monitoreo',
-    MonitoringHealth.unavailable => 'Monitoreo no disponible',
+    MonitoringHealth.unavailable => 'MONITOREO NO DISPONIBLE',
   };
   IconData get _icon => switch (state.monitoringHealth) {
     MonitoringHealth.healthy => Icons.check_circle,
@@ -502,42 +1007,72 @@ class _ActionBar extends StatelessWidget {
   const _ActionBar({
     required this.paused,
     required this.busy,
-    required this.onCalibrate,
-    required this.onPauseResume,
+    required this.onMap,
+    required this.onVoice,
     required this.onFinish,
   });
-  final bool paused;
-  final bool busy;
-  final VoidCallback onCalibrate;
-  final VoidCallback onPauseResume;
-  final VoidCallback onFinish;
+  final bool paused, busy;
+  final VoidCallback onMap, onVoice, onFinish;
   @override
   Widget build(BuildContext context) => Row(
-    children: <Widget>[
-      Expanded(
-        child: OutlinedButton.icon(
-          onPressed: busy ? null : onCalibrate,
-          icon: const Icon(Icons.tune),
-          label: const LocalizedText('Calibrar'),
-        ),
+    children: [
+      _control(
+        context,
+        Icons.open_in_new,
+        'Paradas',
+        const Color(0xFF3478FF),
+        onMap,
       ),
-      const SizedBox(width: 8),
-      Expanded(
-        child: OutlinedButton.icon(
-          onPressed: busy ? null : onPauseResume,
-          icon: Icon(paused ? Icons.play_arrow : Icons.pause),
-          label: LocalizedText(paused ? 'Reanudar' : 'Pausar'),
-        ),
+      _control(
+        context,
+        Icons.mic_none_rounded,
+        'Alertas / Voz',
+        const Color(0xFF23D18B),
+        onVoice,
       ),
-      const SizedBox(width: 8),
-      Expanded(
-        child: FilledButton.icon(
-          onPressed: busy ? null : onFinish,
-          icon: const Icon(Icons.stop),
-          label: const LocalizedText('Finalizar'),
-        ),
+      _control(
+        context,
+        Icons.stop_rounded,
+        'Finalizar',
+        const Color(0xFFFF455C),
+        onFinish,
       ),
     ],
+  );
+  Widget _control(
+    BuildContext context,
+    IconData icon,
+    String label,
+    Color color,
+    VoidCallback action,
+  ) => Expanded(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: 58,
+            height: 58,
+            child: IconButton(
+              tooltip: context.tr(label),
+              style: IconButton.styleFrom(
+                foregroundColor: color,
+                backgroundColor: color.withValues(alpha: .09),
+                side: BorderSide(color: color.withValues(alpha: .55)),
+              ),
+              onPressed: busy ? null : action,
+              icon: Icon(icon, size: 30),
+            ),
+          ),
+          const SizedBox(height: 6),
+          LocalizedText(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+          ),
+        ],
+      ),
+    ),
   );
 }
 
@@ -555,7 +1090,7 @@ class _LoadingPanel extends StatelessWidget {
           const Icon(Icons.videocam_off, size: 48, color: Color(0xFFFFA726)),
         const SizedBox(height: 12),
         LocalizedText(
-          message ?? 'Iniciando monitoreo',
+          message ?? 'Iniciando monitoreo…',
           textAlign: TextAlign.center,
         ),
       ],
@@ -568,93 +1103,60 @@ class _PausedOverlay extends StatelessWidget {
     required this.countdown,
     required this.onResume,
     required this.onFinish,
+    required this.onNavigation,
+    required this.onVoice,
   });
   final int? countdown;
-  final VoidCallback onResume;
-  final VoidCallback onFinish;
+  final VoidCallback onResume, onFinish, onNavigation, onVoice;
   @override
-  Widget build(BuildContext context) => Positioned.fill(
-    child: ColoredBox(
-      color: const Color(0xEB050708),
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Icon(
-              countdown == null ? Icons.pause_circle : Icons.timer,
-              size: 72,
-            ),
-            const SizedBox(height: 18),
-            LocalizedText(
-              countdown == null
-                  ? 'MONITOREO PAUSADO'
-                  : 'REANUDANDO EN $countdown',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
-            ),
-            const SizedBox(height: 22),
-            if (countdown == null)
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  FilledButton.icon(
-                    onPressed: onResume,
-                    icon: const Icon(Icons.play_arrow),
-                    label: const LocalizedText('REANUDAR'),
-                  ),
-                  const SizedBox(width: 10),
-                  OutlinedButton.icon(
-                    onPressed: onFinish,
-                    icon: const Icon(Icons.stop),
-                    label: const LocalizedText('FINALIZAR'),
-                  ),
-                ],
-              ),
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-class _UnavailableOverlay extends StatelessWidget {
-  const _UnavailableOverlay({required this.onFinish});
-  final VoidCallback onFinish;
-
-  @override
-  Widget build(BuildContext context) => Positioned.fill(
-    child: ColoredBox(
-      color: const Color(0xF2050708),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(28),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const Icon(
-                Icons.videocam_off,
-                size: 72,
-                color: Color(0xFFFF3B30),
-              ),
-              const SizedBox(height: 18),
-              const LocalizedText(
-                'MONITOREO NO DISPONIBLE',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
-              ),
-              const SizedBox(height: 12),
-              const LocalizedText(
-                'No se están recibiendo datos confiables.\nDetente en un lugar seguro y revisa la cámara.',
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 24),
-              FilledButton.icon(
-                onPressed: onFinish,
-                icon: const Icon(Icons.stop),
-                label: const LocalizedText('FINALIZAR VIAJE'),
-              ),
-            ],
+  Widget build(BuildContext context) => Material(
+    color: const Color(0xF5101A2B),
+    borderRadius: BorderRadius.circular(16),
+    child: SingleChildScrollView(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          LocalizedText(
+            countdown == null
+                ? 'MONITOREO PAUSADO'
+                : 'REANUDANDO EN $countdown',
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
           ),
-        ),
+          const SizedBox(height: 12),
+          if (countdown == null) ...[
+            FilledButton.icon(
+              onPressed: onResume,
+              icon: const Icon(Icons.play_arrow),
+              label: const LocalizedText('REANUDAR'),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 8,
+              children: [
+                TextButton.icon(
+                  onPressed: onNavigation,
+                  icon: const Icon(Icons.open_in_new),
+                  label: const Text('Google Maps'),
+                ),
+                TextButton.icon(
+                  onPressed: onVoice,
+                  icon: const Icon(Icons.mic),
+                  label: const Text('Comandos de voz'),
+                ),
+                TextButton.icon(
+                  onPressed: onFinish,
+                  icon: const Icon(Icons.stop),
+                  label: const LocalizedText('FINALIZAR'),
+                ),
+              ],
+            ),
+          ] else
+            const LinearProgressIndicator(),
+        ],
       ),
     ),
   );
@@ -698,8 +1200,9 @@ class _CalibrationOverlay extends StatelessWidget {
 }
 
 class _MetricsSheet extends StatelessWidget {
-  const _MetricsSheet({required this.driveState});
+  const _MetricsSheet({required this.driveState, required this.onCalibrate});
   final DriveState driveState;
+  final VoidCallback onCalibrate;
   @override
   Widget build(BuildContext context) => Container(
     height: MediaQuery.sizeOf(context).height * 0.72,
@@ -728,6 +1231,11 @@ class _MetricsSheet extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                OutlinedButton.icon(
+                  onPressed: onCalibrate,
+                  icon: const Icon(Icons.tune),
+                  label: const LocalizedText('Calibrar'),
+                ),
                 DebugMetricsPanel(state: driveState.monitoring),
                 const SizedBox(height: 12),
                 _TechnicalPerformance(state: driveState),
@@ -759,6 +1267,16 @@ class _TechnicalPerformance extends StatelessWidget {
           LocalizedText('Salud: ${state.monitoringHealth.name}'),
           LocalizedText('FPS real: ${state.actualFps.toStringAsFixed(1)}'),
           LocalizedText('Frames descartados: ${state.framesDropped}'),
+          if (state.performance != null) ...[
+            LocalizedText(
+              'Por muestreo adaptativo: '
+              '${state.performance!.framesDroppedScheduler}',
+            ),
+            LocalizedText(
+              'Por procesamiento ocupado: '
+              '${state.performance!.framesDroppedBusy}',
+            ),
+          ],
           LocalizedText('P95 total: ${state.totalP95Ms.toStringAsFixed(1)} ms'),
           LocalizedText('Intentos de recuperación: ${state.recoveryAttempts}'),
         ],

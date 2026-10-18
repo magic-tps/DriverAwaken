@@ -1,5 +1,59 @@
 // Display catalog. Numeric slots preserve dynamic report values.
 const englishMessages = <String, String>{
+  'Google Maps externo': 'External Google Maps',
+  'DriverAwaken no solicita ubicación ni carga mapas internos. Solo después de tu confirmación abre una URL oficial de búsqueda o navegación en Google Maps o en un navegador compatible. El texto de búsqueda o destino se comparte con esa aplicación. Al salir, el monitoreo se pausa y requiere reanudación explícita al regresar.':
+      'DriverAwaken does not request location or load internal maps. Only after your confirmation, it opens an official search or navigation URL in Google Maps or a compatible browser. The search text or destination is shared with that application. Monitoring pauses when you leave and requires explicit resumption when you return.',
+  'Voz y contacto de emergencia': 'Voice and emergency contact',
+  'Las indicaciones habladas usan una voz instalada que declare no necesitar red. Los comandos de voz activan el micrófono solo al pulsar Escuchar comando y usan el servicio de reconocimiento de Android, que puede procesar audio por Internet. La app no guarda grabaciones ni transcripciones en el historial o Firebase. Cerrar el panel o enviar la app a segundo plano cancela la escucha. El contacto opcional del panel SOS se guarda localmente y se elimina dejando el campo vacío. Abrir el marcador requiere confirmación y no realiza una llamada automática; el registro manual opcional queda en el historial local.':
+      'Spoken guidance uses an installed voice that reports no network requirement. Voice commands enable the microphone only when Listen to command is pressed and use Android speech recognition, which may process audio over the Internet. The app does not store recordings or transcripts in history or Firebase. Closing the panel or moving the app to the background cancels listening. The optional SOS contact is stored locally and removed by clearing its field. Opening the dialer requires confirmation and does not place an automatic call; the optional manual record stays in local history.',
+  'Descansos declarados': 'Self-reported rests',
+  'Los intervalos de descanso se guardan localmente al confirmarlos. Si autorizas el viaje de flota, sus datos de tiempo e identificadores pueden sincronizarse con la organización. El registro no demuestra recuperación fisiológica ni se inicia por pulsar Navegar.':
+      'Rest intervals are stored locally when confirmed. If you authorize a fleet trip, their timing data and identifiers may be shared with the organization. This record does not demonstrate physiological recovery and is not started by pressing Navigate.',
+  'Busca un lugar seguro para detenerte.': 'Find a safe place to stop.',
+  'Asistente de voz breve': 'Brief voice assistant',
+  'Las alarmas críticas siguen disponibles.':
+      'Critical alarms remain available.',
+  'Voz desactivada': 'Voice disabled',
+  'Voz sin red seleccionada': 'Offline voice selected',
+  'No hay una voz sin red instalada para el idioma seleccionado.':
+      'No offline voice is installed for the selected language.',
+  'Voz no disponible; las alarmas locales siguen disponibles':
+      'Voice unavailable; local alarms remain available',
+  'Mapa': 'Map',
+  'Alertas / Voz': 'Alerts / Voice',
+  'Configuración': 'Settings',
+  'Paradas cercanas': 'Nearby stops',
+  'Planifica tu próxima pausa': 'Plan your next break',
+  'Autoriza el mapa y la ubicación con el vehículo estacionado.':
+      'Enable maps and location while the vehicle is parked.',
+  'Mapa, destino y descanso': 'Map, destination and rest',
+  'Cámara frontal': 'Front camera',
+  'Pausado': 'Paused',
+  'Sin señal': 'No signal',
+  'Monitoreo': 'Monitoring',
+  'Velocidad GPS': 'GPS speed',
+  'Conducción': 'Driving',
+  'Modo personal · sin envío a flota': 'Personal mode · no fleet sharing',
+  'Índice heurístico · calidad de señal {0} / 100':
+      'Heuristic index · signal quality {0} / 100',
+  'Señal insuficiente': 'Insufficient signal',
+  'Puedes continuar, guardar el viaje o descartarlo.':
+      'You can continue, save the trip or discard it.',
+  'Ojos abiertos': 'Eyes open',
+  'Desvío de cabeza': 'Head turned',
+  'Cabeza alineada': 'Head aligned',
+  '{0} · {1}\nCalidad de señal: {2} / 100':
+      '{0} · {1}\nSignal quality: {2} / 100',
+  'Monitoreo no disponible. Revisa la cámara al detenerte en un lugar seguro.':
+      'Monitoring unavailable. Check the camera after stopping in a safe place.',
+  'Se detectaron señales sostenidas de fatiga. Busca un lugar seguro para detenerte.':
+      'Sustained signs of fatigue detected. Find a safe place to stop.',
+  'Has alcanzado el intervalo de conducción configurado. Planifica una pausa segura.':
+      'You have reached your driving interval. Plan a safe break.',
+  'Cierres oculares repetidos. Busca un lugar seguro para detenerte.':
+      'Repeated eye closures detected. Find a safe place to stop.',
+  'Se detectó una señal crítica. Detente en un lugar seguro tan pronto sea posible; no continúes para buscar café.':
+      'A critical sign was detected. Stop safely as soon as possible; do not keep driving to find coffee.',
   "No se pudo completar la migracion a Drift":
       "Could not complete the local database migration",
   "El borrador no es un objeto JSON": "The draft is not a JSON object",

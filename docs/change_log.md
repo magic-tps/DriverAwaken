@@ -1,5 +1,28 @@
 # Registro técnico de mejoras
 
+## Simplificación de conducción (2026-10-18)
+
+- Cámara frontal ampliada; métricas de ojos, bostezos, PERCLOS, cabeza, señal, riesgo y duración visibles durante el monitoreo.
+- Eliminados mapa interno, tiles OSM, Nominatim, Overpass, GPS y permisos Android de ubicación. Las búsquedas y rutas usan URLs oficiales de Google Maps mediante `url_launcher`.
+- Smart Rest conserva recomendaciones y descansos persistidos. La consulta de paradas exige confirmación de vehículo detenido; la sesión queda pausada hasta reanudación explícita.
+- Reducida una emisión de estado por frame y acotado el muestreo de luminancia. Los drops intencionales del scheduler se distinguen de los drops por procesamiento ocupado.
+- Verificación: `flutter analyze` y `flutter test` sin fallos; APK debug compilado e instalado en un dispositivo Android. El rendimiento físico sostenido requiere medición adicional en ruta controlada.
+
+## Guardian — implementación local (2026-10-17)
+
+- Continuación sobre cambios locales Guardian existentes; base registrada `c5aaa8c`, rama `feat/guardian-mvp`, sin descartar trabajo previo.
+- Fix de `loadEvents` con await para capturar errores asíncronos.
+- Dominio flota y vinculación consentida Android; persistencia/cola Drift v2, cooldown persistente, IDs estables y reintentos autorizados.
+- Falta de rostro diferenciada de somnolencia; modelo incompatible conservado desactivado.
+- Firestore multiempresa y acciones anexas, bootstrap seguro, pruebas emulador y fixture local.
+- Dashboard Next.js, demo independiente y pitch, exportación estática y jobs CI.
+- Documentos de competencia y despliegue. Resultados y estado final en `TECHNICAL_VALIDATION.md`; no hay push, publicación ni entrega oficial en esta sesión.
+- Interfaz de conducción adaptable con cámara real, tarjeta de mapa, controles de voz y confirmación al finalizar; falta de cámara frontal deja un error explícito.
+- Navegación OSM consentida, favoritos y recientes locales, Smart Rest, descansos Drift v3 y navegación externa sin ETA inventada.
+- Voz offline según idioma, prioridad crítica y cancelación de operaciones pendientes al pausar. Protección frente a permisos GPS y cambios de lifecycle que responden tarde.
+- SOS con contacto local opcional, registro manual y marcador confirmado; no realiza llamadas automáticas.
+- Dashboard de conductores y descansos, filtros de reportes compartidos con CSV y emuladores de seguridad/web separados.
+
 ## Inglés y español — 1.1.0+2 (2026-09-05)
 
 - Selector en login y Ajustes: español, inglés o idioma del teléfono, con preferencia persistida.

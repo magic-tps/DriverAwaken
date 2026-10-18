@@ -129,6 +129,14 @@ class PerformanceSnapshot {
   int get framesDropped => framesDroppedBusy + framesDroppedScheduler;
   double get dropRatio =>
       framesReceived == 0 ? 0 : framesDropped / framesReceived;
+
+  /// Scheduling intentionally samples fewer frames than the camera produces.
+  /// Only frames eligible for analysis count toward overload detection.
+  double get busyDropRatio {
+    final eligible = framesAccepted + framesDroppedBusy;
+    return eligible == 0 ? 0 : framesDroppedBusy / eligible;
+  }
+
   double get totalP95Ms => stageStats[ProcessingStage.total]?.p95Ms ?? 0;
 }
 

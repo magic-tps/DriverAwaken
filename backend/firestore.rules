@@ -48,5 +48,186 @@ service cloud.firestore {
       allow read, delete: if owns(uid);
       allow create, update: if owns(uid) && validReport(request.resource.data);
     }
+    function shortText(v, max) { return v is string && v.size() > 0 && v.size() <= max; }
+    function orgPath(org) { return /databases/$(database)/documents/organizations/$(org); }
+    function active(org) {
+      return request.auth != null
+        && get(orgPath(org)).data.status == 'ACTIVE'
+        && get(/databases/$(database)/documents/organizations/$(org)/members/$(request.auth.uid)).data.status == 'ACTIVE';
+    }
+    function role(org, roles) {
+      return active(org) && get(/databases/$(database)/documents/organizations/$(org)/members/$(request.auth.uid)).data.role in roles;
+    }
+    function staff(org) { return role(org, ['ADMIN','OPERATOR']); }
+    function admin(org) { return role(org, ['ADMIN']); }
+    function validMember(d, org, uid) {
+      return d.keys().hasAll(['userId','organizationId','role','status'])
+        && d.keys().hasOnly(['userId','organizationId','role','status'])
+        && d.userId == uid && shortText(uid,128) && d.organizationId == org
+        && d.role in ['ADMIN','OPERATOR','DRIVER'] && d.status in ['ACTIVE','INACTIVE'];
+    }
+    function driver(org, uid) {
+      return get(/databases/$(database)/documents/organizations/$(org)/members/$(uid)).data.role == 'DRIVER'
+        && get(/databases/$(database)/documents/organizations/$(org)/members/$(uid)).data.status == 'ACTIVE';
+    }
+    function vehicle(org, id) {
+      return get(/databases/$(database)/documents/organizations/$(org)/vehicles/$(id)).data.status == 'ACTIVE';
+    }
+    function assigned(org, uid, vehicleId) {
+      let a = get(/databases/$(database)/documents/organizations/$(org)/assignments/$(uid)).data;
+      return a.status == 'ACTIVE' && a.vehicleId == vehicleId;
+    }
+    function validTrip(d, org, id) {
+      return d.keys().hasAll(['id','organizationId','vehicleId','driverId','origin','destination',
+          'startTime','endTime','status','monitoringStatus','lastEventAt','lastSeenAt'])
+        && d.keys().hasOnly(['id','organizationId','vehicleId','driverId','origin','destination',
+          'startTime','endTime','status','monitoringStatus','lastEventAt','lastSeenAt'])
+        && d.id == id && shortText(id,128) && d.organizationId == org
+        && shortText(d.vehicleId,128) && shortText(d.driverId,128)
+        && shortText(d.origin,160) && shortText(d.destination,160)
+        && d.startTime is timestamp && d.startTime <= request.time
+        && (d.endTime == null || (d.endTime is timestamp && d.endTime >= d.startTime && d.endTime <= request.time))
+        && d.status in ['ASSIGNED','ACTIVE','COMPLETED','CANCELLED']
+        && ((d.status in ['ASSIGNED','ACTIVE'] && d.endTime == null)
+          || (d.status in ['COMPLETED','CANCELLED'] && d.endTime is timestamp && d.monitoringStatus != 'ACTIVE'))
+        && d.monitoringStatus in ['ACTIVE','PAUSED','UNAVAILABLE','OFFLINE']
+        && (d.lastEventAt == null || (d.lastEventAt is timestamp && d.lastEventAt <= request.time))
+        && (d.lastSeenAt == null || (d.lastSeenAt is timestamp && d.lastSeenAt <= request.time));
+    }
+    function driverTripUpdate(org) {
+      let old = resource.data;
+      let d = request.resource.data;
+      let changed = d.diff(old).affectedKeys();
+      return role(org,['DRIVER']) && old.driverId == request.auth.uid
+        && assigned(org,request.auth.uid,old.vehicleId) && vehicle(org,old.vehicleId)
+        && changed.hasOnly(['status','monitoringStatus','endTime','lastSeenAt','lastEventAt'])
+        && ((old.status == 'ASSIGNED' && d.status in ['ASSIGNED','ACTIVE','CANCELLED'])
+          || (old.status == 'ACTIVE' && d.status in ['ACTIVE','COMPLETED','CANCELLED']))
+        && (!changed.hasAny(['lastSeenAt']) || (d.lastSeenAt is timestamp
+          && d.lastSeenAt >= old.startTime && d.lastSeenAt <= request.time
+          && (old.lastSeenAt == null || d.lastSeenAt >= old.lastSeenAt)))
+        && (!changed.hasAny(['lastEventAt']) || d.lastEventAt == request.time);
+    }
+    function validIncident(d, org, id) {
+      let t = get(/databases/$(database)/documents/organizations/$(org)/trips/$(d.tripId)).data;
+      return d.keys().hasAll(['id','organizationId','tripId','driverId','type','severity','detectedAt','receivedAt','riskScore','reasonCode','signalQuality','monitoringHealth'])
+        && d.keys().hasOnly(['id','organizationId','tripId','driverId','type','severity','detectedAt','receivedAt','riskScore','reasonCode','signalQuality','monitoringHealth'])
+        && d.id == id && id.matches('^[a-f0-9]{64}$') && d.organizationId == org
+        && shortText(d.tripId,128) && d.driverId == request.auth.uid && t.driverId == request.auth.uid
+        && t.status == 'ACTIVE' && assigned(org,request.auth.uid,t.vehicleId) && vehicle(org,t.vehicleId)
+        && d.type in ['PROLONGED_EYE_CLOSURE','HIGH_PERCLOS','REPEATED_YAWNING','SUSTAINED_HEAD_DOWN','POSSIBLE_DISTRACTION','SIGNAL_UNAVAILABLE','MONITORING_INTERRUPTED']
+        && d.severity in ['INFO','WARNING','CRITICAL'] && d.reasonCode == d.type
+        && d.detectedAt is timestamp && d.detectedAt >= t.startTime && d.detectedAt <= request.time
+        && d.receivedAt == request.time && d.riskScore is number && d.riskScore >= 0 && d.riskScore <= 100
+        && d.signalQuality in ['RELIABLE','INSUFFICIENT'] && d.monitoringHealth in ['HEALTHY','DEGRADED','UNAVAILABLE']
+        && ((d.type in ['SIGNAL_UNAVAILABLE','MONITORING_INTERRUPTED'] && d.severity == 'INFO' && d.riskScore == 0 && d.signalQuality == 'INSUFFICIENT')
+          || (!(d.type in ['SIGNAL_UNAVAILABLE','MONITORING_INTERRUPTED']) && d.severity in ['WARNING','CRITICAL'] && d.signalQuality == 'RELIABLE'));
+    }
+    match /organizations/{org} {
+      allow read: if active(org);
+      // Organizations and initial ADMIN membership: trusted Admin SDK bootstrap only.
+      allow update: if admin(org)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name','emergencyPhone','emergencyLabel'])
+        && shortText(request.resource.data.name,120)
+        && (!('emergencyPhone' in request.resource.data)
+          || request.resource.data.emergencyPhone == null
+          || (request.resource.data.emergencyPhone is string
+            && request.resource.data.emergencyPhone.matches('^\\+?[0-9]{3,15}$')))
+        && (!('emergencyLabel' in request.resource.data)
+          || request.resource.data.emergencyLabel == null
+          || shortText(request.resource.data.emergencyLabel,80));
+      match /members/{uid} {
+        allow read: if owns(uid) || staff(org);
+        allow create, update: if admin(org) && validMember(request.resource.data,org,uid);
+      }
+      match /vehicles/{id} {
+        allow read: if active(org);
+        allow create, update: if admin(org)
+          && request.resource.data.keys().hasAll(['id','organizationId','internalCode','vehicleType','status'])
+          && request.resource.data.keys().hasOnly(['id','organizationId','internalCode','vehicleType','status'])
+          && request.resource.data.id == id && shortText(id,128) && request.resource.data.organizationId == org
+          && shortText(request.resource.data.internalCode,40)
+          && request.resource.data.vehicleType in ['BUS','MINIBUS','TRUCK','VAN']
+          && request.resource.data.status in ['ACTIVE','INACTIVE'];
+      }
+      match /assignments/{uid} {
+        allow read: if (owns(uid) && active(org)) || staff(org);
+        allow create, update: if admin(org)
+          && request.resource.data.keys().hasAll(['userId','organizationId','vehicleId','status'])
+          && request.resource.data.keys().hasOnly(['userId','organizationId','vehicleId','status'])
+          && request.resource.data.userId == uid && request.resource.data.organizationId == org
+          && shortText(request.resource.data.vehicleId,128) && driver(org,uid)
+          && vehicle(org,request.resource.data.vehicleId) && request.resource.data.status in ['ACTIVE','INACTIVE'];
+      }
+      match /trips/{id} {
+        allow read: if staff(org) || (role(org,['DRIVER']) && resource.data.driverId == request.auth.uid);
+        allow create: if admin(org) && validTrip(request.resource.data,org,id)
+          && driver(org,request.resource.data.driverId) && vehicle(org,request.resource.data.vehicleId)
+          && assigned(org,request.resource.data.driverId,request.resource.data.vehicleId)
+          && request.resource.data.status in ['ASSIGNED','ACTIVE']
+          && request.resource.data.monitoringStatus != 'ACTIVE'
+          && request.resource.data.lastEventAt == null && request.resource.data.lastSeenAt == null;
+        allow update: if validTrip(request.resource.data,org,id) && driverTripUpdate(org);
+      }
+      match /incidents/{id} {
+        allow read: if staff(org) || (role(org,['DRIVER']) && resource.data.driverId == request.auth.uid);
+        allow get: if role(org,['DRIVER']) && !exists(/databases/$(database)/documents/organizations/$(org)/incidents/$(id));
+        allow create: if role(org,['DRIVER']) && validIncident(request.resource.data,org,id);
+        // No update/delete: human actions are append-only, not changes to detection.
+      }
+      match /operatorActions/{id} {
+        allow read: if staff(org);
+        allow create: if staff(org)
+          && request.resource.data.keys().hasAll(['id','organizationId','incidentId','operatorId','actionType','note','createdAt'])
+          && request.resource.data.keys().hasOnly(['id','organizationId','incidentId','operatorId','actionType','note','createdAt'])
+          && request.resource.data.id == id && shortText(id,128) && request.resource.data.organizationId == org
+          && shortText(request.resource.data.incidentId,128)
+          && exists(/databases/$(database)/documents/organizations/$(org)/incidents/$(request.resource.data.incidentId))
+          && request.resource.data.operatorId == request.auth.uid
+          && request.resource.data.actionType in ['ACKNOWLEDGED','ACTION_RECORDED','RESOLVED']
+          && request.resource.data.note is string && request.resource.data.note.size() <= 1000
+          && (request.resource.data.actionType == 'ACKNOWLEDGED' || request.resource.data.note.size() > 0)
+          && request.resource.data.createdAt == request.time;
+      }
+      match /restSessions/{id} {
+        allow read: if staff(org) || (role(org,['DRIVER']) && resource.data.driverId == request.auth.uid);
+        allow get: if role(org,['DRIVER']) && !exists(/databases/$(database)/documents/organizations/$(org)/restSessions/$(id));
+        allow create: if role(org,['DRIVER']) && validRest(request.resource.data,org,id);
+      }
+      match /alertSubscriptions/{id} {
+        // FCM tokens are private credentials; only the owner can manage one.
+        allow get: if staff(org) && resource.data.userId == request.auth.uid;
+        allow list: if false;
+        allow create: if staff(org) && validAlertSubscription(request.resource.data,org,id);
+        allow update: if staff(org) && resource.data.userId == request.auth.uid
+          && validAlertSubscription(request.resource.data,org,id);
+        allow delete: if resource.data.userId == request.auth.uid;
+      }
+      // Cloud Functions owns delivery records; clients cannot forge receipts.
+      match /alertDispatches/{id} { allow read, write: if false; }
+    }
+    function validAlertSubscription(d, org, id) {
+      return d.keys().hasAll(['id','organizationId','userId','token','platform','updatedAt'])
+        && d.keys().hasOnly(['id','organizationId','userId','token','platform','updatedAt'])
+        && id.matches('^[a-f0-9]{64}$') && d.id == id
+        && d.organizationId == org && d.userId == request.auth.uid
+        && d.platform == 'WEB' && shortText(d.token,4096)
+        && d.updatedAt == request.time;
+    }
+    function validRest(d, org, id) {
+      let t = get(/databases/$(database)/documents/organizations/$(org)/trips/$(d.tripId)).data;
+      return d.keys().hasAll(['id','organizationId','tripId','driverId','startedAt','endedAt','durationMs','recommendationReason','voluntarilyConfirmed','receivedAt'])
+        && d.keys().hasOnly(['id','organizationId','tripId','driverId','startedAt','endedAt','durationMs','recommendationReason','voluntarilyConfirmed','receivedAt'])
+        && d.id == id && id.matches('^[a-f0-9]{64}$') && d.organizationId == org
+        && shortText(d.tripId,128) && d.driverId == request.auth.uid && t.driverId == request.auth.uid
+        && d.startedAt is timestamp && d.endedAt is timestamp
+        && d.startedAt >= t.startTime && d.endedAt >= d.startedAt && d.endedAt <= request.time
+        && d.durationMs is int && d.durationMs >= 0 && d.durationMs <= 604800000
+        && d.durationMs == d.endedAt.toMillis() - d.startedAt.toMillis()
+        && shortText(d.recommendationReason,120) && d.voluntarilyConfirmed == true
+        && d.receivedAt == request.time
+        && ((t.status == 'ACTIVE' && assigned(org,request.auth.uid,t.vehicleId))
+          || (t.status == 'COMPLETED' && d.endedAt <= t.endTime));
+    }
   }
 }

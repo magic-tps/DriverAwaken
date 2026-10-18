@@ -29,12 +29,20 @@ class DrowsinessEngine {
       raise(22, 'Iluminacion insuficiente');
     }
 
-    if (signal.noFaceDuration >= const Duration(seconds: 4)) {
-      raise(90, 'Rostro ausente por varios segundos', critical: true);
-    } else if (signal.noFaceDuration >= DrowsinessThresholds.noFaceDanger) {
-      raise(62, 'Rostro fuera de camara');
-    } else if (signal.noFaceDuration >= DrowsinessThresholds.noFaceWarning) {
-      raise(42, 'Rostro fuera de camara brevemente');
+    // Missing face means unavailable observation, not evidence of fatigue.
+    if (signal.noFaceDuration > Duration.zero) {
+      reset();
+      return const RiskDecision(
+        level: DrowsinessLevel.normal,
+        ruleRisk: 0,
+        modelRisk: 0,
+        totalRisk: 0,
+        reason: 'SIGNAL_UNAVAILABLE',
+        message:
+            'Señal insuficiente. Revisa la cámara al detenerte en un lugar seguro.',
+        alertTier: 0,
+        sustainedDangerDuration: Duration.zero,
+      );
     }
 
     if (signal.closedEyeDuration >= DrowsinessThresholds.prolongedBlinkDanger) {

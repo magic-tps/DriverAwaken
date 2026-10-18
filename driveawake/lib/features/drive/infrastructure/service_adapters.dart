@@ -17,7 +17,7 @@ import '../application/performance_monitor.dart';
 
 class CameraServiceAdapter implements CameraRepository {
   CameraServiceAdapter([CameraService? service])
-    : _service = service ?? CameraService();
+    : _service = service ?? CameraService(requestPermissions: false);
   final CameraService _service;
 
   @override

@@ -108,4 +108,26 @@ void main() {
     expect(decision.level, isNot(DrowsinessLevel.danger));
     expect(decision.message, contains('Iluminacion'));
   });
+  test('sin rostro no infiere somnolencia incluso después de peligro', () {
+    final engine = DrowsinessEngine();
+    engine.evaluate(
+      signal(
+        timestamp: DateTime(2026),
+        eyesClosed: true,
+        closedEyeDuration: const Duration(seconds: 4),
+      ),
+    );
+    final decision = engine.evaluate(
+      signal(
+        timestamp: DateTime(2026, 1, 1, 0, 0, 5),
+        noFaceDuration: const Duration(seconds: 5),
+        signalQuality: 0,
+        perclos: .9,
+      ),
+    );
+    expect(decision.level, DrowsinessLevel.normal);
+    expect(decision.totalRisk, 0);
+    expect(decision.alertTier, 0);
+    expect(decision.reason, 'SIGNAL_UNAVAILABLE');
+  });
 }

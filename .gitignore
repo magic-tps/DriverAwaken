@@ -52,3 +52,6 @@ Thumbs.db
 **/*.log
 /.firebase/
 **/node_modules/
+**/.next/
+/dashboard/out/
+!/dashboard/.env.example

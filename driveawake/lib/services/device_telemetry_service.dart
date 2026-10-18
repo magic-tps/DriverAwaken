@@ -7,6 +7,31 @@ class DeviceTelemetryService {
     'com.magicdrive.alert/device',
   );
 
+  Future<bool> openDialer({String? number}) async {
+    try {
+      return await _channel.invokeMethod<bool>('openDialer', {
+            'number':
+                number != null && RegExp(r'^\+?[0-9]{6,15}$').hasMatch(number)
+                ? number
+                : null,
+          }) ??
+          false;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  Future<Map<String, dynamic>> cameraCapabilities() async {
+    try {
+      return await _channel.invokeMapMethod<String, dynamic>(
+            'cameraCapabilities',
+          ) ??
+          {};
+    } catch (_) {
+      return {};
+    }
+  }
+
   Future<DeviceTelemetrySnapshot?> getBatteryThermalSnapshot() async {
     try {
       final result = await _channel.invokeMapMethod<dynamic, dynamic>(

@@ -22,11 +22,14 @@ import '../utils/input_image_converter.dart';
 import '../widgets/face_landmark_overlay.dart';
 import '../widgets/account_card.dart';
 import 'drive_mode_screen.dart';
+import 'trip_preparation_screen.dart';
 import 'history_screen.dart';
 import 'privacy_policy_screen.dart';
 import 'settings_screen.dart';
 import 'cloud_reports_screen.dart';
 import 'login_screen.dart';
+import 'fleet_screen.dart';
+import '../fleet/fleet_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, this.cameraService, this.drowsinessService});
@@ -102,11 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
     if (recover == true) {
-      await _openRoute(
-        MaterialPageRoute<void>(
-          builder: (_) => DriveModeScreen(recoveredDraft: draft),
-        ),
-      );
+      await _openDriveMode(context, recoveredDraft: draft);
     } else if (recover == false) {
       await LocalHistoryService.instance.deleteEventsForTrip(draft.tripId);
       await TripSessionDraftService.instance.clear();
@@ -185,6 +184,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(height: 12),
                       const _BreakCard(),
+                      const SizedBox(height: 12),
+                      ListenableBuilder(
+                        listenable: FleetService.instance,
+                        builder: (context, _) => OutlinedButton.icon(
+                          onPressed: () => unawaited(
+                            _openRoute(
+                              MaterialPageRoute<void>(
+                                builder: (_) => const FleetScreen(),
+                              ),
+                            ),
+                          ),
+                          icon: const Icon(Icons.local_shipping_outlined),
+                          label: Text(
+                            FleetService.instance.selected == null
+                                ? 'Modo personal · Vincular flota'
+                                : 'Modo flota · ${FleetService.instance.selected!.origin} → ${FleetService.instance.selected!.destination}',
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: 14),
                       _StartTripButton(
                         onPressed: () {
@@ -232,10 +250,36 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<void> _openDriveMode(BuildContext context) async {
-    await _openRoute(
-      MaterialPageRoute<void>(builder: (_) => const DriveModeScreen()),
-    );
+  Future<void> _openDriveMode(
+    BuildContext context, {
+    TripSessionDraft? recoveredDraft,
+  }) async {
+    if (!mounted || _routeOpen) return;
+    _routeOpen = true;
+    try {
+      await _liveMonitorKey.currentState?.stop();
+      if (!context.mounted) return;
+      final ready = await Navigator.of(context).push<bool>(
+        MaterialPageRoute(builder: (_) => const TripPreparationScreen()),
+      );
+      if (!context.mounted) return;
+      if (ready == true) {
+        await Navigator.of(context).push<void>(
+          MaterialPageRoute(
+            builder: (_) => DriveModeScreen(
+              recoveredDraft: recoveredDraft,
+              resumeRecovered: recoveredDraft != null,
+            ),
+          ),
+        );
+      }
+    } finally {
+      _routeOpen = false;
+      if (mounted) {
+        setState(() {});
+        unawaited(_liveMonitorKey.currentState?.start());
+      }
+    }
   }
 
   Future<void> _openRoute(Route<void> route) async {
@@ -769,7 +813,7 @@ class _LiveMonitoringPanel extends StatefulWidget {
 class _LiveMonitoringPanelState extends State<_LiveMonitoringPanel>
     with WidgetsBindingObserver {
   late final CameraService _cameraService =
-      widget.cameraService ?? CameraService();
+      widget.cameraService ?? CameraService(requestPermissions: false);
   final FaceDetectionService _faceDetectionService = FaceDetectionService();
   late final DrowsinessService _drowsinessService =
       widget.drowsinessService ?? DrowsinessService();

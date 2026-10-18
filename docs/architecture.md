@@ -1,5 +1,17 @@
 # Arquitectura de DriverAwake
 
+## Ampliación Guardian (2026-10-17)
+
+La arquitectura personal descrita abajo se conserva. `lib/fleet/` añade el dominio de transporte: `FleetService` gestiona consentimiento y viaje asignado; `IncidentClassifier` adapta `DrowsinessEvent` y señales ya evaluadas; `IncidentRepository` guarda incidentes con cooldown persistente. No hay un segundo detector. La ausencia de rostro se presenta como señal insuficiente, con riesgo de fatiga cero.
+
+Drift pasa de esquema 1 a **2** mediante creación aditiva de `fleet_outbox`; no se reinician tablas anteriores. Cada fila conserva payload JSON inmutable y datos de entrega (`QUEUED`, `SYNCING`, `SYNCED`, `FAILED`), propietario, empresa, viaje remoto y sesión local. En modo personal no se encola información empresarial. El historial local existente representa los eventos personales `LOCAL_ONLY`.
+
+`AuthorizedCloudSync` reintenta como máximo diez mensajes por pasada, una sola pasada concurrente, con orden FIFO y backoff exponencial/jitter. La cola admite 2000 pendientes. Las transacciones Firebase verifican consentimiento local, identidad, membresía y viaje; los IDs de incidente no cambian al reintentar. Un ID recibido tras pérdida de confirmación no se vuelve a escribir. Los mensajes de salud y fin de viaje siguen a los incidentes; el fin remoto puede retrasarse mientras no hay conexión. La app mantiene la alerta local independiente de la red.
+
+El dashboard en `dashboard/` es Next.js con exportación estática, Firebase JS y control por membresía. Los datos se consultan por organización; las detecciones no pueden actualizarse o borrarse desde clientes. Las acciones del operador se anexan a `operatorActions`, y su estado se deriva sin alterar evidencia. `lastSeenAt` no prueba continuidad de monitoreo: la UI aplica caducidad y no puede conocer la cola de un teléfono desconectado.
+
+`/demo/` usa un motor independiente con datos sintéticos y reloj lógico. `/pitch/` es público. Ninguno requiere una cuenta personal. Ver contrato, pruebas y límites en `DEPLOYMENT.md`, `HACKTHEANDES_2026.md` y `TECHNICAL_VALIDATION.md` de la raíz.
+
 ## Estado implementado
 
 `AppEntryScreen` restaura la sesión antes de entrar al dashboard. Sin sesión presenta `LoginScreen`, con registro, recuperación y acceso sin cuenta. La cámara solo se monta después de elegir entrar; Inicio conserva su activación automática al estar visible. La restauración pendiente no bloquea el acceso local.
@@ -77,7 +89,7 @@ Detalles y datos prohibidos: `docs/performance_observability.md`. Protocolo fís
 
 ## Persistencia Drift
 
-La versión inicial del esquema es `1` y activa claves foráneas en cada apertura.
+El esquema actual es `3` y activa claves foráneas en cada apertura. La migración 1→2 añade la outbox de flota y 2→3 añade descansos; conserva las tablas y registros anteriores.
 
 | Tabla | Responsabilidad |
 |---|---|
@@ -87,6 +99,8 @@ La versión inicial del esquema es `1` y activa claves foráneas en cada apertur
 | `calibrations` | Calibraciones versionadas en JSON. |
 | `app_settings` | Ajustes versionados. |
 | `model_metadata` | Metadata operativa y bandera de migración. |
+| `fleet_outbox` | Intentos persistentes, deduplicación y entrega autorizada por organización. |
+| `rest_sessions` | Intervalos declarados por el usuario y vínculo de sincronización consentido. |
 
 Índices: timestamp, trip ID y nivel de evento. Finalizar, descartar, borrar historial y aplicar retención usan transacciones.
 

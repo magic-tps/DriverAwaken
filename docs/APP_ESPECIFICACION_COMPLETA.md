@@ -1,5 +1,7 @@
 # DriverAwake — Especificación funcional y técnica completa
 
+> **Documento histórico:** varias descripciones de versión, idioma, cuentas, conectividad y GPS quedaron superadas. Para el estado actual consultar [el informe completo de Guardian](INFORME_COMPLETO_DRIVERAWAKEN_GUARDIAN.md) y [la validación ejecutada](../TECHNICAL_VALIDATION.md). Se conserva el contenido original como antecedente.
+
 > Documento maestro del estado real del proyecto al 17 de julio de 2026. Describe lo que está implementado en el código actual, lo que existe como infraestructura experimental y lo que todavía no forma parte del producto. No sustituye documentación legal, certificación vehicular, evaluación médica ni pruebas en dispositivos físicos.
 
 ## 1. Identidad y propósito

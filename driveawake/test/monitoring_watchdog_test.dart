@@ -48,17 +48,33 @@ void main() {
     );
   });
 
-  test('degraded when drop ratio is excessive', () {
+  test(
+    'degraded when eligible frames are lost to real processing overload',
+    () {
+      final fixture = PerformanceFixture()..processedFrames(5, 250000);
+      for (var index = 0; index < 6; index++) {
+        fixture.monitor
+          ..frameReceived()
+          ..frameDroppedBusy();
+      }
+      expect(
+        assess(fixture.monitor.snapshot()).health,
+        MonitoringHealth.degraded,
+      );
+    },
+  );
+
+  test('intentional sampling at 4 FPS from a 30 FPS camera is healthy', () {
     final fixture = PerformanceFixture()..processedFrames(5, 250000);
-    for (var index = 0; index < 6; index++) {
+    for (var index = 0; index < 25; index++) {
       fixture.monitor
         ..frameReceived()
         ..frameDroppedScheduler();
     }
-    expect(
-      assess(fixture.monitor.snapshot()).health,
-      MonitoringHealth.degraded,
-    );
+    final snapshot = fixture.monitor.snapshot();
+    expect(snapshot.dropRatio, greaterThan(.8));
+    expect(snapshot.busyDropRatio, 0);
+    expect(assess(snapshot).health, MonitoringHealth.healthy);
   });
 
   test('recovering has explicit priority', () {

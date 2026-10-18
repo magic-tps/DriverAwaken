@@ -30,7 +30,7 @@ def violations(paths: list[str]) -> list[str]:
             path.name in FORBIDDEN_NAMES
             or path.suffix.lower() in FORBIDDEN_SUFFIXES
             or (path.parts and path.parts[0] in FORBIDDEN_ROOTS)
-            or path.name.startswith(".env.")
+            or (path.name.startswith(".env.") and path.name != ".env.example")
         ):
             unsafe.append(raw_path)
     return sorted(unsafe)

@@ -29,7 +29,7 @@ class LocalHistoryService {
       if (retention != null) {
         await _repository.applyRetention(DateTime.now().subtract(retention));
       }
-      return _repository.loadEvents(level: level);
+      return await _repository.loadEvents(level: level);
     } catch (_) {
       return _loadLegacyFallback(level: level);
     }

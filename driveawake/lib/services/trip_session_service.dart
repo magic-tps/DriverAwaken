@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:math';
+import '../fleet/fleet_service.dart';
+import '../navigation/smart_navigation.dart';
 
 import '../data/database/database_provider.dart';
 import '../data/repositories/drift_trip_repository.dart';
@@ -86,10 +88,13 @@ class TripSessionService {
     _lastNoFace = false;
     _lastEventAt.clear();
     _lastDraftSavedAt = null;
+    FleetService.instance.startLocal(_tripId!);
+    SmartNavigation.instance.startTrip(_tripId!);
     unawaited(_saveDraft(now, force: true));
   }
 
   void restore(TripSessionDraft draft) {
+    SmartNavigation.instance.startTrip(draft.tripId);
     _tripId = draft.tripId;
     _startedAt = draft.startedAt;
     _lastObservedAt = null;
@@ -113,13 +118,29 @@ class TripSessionService {
 
   void pause() {
     _paused = true;
+    unawaited(SmartNavigation.instance.voice.stop());
     _lastObservedAt = null;
+    FleetService.instance.health('PAUSED');
+    unawaited(
+      FleetService.instance.capture(
+        DrowsinessEvent(
+          id: 'pause_${_tripId}_${DateTime.now().microsecondsSinceEpoch}',
+          dateTime: DateTime.now(),
+          level: DrowsinessLevel.normal,
+          eventType: 'monitoreo_interrumpido',
+          durationSeconds: 0,
+          notes: 'Monitoreo pausado',
+          tripId: _tripId,
+        ),
+      ),
+    );
     unawaited(_saveDraft(DateTime.now(), force: true));
   }
 
   void resume() {
     _paused = false;
     _lastObservedAt = null;
+    FleetService.instance.health('UNAVAILABLE');
     unawaited(_saveDraft(DateTime.now(), force: true));
   }
 
@@ -140,6 +161,12 @@ class TripSessionService {
       return;
     }
 
+    FleetService.instance.health(
+      state.faceDetected && state.signalQuality >= .32
+          ? 'ACTIVE'
+          : 'UNAVAILABLE',
+    );
+
     final previousTimestamp = _lastObservedAt;
     final delta = previousTimestamp == null
         ? Duration.zero
@@ -153,6 +180,7 @@ class TripSessionService {
     }
 
     _sampleCount += 1;
+    SmartNavigation.instance.observe(state, timestamp, _drivingDuration);
     _riskSum += state.riskScore;
     _maxRisk = max(_maxRisk, state.riskScore);
     switch (state.level) {
@@ -181,6 +209,8 @@ class TripSessionService {
     }
     if (!state.faceDetected && !_lastNoFace) {
       _noFaceEvents += 1;
+    }
+    if (!state.faceDetected && state.noFaceTooLong) {
       await _recordEvent('rostro_ausente', state, timestamp);
     }
     if (state.prolongedBlink) {
@@ -234,6 +264,8 @@ class TripSessionService {
     _lastObservedAt = null;
     await _pendingDraftWrite;
     await _tripRepository.finishTrip(_draftSnapshot(now), summary);
+    await SmartNavigation.instance.endRest(at: now, forTrip: _tripId);
+    await FleetService.instance.finish();
     return summary;
   }
 
@@ -243,6 +275,7 @@ class TripSessionService {
     _paused = false;
     _lastObservedAt = null;
     await _pendingDraftWrite;
+    await FleetService.instance.finish(discard: true);
     if (id != null) {
       await _tripRepository.discardTrip(id);
     } else {
@@ -303,21 +336,21 @@ class TripSessionService {
     }
     _lastEventAt[eventType] = timestamp;
 
-    await _historyService.addEvent(
-      DrowsinessEvent(
-        id: '${eventType}_${timestamp.microsecondsSinceEpoch}',
-        dateTime: timestamp,
-        level: state.level,
-        eventType: eventType,
-        durationSeconds: _durationFor(eventType, state),
-        riskScore: state.riskScore,
-        perclos: state.perclos,
-        modelPrediction: state.modelLabel,
-        modelConfidence: state.modelConfidence,
-        tripId: _tripId,
-        notes: state.riskReason,
-      ),
+    final event = DrowsinessEvent(
+      id: '${eventType}_${timestamp.microsecondsSinceEpoch}',
+      dateTime: timestamp,
+      level: state.level,
+      eventType: eventType,
+      durationSeconds: _durationFor(eventType, state),
+      riskScore: state.riskScore,
+      perclos: state.perclos,
+      modelPrediction: state.modelLabel,
+      modelConfidence: state.modelConfidence,
+      tripId: _tripId,
+      notes: state.riskReason,
     );
+    await _historyService.addEvent(event);
+    await FleetService.instance.capture(event, signal: state);
   }
 
   double _durationFor(String eventType, DrowsinessState state) {

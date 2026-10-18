@@ -3,6 +3,9 @@ package com.magicdrive.alert
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.MediaPlayer
+import android.net.Uri
+import android.hardware.camera2.CameraManager
+import android.hardware.camera2.CameraCharacteristics
 import android.os.BatteryManager
 import android.os.Build
 import android.os.Debug
@@ -23,6 +26,26 @@ class MainActivity : FlutterActivity() {
             deviceChannelName
         ).setMethodCallHandler { call, result ->
             when (call.method) {
+                "openDialer" -> {
+                    val number = call.argument<String>("number")
+                    val intent = if (number != null && number.matches(Regex("^\\+?[0-9]{6,15}$"))) {
+                        Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", number, null))
+                    } else Intent(Intent.ACTION_DIAL)
+                    try { startActivity(intent); result.success(true) }
+                    catch (_: Exception) { result.success(false) }
+                }
+                "cameraCapabilities" -> {
+                    val manager = getSystemService(CAMERA_SERVICE) as CameraManager
+                    val concurrent = if (Build.VERSION.SDK_INT >= 30) {
+                        try {
+                            manager.concurrentCameraIds.any { ids ->
+                                val facings = ids.map { manager.getCameraCharacteristics(it).get(CameraCharacteristics.LENS_FACING) }
+                                facings.contains(CameraCharacteristics.LENS_FACING_FRONT) && facings.contains(CameraCharacteristics.LENS_FACING_BACK)
+                            }
+                        } catch (_: Exception) { false }
+                    } else false
+                    result.success(mapOf("hardwareConcurrentFrontRear" to concurrent, "appConcurrentEnabled" to false))
+                }
                 "getBatteryThermal" -> result.success(getBatteryThermal())
                 "playAlarm" -> {
                     val repeat = call.argument<Int>("repeat")?.coerceIn(1, 4) ?: 1

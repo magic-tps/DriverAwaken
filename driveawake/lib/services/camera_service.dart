@@ -4,6 +4,8 @@ import 'package:camera/camera.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class CameraService {
+  CameraService({this.requestPermissions = true});
+  final bool requestPermissions;
   CameraController? _controller;
   CameraDescription? _camera;
   String? _lastError;
@@ -23,7 +25,9 @@ class CameraService {
     // is a real retry and does not reuse a broken Android camera session.
     await dispose();
 
-    final status = await Permission.camera.request();
+    final status = requestPermissions
+        ? await Permission.camera.request()
+        : await Permission.camera.status;
     if (!status.isGranted) {
       _lastError = status.isPermanentlyDenied
           ? 'Permiso de camara denegado permanentemente.'
@@ -37,10 +41,15 @@ class CameraService {
       throw CameraException('noCamera', _lastError);
     }
 
-    final selectedCamera = cameras.firstWhere(
+    final frontCameras = cameras.where(
       (camera) => camera.lensDirection == CameraLensDirection.front,
-      orElse: () => cameras.first,
     );
+    if (frontCameras.isEmpty) {
+      _lastError =
+          'No hay cámara frontal disponible para monitorear al conductor.';
+      throw CameraException('noFrontCamera', _lastError);
+    }
+    final selectedCamera = frontCameras.first;
 
     final imageFormatGroup = Platform.isAndroid
         ? ImageFormatGroup.yuv420

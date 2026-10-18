@@ -10,15 +10,18 @@ class StatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = _levelColor(state.level);
-    final icon = _levelIcon(state.level);
+    final reliable = state.faceDetected && state.signalQuality >= .32;
+    final color = reliable ? _levelColor(state.level) : const Color(0xFFFFA726);
+    final icon = reliable
+        ? _levelIcon(state.level)
+        : Icons.videocam_off_outlined;
 
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.black.withValues(alpha: 0.68),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(20),
         border: Border.all(color: color.withValues(alpha: 0.7), width: 1.3),
         boxShadow: <BoxShadow>[
           BoxShadow(
@@ -38,7 +41,7 @@ class StatusCard extends StatelessWidget {
                 height: 46,
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: 0.16),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: Icon(icon, color: color, size: 27),
               ),
@@ -52,7 +55,7 @@ class StatusCard extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: LocalizedText(
-                            state.level.label,
+                            reliable ? state.level.label : 'Señal insuficiente',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -63,7 +66,8 @@ class StatusCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        _RiskBadge(score: state.riskScore, color: color),
+                        if (reliable)
+                          _RiskBadge(score: state.riskScore, color: color),
                       ],
                     ),
                     const SizedBox(height: 4),
@@ -84,8 +88,12 @@ class StatusCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          _RiskBar(color: color, score: state.riskScore),
+          if (reliable) _RiskBar(color: color, score: state.riskScore),
           const SizedBox(height: 7),
+          Text(
+            'Índice heurístico · calidad de señal ${(state.signalQuality.clamp(0, 1) * 100).round()} / 100',
+            style: const TextStyle(fontSize: 10, color: Colors.white60),
+          ),
           Row(
             children: <Widget>[
               Expanded(
@@ -164,11 +172,11 @@ class _RiskBadge extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.13),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(20),
         border: Border.all(color: color.withValues(alpha: 0.34)),
       ),
       child: LocalizedText(
-        '$value%',
+        '$value / 100',
         style: TextStyle(
           color: color,
           fontSize: 12,

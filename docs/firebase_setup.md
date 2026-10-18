@@ -1,5 +1,31 @@
 # Firebase: cuentas y copias de informes
 
+## Avisos a supervisores (implementados localmente; despliegue pendiente)
+
+Los incidentes `WARNING` y `CRITICAL` de una flota activa pueden generar avisos web por Firebase Cloud Messaging. La función `backend/functions/index.mjs`, ubicada en `us-central1` junto a la base Firestore `nam5`, comprueba de nuevo la membresía `ADMIN`/`OPERATOR` activa antes de enviar; los eventos `INFO` no disparan push. El navegador del supervisor debe activar voluntariamente **Activar avisos** en la central. Los tokens quedan privados bajo `alertSubscriptions`, y al cerrar sesión o cambiar de organización se intenta revocar la suscripción. La función conserva un registro de despacho para evitar notificaciones repetidas ante reintentos. La alarma local del conductor no depende de FCM ni de Internet.
+
+Para poner esta función en servicio hay que configurar `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID` y `NEXT_PUBLIC_FIREBASE_VAPID_KEY` en el dashboard, habilitar FCM/Web Push en el proyecto Firebase, compilar y publicar la web, instalar dependencias en `backend/functions` y desplegar **reglas y función** con credenciales de despliegue autorizadas. No se desplegó ni se verificó entrega a un navegador real en esta sesión. El SDK web instalado aún usa `getToken`; Firebase lo considera una API en transición, por lo que conviene migrar a `register`/FID cuando el Admin SDK de este proyecto admita envíos FID.
+
+```powershell
+cd backend/functions
+npm install
+npm test
+cd ../..
+firebase deploy --only firestore:rules,functions --project driverawaken
+cd dashboard
+npm run build
+```
+
+Después de publicar la central por HTTPS, se requiere una prueba de extremo a extremo con una cuenta de operador real y un incidente de prueba legítimo: conceder permiso de notificaciones, recibir un aviso en segundo plano, abrir el incidente, reconocerlo y comprobar que una membresía revocada ya no recibe mensajes. FCM no garantiza entrega instantánea ni sustituye la alerta local.
+
+## Guardian — ampliación pendiente de publicación (2026-10-17)
+
+La ampliación Guardian añade colecciones `organizations/{org}` con `members`, `vehicles`, `assignments`, `trips`, `incidents`, `operatorActions` y `restSessions`. Roles ADMIN/OPERATOR/DRIVER y aislamiento se aplican en `backend/firestore.rules`; `users/{uid}/reports/{id}` conserva su esquema y acceso personal. Las reglas se verificaron con 17 pruebas en emulador y se publicaron en `driverawaken` el 18 de octubre de 2026.
+
+La organización y su primera membresía ADMIN solo se crean con `backend/scripts/bootstrap.mjs` y credenciales Admin autorizadas. Los clientes no pueden autoasignarse un rol. Incidentes solo para viajes activos propios y asignados; acciones del operador anexas e inmutables. No se envían imágenes ni vectores biométricos. El consentimiento para flota es distinto de la copia manual de informes personales.
+
+La configuración pública de Firebase web vive en variables `NEXT_PUBLIC_FIREBASE_*`, nunca en una clave Admin. La guía operativa actual, cuentas ficticias de emulador, comandos exactos y pasos pendientes están en `DEPLOYMENT.md` de la raíz. Las afirmaciones históricas sobre la nube a continuación no certifican el estado actual del proyecto remoto: no se reconsultó ni modificó en esta sesión.
+
 ## Configuración implementada
 
 - Proyecto: `driverawaken`.

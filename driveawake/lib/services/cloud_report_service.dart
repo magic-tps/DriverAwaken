@@ -9,6 +9,7 @@ import '../models/cloud_trip_report.dart';
 import '../models/trip_session_summary.dart';
 import 'account_session.dart';
 import '../l10n/locale_controller.dart';
+import '../fleet/fleet_service.dart';
 
 class CloudReportService implements AccountSession {
   CloudReportService._();
@@ -32,12 +33,31 @@ class CloudReportService implements AccountSession {
     if (kIsWeb || defaultTargetPlatform != TargetPlatform.android) {
       throw UnsupportedError('La copia en la nube está disponible en Android.');
     }
-    await Firebase.initializeApp();
+    const useEmulators = bool.fromEnvironment('GUARDIAN_USE_EMULATORS');
+    await Firebase.initializeApp(
+      options: useEmulators
+          ? const FirebaseOptions(
+              apiKey: 'demo-guardian-public-emulator-key',
+              appId: '1:1234567890:android:guardian',
+              messagingSenderId: '1234567890',
+              projectId: 'demo-guardian',
+            )
+          : null,
+    );
     _auth = FirebaseAuth.instance;
     _store = FirebaseFirestore.instance;
+    if (useEmulators) {
+      const host = String.fromEnvironment(
+        'GUARDIAN_EMULATOR_HOST',
+        defaultValue: '10.0.2.2',
+      );
+      await _auth!.useAuthEmulator(host, 9098);
+      _store!.useFirestoreEmulator(host, 8085);
+    }
     // SQLite is the offline source of truth. Do not retain other accounts'
     // cloud reports in a second on-disk cache on this device.
     _store!.settings = const Settings(persistenceEnabled: false);
+    if (_auth!.currentUser != null) unawaited(FleetService.instance.refresh());
   }
 
   @override
@@ -58,6 +78,7 @@ class CloudReportService implements AccountSession {
         password: password,
       );
     }
+    unawaited(FleetService.instance.refresh());
   }
 
   @override
@@ -106,7 +127,10 @@ class CloudReportService implements AccountSession {
   Future<void> deleteReport(String id) =>
       _reports().doc(id).delete().timeout(const Duration(seconds: 20));
 
-  Future<void> signOut() => _auth!.signOut();
+  Future<void> signOut() async {
+    await FleetService.instance.revoke();
+    await _auth!.signOut();
+  }
 
   Future<void> deleteAccount(String password) async {
     final current = user;
@@ -116,6 +140,7 @@ class CloudReportService implements AccountSession {
     await current.reauthenticateWithCredential(
       EmailAuthProvider.credential(email: current.email!, password: password),
     );
+    await FleetService.instance.revoke();
     final collection = _reports();
     while (true) {
       final page = await collection

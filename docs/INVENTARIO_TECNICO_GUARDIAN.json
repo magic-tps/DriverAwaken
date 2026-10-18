@@ -1,0 +1,4730 @@
+{
+  "snapshot_date": "2026-10-17",
+  "timezone": "America/Lima",
+  "scope": "Tracked and non-ignored untracked files. Excludes this catalog pair, dependency/build/cache internals and raw private datasets. Private configuration contents excluded. Static declarations do not prove runtime reachability.",
+  "branch": "feat/guardian-mvp",
+  "head": "c5aaa8ca1d7e0fb1330056b6c4ac6b08ccd6ffa8",
+  "file_count": 385,
+  "counts_by_root": {
+    ".github": 2,
+    "app_conductores_ml": 30,
+    "backend": 8,
+    "dashboard": 47,
+    "docs": 17,
+    "driveawake": 259,
+    "root": 10,
+    "scripts": 2,
+    "shared": 10
+  },
+  "counts_by_module": {
+    "driveawake/lib": 90,
+    "driveawake/test": 30,
+    "app_conductores_ml/src": 17,
+    "app_conductores_ml/tests": 2,
+    "dashboard/src": 27,
+    "dashboard/tests": 4,
+    "dashboard/e2e": 2,
+    "backend": 8,
+    "scripts": 2,
+    "shared": 10,
+    "docs": 17
+  },
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "bytes": 2449,
+      "category": ".github",
+      "content_excluded": false,
+      "sha256": "9065a8d8d36cc991ebd1eb269eb76f89fd15482a6245080417623df7562f48b4",
+      "lines": 96
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "bytes": 2266,
+      "category": ".github",
+      "content_excluded": false,
+      "sha256": "d8eb8c60441c896854a1d7d29a364aff63120b91e469d7e1fd25f140a3e3d7aa",
+      "lines": 65
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 1014,
+      "category": "root",
+      "content_excluded": false,
+      "sha256": "a48fd61b8d2039651939f3f9cc89f2b40e4bd4c77b9eec02a7aceec4566e35ba",
+      "lines": 57
+    },
+    {
+      "path": "DEMO_GUIDE.md",
+      "bytes": 2643,
+      "category": "root",
+      "content_excluded": false,
+      "sha256": "f0d2879357f9cf57b5291f6e6b6bd2845c8e851f8b6696917d0e134afbfde505",
+      "lines": 26
+    },
+    {
+      "path": "DEPLOYMENT.md",
+      "bytes": 6820,
+      "category": "root",
+      "content_excluded": false,
+      "sha256": "fa7641af8b92def7f686c5ea5f24e883d75493f6ab65554dbf160dd1ce5a3f51",
+      "lines": 125
+    },
+    {
+      "path": "HACKTHEANDES_2026.md",
+      "bytes": 4534,
+      "category": "root",
+      "content_excluded": false,
+      "sha256": "f689d1c71f771a04cda38c8b8615ce6877101dfa0d58e988d0142a5ef468efd2",
+      "lines": 46
+    },
+    {
+      "path": "PITCH_SCRIPT.md",
+      "bytes": 4733,
+      "category": "root",
+      "content_excluded": false,
+      "sha256": "2f7aabba050c4990fee54dd83db03983f51a465c0f4f236817aa09694b9f068a",
+      "lines": 31
+    },
+    {
+      "path": "PRIVACY.md",
+      "bytes": 2905,
+      "category": "root",
+      "content_excluded": false,
+      "sha256": "41647f2445b8c12f2882abdad5b7120267aa1ca7d17660d194ebb8c31c43da64",
+      "lines": 19
+    },
+    {
+      "path": "README.md",
+      "bytes": 4335,
+      "category": "root",
+      "content_excluded": false,
+      "sha256": "4029559d9b720a2295a27a08b3c6b142bc4c7d9ff494bd01f463ab4287ed7ec5",
+      "lines": 43
+    },
+    {
+      "path": "TECHNICAL_VALIDATION.md",
+      "bytes": 12753,
+      "category": "root",
+      "content_excluded": false,
+      "sha256": "b16808be86c98fb2b79f86341a3f28a55d0ba1be434df3563bac0d2ad65c9e2c",
+      "lines": 122
+    },
+    {
+      "path": "app_conductores_ml/.gitignore",
+      "bytes": 158,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "a32d5ad442f7b749b5d89e5e711188ccfc54ec515287a0e96c7bce7ee251d5dd",
+      "lines": 15
+    },
+    {
+      "path": "app_conductores_ml/README.md",
+      "bytes": 8767,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "4686bc46fec05ab062b0bba73663bb45d1ddd42f2cf6212c84d22352bb77a85b",
+      "lines": 318
+    },
+    {
+      "path": "app_conductores_ml/flutter_assets/README_FLUTTER_INTEGRATION.md",
+      "bytes": 7301,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "06846a0f07e9fcf593248e4424547b3c3059363a047d21eb8139990231a3e875",
+      "lines": 262
+    },
+    {
+      "path": "app_conductores_ml/flutter_assets/assets/models/drowsiness_mlp.tflite",
+      "bytes": 37552,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "e29e3b6017ad897a319afe7968b5bca3213f12a5551a3853b9e3cb5671f1c34f"
+    },
+    {
+      "path": "app_conductores_ml/flutter_assets/assets/models/preprocessing_metadata.json",
+      "bytes": 18410,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "50af70956328a60905003b40d6f139d2eeed0f66d280bdebed5609ef8ed7f0d0",
+      "lines": 747
+    },
+    {
+      "path": "app_conductores_ml/models/preprocessing_metadata.json",
+      "bytes": 18410,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "50af70956328a60905003b40d6f139d2eeed0f66d280bdebed5609ef8ed7f0d0",
+      "lines": 747
+    },
+    {
+      "path": "app_conductores_ml/pyproject.toml",
+      "bytes": 259,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "9bb3389ea29e70e22d859bac9493391ba11da6e88f400ee05c448263c89bf691"
+    },
+    {
+      "path": "app_conductores_ml/reports/feature_importance.csv",
+      "bytes": 7847,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "36630cea93f9f31bfa17f2da4a266290e877cc77ca363f60eef9e37b5d6b900c"
+    },
+    {
+      "path": "app_conductores_ml/reports/model_zoo_metrics.csv",
+      "bytes": 1316,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "1c73ecb96612f229736967a8600221fbd8608f78f77b36915296c81c7ea1922a"
+    },
+    {
+      "path": "app_conductores_ml/requirements-dev.txt",
+      "bytes": 49,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "e45ecee711229ebe0ecfd90a720f0240aaefd34a5db301a7fe0720657a912a24",
+      "lines": 3
+    },
+    {
+      "path": "app_conductores_ml/requirements.txt",
+      "bytes": 251,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "974a6a692e8336cd4faf2d7e254568b3cb5bb0ec3214cd82269adcfa2697229e",
+      "lines": 13
+    },
+    {
+      "path": "app_conductores_ml/src/__init__.py",
+      "bytes": 62,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "3a29031c521827ddf3fe223c818fe7e2addf017c6df2fc14cc6fd5aaf27547f1",
+      "lines": 1
+    },
+    {
+      "path": "app_conductores_ml/src/config.py",
+      "bytes": 1972,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "7c4e82530375f4da5bb94ab967ee8dd38ddfc6f2a130b81ee595030ce33f106e",
+      "lines": 98,
+      "declarations": [
+        "infer_feature_columns",
+        "ensure_project_dirs"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/dataset_utils.py",
+      "bytes": 3090,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "e0e1fdc4add5cfb9c8c4777068d8d8aff09cdc512393c72f027444708f223ffc",
+      "lines": 97,
+      "declarations": [
+        "find_video_files",
+        "infer_raw_label",
+        "model_label_from_raw",
+        "video_id_for_path",
+        "source_path_text",
+        "labeled_videos",
+        "_relative_parts",
+        "count_by_label"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/export_flutter_assets.py",
+      "bytes": 4484,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "68a95b8257681c6421d990fa94b7b0cf0e468f4641c58b407db413e4893262a2",
+      "lines": 157,
+      "declarations": [
+        "export_assets",
+        "_feature_columns_from_metadata",
+        "build_readme",
+        "parse_args",
+        "main"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/extract_features.py",
+      "bytes": 18154,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "2c2167d46ee3bd763a183d5eb058ac38704db4e94402da73a7e5805318c2c4e0",
+      "lines": 537,
+      "declarations": [
+        "process_frame",
+        "process_video",
+        "process_video_worker",
+        "summarize_window",
+        "extract_features",
+        "_numeric_values",
+        "_stat",
+        "_max_abs",
+        "_count_true_runs",
+        "_max_true_run_duration",
+        "resize_for_mesh",
+        "iter_sampled_frames",
+        "parse_args",
+        "main"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/feature_engineering.py",
+      "bytes": 9609,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "fd2f50cc86d9c946220d448afc95f3414084b428d3682edcf635a2b57cbfb94c",
+      "lines": 264,
+      "declarations": [
+        "engineer_features",
+        "add_static_features",
+        "add_temporal_features",
+        "extract_subject_id",
+        "extract_fold_id",
+        "parse_args",
+        "main"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/inspect_dataset.py",
+      "bytes": 3753,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "a297a775b5e9b99af2ee55a730cc05a163165e934d428a815ba3582f27e0f5d0",
+      "lines": 119,
+      "declarations": [
+        "inspect_video",
+        "run",
+        "parse_args",
+        "main"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/landmark_utils.py",
+      "bytes": 3598,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "3818c5e213c51fa96ce5930d6f8620ddae8f6db79f50721a3c9b421fa7675630",
+      "lines": 122,
+      "declarations": [
+        "safe_float",
+        "nanmean",
+        "euclidean_distance",
+        "calculate_ear",
+        "calculate_mar",
+        "calculate_yaw_proxy",
+        "calculate_pitch_proxy",
+        "_xy"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/predict_sample.py",
+      "bytes": 3344,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "762a7b6a8c64c69f596578be7eb7dd4b8e8289464064f8445a382df26e13f20c",
+      "lines": 92,
+      "declarations": [
+        "load_model",
+        "select_row",
+        "predict",
+        "parse_args",
+        "main"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/run_all_phase2.py",
+      "bytes": 8268,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "337685c8c8875668f16aa279774568f6026140377f864626ae5703082639d533",
+      "lines": 255,
+      "declarations": [
+        "python_executable",
+        "run_command",
+        "run_all",
+        "parse_args",
+        "main"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/splitting.py",
+      "bytes": 3307,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "41700014cdb76dac3763312aa5213d5797289e33b30dc24a27723eac83bfb855",
+      "lines": 86,
+      "declarations": [
+        "extract_subject_groups",
+        "validate_no_group_leakage",
+        "grouped_holdout_indices",
+        "create_grouped_cv"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/train_logistic_search.py",
+      "bytes": 7519,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "1c87376eb7fe2f7f168ada115ce701ca8a40626ab32af0b6559b064688ab3090",
+      "lines": 235,
+      "declarations": [
+        "load_training_data",
+        "split_by_subject",
+        "build_pipeline",
+        "train_logistic_search",
+        "save_confusion_matrix",
+        "parse_args",
+        "main"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/train_mlp_tflite.py",
+      "bytes": 15521,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "28d19912df8a15275616b5b087b825d5170b088c49051e02fae4642c3745f5b4",
+      "lines": 447,
+      "declarations": [
+        "load_training_data",
+        "split_by_subject",
+        "split_train_validation_by_video",
+        "build_model",
+        "train",
+        "scale_features",
+        "build_callbacks",
+        "best_epoch_from_history",
+        "_class_weight",
+        "save_confusion_matrix",
+        "save_training_history",
+        "export_tflite",
+        "parse_args",
+        "main"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/train_model_zoo.py",
+      "bytes": 12699,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "aa5ede0b7cfc81ea7829b13f3110217a5f49fc9e7f27ab09377dd8122e3d2ab3",
+      "lines": 386,
+      "declarations": [
+        "load_training_data",
+        "split_by_subject",
+        "build_models",
+        "train_model_zoo",
+        "save_confusion_matrix",
+        "save_feature_importance_if_available",
+        "parse_args",
+        "main"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/train_random_forest.py",
+      "bytes": 11927,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "d273bba371560d97c9beb2b21c7b87d41723d75360762d625e35d33a1bb76c0e",
+      "lines": 379,
+      "declarations": [
+        "load_training_data",
+        "split_by_subject",
+        "build_pipeline",
+        "fit_random_forest",
+        "train",
+        "save_confusion_matrix",
+        "save_feature_importance",
+        "print_conclusion",
+        "parse_args",
+        "main"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/validate_model_contract.py",
+      "bytes": 2262,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "c7e8ad9605d48160d40a460627f683f81c55bf4dc51f95c516be967de8f9c2bf",
+      "lines": 53,
+      "declarations": [
+        "sha256_file",
+        "validate_contract",
+        "main"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/src/validate_product_rules.py",
+      "bytes": 8230,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "688b38a6d5f2a8ec10a6096edac967698d00e501524c51ca66ae86d0b56c593f",
+      "lines": 194,
+      "declarations": [
+        "safe_col",
+        "hybrid_product_scores",
+        "summarize_binary",
+        "main"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/tests/test_model_contract.py",
+      "bytes": 2093,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "bb796e66915ea19eaf6e03d2fdc63a5d05522bf30a08406d507a89d6df8a5e7e",
+      "lines": 58,
+      "declarations": [
+        "load_json",
+        "test_contract_matches_deployed_metadata_order",
+        "test_contract_hash_matches_deployed_model",
+        "test_shared_golden_scaling_vector"
+      ]
+    },
+    {
+      "path": "app_conductores_ml/tests/test_splitting.py",
+      "bytes": 2757,
+      "category": "app_conductores_ml",
+      "content_excluded": false,
+      "sha256": "408de19b0cb35e1e08d053e85716f7081690944bbe347b5728c0c5a50587c900",
+      "lines": 82,
+      "declarations": [
+        "sample_data",
+        "test_extract_subject_groups_requires_subject_id",
+        "test_extract_subject_groups_rejects_unknown_values",
+        "test_holdout_has_zero_subject_intersection",
+        "test_holdout_is_reproducible_with_same_seed",
+        "test_different_seed_ranges_can_select_different_subjects",
+        "test_validate_no_group_leakage_fails_fast",
+        "test_grouped_cv_rejects_too_few_subjects",
+        "test_grouped_cv_never_mixes_subjects"
+      ]
+    },
+    {
+      "path": "backend/firebase.test.json",
+      "bytes": 317,
+      "category": "backend",
+      "content_excluded": false,
+      "sha256": "44e6e20272af22727d34971da0a6b4617d329640319aa565be469327e101ef8b",
+      "lines": 10
+    },
+    {
+      "path": "backend/firebase.web-test.json",
+      "bytes": 368,
+      "category": "backend",
+      "content_excluded": false,
+      "sha256": "417b36c22556e3f0f562e0b6462fc1bbb129f9e61bb360ad493cb49fff9b9f65",
+      "lines": 11
+    },
+    {
+      "path": "backend/firestore.rules",
+      "bytes": 13852,
+      "category": "backend",
+      "content_excluded": false,
+      "sha256": "313d0c417daac6a2b28d9c48dfbd7597e6b0cddf93d5eba884df2e490fa87a54",
+      "lines": 207
+    },
+    {
+      "path": "backend/package-lock.json",
+      "bytes": 103532,
+      "category": "backend",
+      "content_excluded": false,
+      "sha256": "f5f667dd9a09a3f3858d66a77e5c92f31f2606d93b6847b434850e86530f0bce",
+      "lines": 2787
+    },
+    {
+      "path": "backend/package.json",
+      "bytes": 480,
+      "category": "backend",
+      "content_excluded": false,
+      "sha256": "8aff62b02578080c002c059de03bb9fb5b181ed50f41f3137cc9ac6480e7579e",
+      "lines": 12
+    },
+    {
+      "path": "backend/scripts/bootstrap.mjs",
+      "bytes": 1637,
+      "category": "backend",
+      "content_excluded": false,
+      "sha256": "b2235bf96978dbb63bb589d9f7a449b3be8483b2115f2288320fa97dd923e1e3",
+      "lines": 28
+    },
+    {
+      "path": "backend/scripts/seed-emulators.mjs",
+      "bytes": 4487,
+      "category": "backend",
+      "content_excluded": false,
+      "sha256": "b8841c17b13b228e8b8c9e3aeb16c9d6529e56c8f635b92e66e98a8e95be3b50",
+      "lines": 59,
+      "declarations": [
+        "loopbackPort"
+      ]
+    },
+    {
+      "path": "backend/tests/firestore.test.mjs",
+      "bytes": 13325,
+      "category": "backend",
+      "content_excluded": false,
+      "sha256": "e38080859a0b01868babeb8601bcfec9d6fa1e576beb9690004c713ee5619589",
+      "lines": 181,
+      "declarations": [
+        "deliver"
+      ],
+      "test_titles": [
+        "unauthenticated users cannot access tenant or personal data",
+        "tenant isolation for driver and operator, including queries",
+        "driver cannot elevate role, bootstrap org, create trips or forge assignments",
+        "only ADMIN manages valid members vehicles assignments and assigned trips",
+        "driver publishes valid immutable incident only for assigned active trip",
+        "invalid incident fields values times and missing trip rejected",
+        "unavailable signal is INFO with zero fatigue risk",
+        "operator actions append with authenticated identity, never rewrite detection",
+        "trip lifecycle prevents reassignment timestamps spoofing and resurrection",
+        "delayed health keeps its observed time and cannot move backwards",
+        "revoked membership blocks pending publication",
+        "real emulator flow: assigned trip → incident → idempotent retry → acknowledgement → action history",
+        "personal reports remain owner-only with original validated schema",
+        "completed voluntary rests are validated, immutable and tenant-scoped",
+        "late rest sync remains possible for own completed trip within its interval"
+      ]
+    },
+    {
+      "path": "dashboard/.env.example",
+      "bytes": 286,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "946f51185d5656a319ca3bae0ad5c68dc009c3ca678ca4694009cca71b72196a"
+    },
+    {
+      "path": "dashboard/.gitignore",
+      "bytes": 93,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "5ccc41b122f31964442c3ebdcbf3f011ba9452faa043d2303d1fe75297e1d6d5",
+      "lines": 8
+    },
+    {
+      "path": "dashboard/README.md",
+      "bytes": 10859,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "749f429b5fd625f4974245fd2faadd901c39b9a07c9306d305f9fb06ba596ce8",
+      "lines": 120
+    },
+    {
+      "path": "dashboard/e2e/emulator.spec.ts",
+      "bytes": 7218,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "45872b0aad0c10a5c5cf2b3c4e5322e8cde5d875b6be17343e3675793f4a85f5",
+      "lines": 98,
+      "declarations": [
+        "login"
+      ],
+      "test_titles": [
+        "operator sees driver-SDK event, appends a response, and selection survives navigation",
+        "driver cannot open operations central",
+        "operator sees actual driver membership, rest and consistently filtered report export",
+        "operator reads completed self-declared rest from driver SDK without edit controls",
+        "administrator registers vehicle, membership and assigned trip"
+      ]
+    },
+    {
+      "path": "dashboard/e2e/public.spec.ts",
+      "bytes": 7236,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "c685bed9c5aba2ad2e69ef4845d14d58f3ca17ed976c7e887e395f735096265b",
+      "lines": 105,
+      "test_titles": [
+        "public landing navigates to isolated demo, no Firebase requests",
+        "offline → persisted incident → reconnect → human action → complete → reset",
+        "caution cooldown groups duplicate events",
+        "synthetic destination and voluntary rest never imply real navigation or recovery",
+        "pitch has ten slides, keyboard controls and working demo link",
+        "protected routes require configuration or an authenticated session",
+        "main public pages fit the viewport and support keyboard focus"
+      ]
+    },
+    {
+      "path": "dashboard/eslint.config.mjs",
+      "bytes": 339,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "ca7c5f0664abad6d37d8ce730477d3650e21e253a2e06ed7ef9bfc47a67a4c25",
+      "lines": 8
+    },
+    {
+      "path": "dashboard/next-env.d.ts",
+      "bytes": 288,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b",
+      "lines": 7
+    },
+    {
+      "path": "dashboard/next.config.ts",
+      "bytes": 198,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "719de02cf887b2397c6faf03a65a22a26c8b4d5498acd5d3bbfbeb68c477cb46",
+      "lines": 9
+    },
+    {
+      "path": "dashboard/package-lock.json",
+      "bytes": 325623,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "7d64b114c5a1796ded9d5f967621a3beee9bd2076e2cc9adfb4c5e4d4cc7e946",
+      "lines": 9460
+    },
+    {
+      "path": "dashboard/package.json",
+      "bytes": 908,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "e249f28bd1c042b8523f4dc0146bc882028e384e163a97fbdc43c3bbb46cd201",
+      "lines": 34
+    },
+    {
+      "path": "dashboard/playwright.config.ts",
+      "bytes": 611,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "14d3782cc87b25a33520f8afedca988114a7ed06b9a81532e70cb7d902019fb6",
+      "lines": 9
+    },
+    {
+      "path": "dashboard/postcss.config.mjs",
+      "bytes": 83,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "258faa39968594a46c2cf72ba120fb353e788ef2acc3265ddbfbc6400dd80761",
+      "lines": 2
+    },
+    {
+      "path": "dashboard/scripts/emulator.mjs",
+      "bytes": 1747,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "3c99763395229398453849a3464a9df4f5990ff12dd395d119a07b9447a6c6d8",
+      "lines": 31,
+      "declarations": [
+        "port"
+      ]
+    },
+    {
+      "path": "dashboard/scripts/serve.mjs",
+      "bytes": 1545,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "77192e21599c7c8e22642c78d31199b7c1dfd50f4dcb55f1637e78656eba0e4a",
+      "lines": 18
+    },
+    {
+      "path": "dashboard/src/app/dashboard/drivers/page.tsx",
+      "bytes": 179,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "c451ec02ad57a0c77c79bec8091929534c4233b54dbc5d7d8df20608b0d853a6",
+      "lines": 3,
+      "declarations": [
+        "Page"
+      ]
+    },
+    {
+      "path": "dashboard/src/app/dashboard/fleet/page.tsx",
+      "bytes": 171,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "4122adf2442d42e8a8d86212fa47201433082113f93951c65c7541506303b718",
+      "lines": 3,
+      "declarations": [
+        "Page"
+      ]
+    },
+    {
+      "path": "dashboard/src/app/dashboard/incidents/page.tsx",
+      "bytes": 180,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "5462ccc70415c5d9d663a7007dc521bba1e7297c49247ab518763d36f2397419",
+      "lines": 3,
+      "declarations": [
+        "Page"
+      ]
+    },
+    {
+      "path": "dashboard/src/app/dashboard/page.tsx",
+      "bytes": 167,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "a1f3e93fc573762e1ab03a1190f15322705d5acc93819a2f410d304fe80e2541",
+      "lines": 3,
+      "declarations": [
+        "Page"
+      ]
+    },
+    {
+      "path": "dashboard/src/app/dashboard/reports/page.tsx",
+      "bytes": 189,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "0bfe0af27d4f60216dde3cf1908e00b1997e646e8a18cc5db12e744f2aa60e1c",
+      "lines": 3,
+      "declarations": [
+        "Page"
+      ]
+    },
+    {
+      "path": "dashboard/src/app/dashboard/rest/page.tsx",
+      "bytes": 174,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "fce3c9c7144ba0a30963e79723e393e1c2afc43901396ecd166811f92ca74782",
+      "lines": 3,
+      "declarations": [
+        "Page"
+      ]
+    },
+    {
+      "path": "dashboard/src/app/dashboard/settings/page.tsx",
+      "bytes": 176,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "cadbdd0c2e5a1dfe540e94c7b8477a07b05fa048587dea79e26cd5c99489dc14",
+      "lines": 3,
+      "declarations": [
+        "Page"
+      ]
+    },
+    {
+      "path": "dashboard/src/app/dashboard/trips/page.tsx",
+      "bytes": 172,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "741781e46bc9c0a5326519f2475aad64d6ec02da3cde3a389c90f77825f67421",
+      "lines": 3,
+      "declarations": [
+        "Page"
+      ]
+    },
+    {
+      "path": "dashboard/src/app/demo/page.tsx",
+      "bytes": 162,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "19b3edb6f3d8aa0b2a19d6c687e95c820c007aeb38202b5b6526ae208eb9b3c2",
+      "lines": 3,
+      "declarations": [
+        "DemoPage"
+      ]
+    },
+    {
+      "path": "dashboard/src/app/globals.css",
+      "bytes": 45725,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "0636a4b3f6a075ac55510700d05202220b04f38a1d48ae6669bdcc8b1a0c0404",
+      "lines": 68
+    },
+    {
+      "path": "dashboard/src/app/layout.tsx",
+      "bytes": 597,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "eb0a18c2b8729035b909c913dda7bbb63961dc6d4b755d188e9808a9744d1cf1",
+      "lines": 11,
+      "declarations": [
+        "RootLayout"
+      ]
+    },
+    {
+      "path": "dashboard/src/app/not-found.tsx",
+      "bytes": 506,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "adce8d1893e3ae932b7730be739afdd37acb55b7059be005278cfecd4e717835",
+      "lines": 3,
+      "declarations": [
+        "NotFound"
+      ]
+    },
+    {
+      "path": "dashboard/src/app/page.tsx",
+      "bytes": 4064,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "e5a723da534b1fa2509694863b5f881c3129e871a5580c566a41aae2eeb51509",
+      "lines": 13,
+      "declarations": [
+        "Home"
+      ]
+    },
+    {
+      "path": "dashboard/src/app/pitch/page.tsx",
+      "bytes": 161,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "c31f4d7ca821fc3285df9ba0fa1297a60104a953ec8d351fbcea218a5646815c",
+      "lines": 3,
+      "declarations": [
+        "Page"
+      ]
+    },
+    {
+      "path": "dashboard/src/components/demo-app.tsx",
+      "bytes": 9583,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "e5894cac86926c33f3ca48bd2b31a7c0adff669e6189c58516e5f63339972f16",
+      "lines": 37,
+      "declarations": [
+        "DemoApp",
+        "action"
+      ]
+    },
+    {
+      "path": "dashboard/src/components/demo-rest.tsx",
+      "bytes": 3337,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "fb56bee3d6462a09b2a83d3d2680ad78cb5e4c5874157542357e3a6d8c0b6d01",
+      "lines": 11,
+      "declarations": [
+        "DemoRest"
+      ]
+    },
+    {
+      "path": "dashboard/src/components/incidents.tsx",
+      "bytes": 6641,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "16507f310c320e1ad0b0625277ee322f13d770545939fb0aadb5f68bc70c0096",
+      "lines": 31,
+      "declarations": [
+        "IncidentBoard",
+        "IncidentDetail",
+        "submit"
+      ]
+    },
+    {
+      "path": "dashboard/src/components/operational-reports.tsx",
+      "bytes": 6156,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "5241b076f321dacbd55e3dcdb9e23c5aa11eb8a0e8d286f0ad8d8886fbfd98ff",
+      "lines": 32,
+      "declarations": [
+        "OperationalReports",
+        "csvExport"
+      ]
+    },
+    {
+      "path": "dashboard/src/components/operations.tsx",
+      "bytes": 29358,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "b55d604ecbfb2d1d83d0fa9623820fd9895c1c2f58f987ffb1be2de7f06c71bd",
+      "lines": 215,
+      "declarations": [
+        "Section",
+        "Client",
+        "Data",
+        "timestamp",
+        "parseRecord",
+        "Operations",
+        "clearStreams",
+        "fail",
+        "login",
+        "connectOrg",
+        "AccessFrame",
+        "RestHistory",
+        "Observation",
+        "DriverTable",
+        "TripTable",
+        "Reports",
+        "AdminVehicleForm",
+        "save",
+        "AdminTripForm",
+        "save",
+        "AdminMembershipForm",
+        "save"
+      ]
+    },
+    {
+      "path": "dashboard/src/components/pitch.tsx",
+      "bytes": 7294,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "a416f9c0600d150c442e509f9adc5adac8543aaed6fd01a0eaf396b692c1dff6",
+      "lines": 38,
+      "declarations": [
+        "Pitch",
+        "key"
+      ]
+    },
+    {
+      "path": "dashboard/src/components/ui.tsx",
+      "bytes": 3388,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "42afe01b64bb2a89e36fc8be931768fb425e33bd9ee02fec88777fb012749317",
+      "lines": 35,
+      "declarations": [
+        "Mark",
+        "Icon",
+        "Badge",
+        "Empty",
+        "Stat",
+        "PublicHeader"
+      ]
+    },
+    {
+      "path": "dashboard/src/lib/demo-store.ts",
+      "bytes": 1622,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "9eec203182389ebf949fd99a4799b80f6895c3e0b9f195ef2b0ce6340bebc21f",
+      "lines": 34,
+      "declarations": [
+        "getDemoServerSnapshot",
+        "getDemoSnapshot",
+        "subscribeDemo",
+        "storage",
+        "dispatchDemo"
+      ]
+    },
+    {
+      "path": "dashboard/src/lib/demo.ts",
+      "bytes": 13500,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "87222abd28b38bcca422d1d7306e0a96b6c5c264550d92e61ce683ac75ca68d4",
+      "lines": 156,
+      "declarations": [
+        "DemoRestSession",
+        "TimelineEntry",
+        "DemoState",
+        "DemoEvent",
+        "initialDemo",
+        "demoReducer",
+        "restoreDemo"
+      ]
+    },
+    {
+      "path": "dashboard/src/lib/domain.ts",
+      "bytes": 4205,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "2357ac6de57ec2c95c050af74983eeb1dbb182cd436c98691c4ce804189e0640",
+      "lines": 58,
+      "declarations": [
+        "IncidentType",
+        "Severity",
+        "ActionType",
+        "IncidentStatus",
+        "SyncStatus",
+        "Incident",
+        "OperatorAction",
+        "Trip",
+        "Vehicle",
+        "FleetRestSession",
+        "Membership",
+        "incidentStatus",
+        "metrics",
+        "formatTime",
+        "formatDate",
+        "isFresh"
+      ]
+    },
+    {
+      "path": "dashboard/src/lib/firebase.ts",
+      "bytes": 2461,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "047d1b41b8b681d9f2fbd23ff0a2e7405cc8406a740564a6020a9310714fe360",
+      "lines": 38,
+      "declarations": [
+        "emulatorPort",
+        "firebaseClient",
+        "firebaseError"
+      ]
+    },
+    {
+      "path": "dashboard/src/lib/operations-model.ts",
+      "bytes": 2008,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "495acb584df9e76f791425a60473a8c49ab5e308e3d5fcb269c28693b48b5164",
+      "lines": 30,
+      "declarations": [
+        "reportedRiskLabel",
+        "latestIncident",
+        "monitoringObservation",
+        "driverRows"
+      ]
+    },
+    {
+      "path": "dashboard/src/lib/reports.ts",
+      "bytes": 2922,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "2cde2c52409db3b30c2a22ea21965064f593a69bbc34abedb9592a23b49904f2",
+      "lines": 41,
+      "declarations": [
+        "IncidentFilters",
+        "limaDay",
+        "filterIncidents",
+        "incidentAnalytics",
+        "csvCell",
+        "incidentCsv"
+      ]
+    },
+    {
+      "path": "dashboard/tests/demo.test.ts",
+      "bytes": 5525,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "fe6fc4c084fddbdc04873ad39d233b1323b04b80e4d96e40c5424321cbc657b3",
+      "lines": 83
+    },
+    {
+      "path": "dashboard/tests/operations-model.test.ts",
+      "bytes": 4771,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "05ac99c5334cb0324914bd363456b099e99dd22a73fd8cd0601dd11e6ddee2e1",
+      "lines": 63
+    },
+    {
+      "path": "dashboard/tests/reports.test.ts",
+      "bytes": 1204,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "993b92fcfb79489adf9e9abb0656fab97558a9bb9167fc6cddb80d949980a6c0",
+      "lines": 20
+    },
+    {
+      "path": "dashboard/tests/rest.test.ts",
+      "bytes": 3208,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "19ffcf17e3500a4df193fae29c09174b637c8c81943508720c808b3f0b3f32f2",
+      "lines": 52
+    },
+    {
+      "path": "dashboard/tsconfig.json",
+      "bytes": 602,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "14ef2c4cc5d549a9ebbc1e0f21c5bc369ada596b36fd4c989bfcf5c909ef25d3",
+      "lines": 21
+    },
+    {
+      "path": "dashboard/vitest.config.ts",
+      "bytes": 143,
+      "category": "dashboard",
+      "content_excluded": false,
+      "sha256": "1ba6d2b5cb75229fd46a6b773c71d06ae1e9e55bb479def43674174b1c6c1456",
+      "lines": 2
+    },
+    {
+      "path": "docs/APP_ESPECIFICACION_COMPLETA.md",
+      "bytes": 38127,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "c2202fd91c13f2c8f74fce901a639f88cd6bd441cfb91f8ceabf752414b6e1ef",
+      "lines": 1063
+    },
+    {
+      "path": "docs/INFORME_COMPLETO_DRIVERAWAKEN_GUARDIAN.md",
+      "bytes": 77082,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "821d4b6a3cea0e50aa08748735a66da30861414f519f328c64d03392d7b1bb99",
+      "lines": 1058
+    },
+    {
+      "path": "docs/architecture.md",
+      "bytes": 9447,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "f801f4ab24f26e8b2ef33f853f6a7ea0b661ec412c75c4a7d785396a9e830fb3",
+      "lines": 141
+    },
+    {
+      "path": "docs/change_log.md",
+      "bytes": 7794,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "71f884f9e2aca87f4a4b37fa7a313dd5c6fabbf3670b7d2b40a13ffbb0a6fec0",
+      "lines": 97
+    },
+    {
+      "path": "docs/device_test_protocol.md",
+      "bytes": 5175,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "5d85dc7b329287bf9d47df9b0773bee876f1473ec5e3cc4cc270e99bc7ed0d3c",
+      "lines": 107
+    },
+    {
+      "path": "docs/firebase_setup.md",
+      "bytes": 5804,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "df144dd6d8e2a1b0fa5979aac87d7be8bc9538e894800a63fa72e2792eaeda42",
+      "lines": 63
+    },
+    {
+      "path": "docs/guardian_audit.md",
+      "bytes": 4129,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "8fb99d50d9d5bd50526467ea37d7219d36f583bebe7915b3a45e59fd65730bc2",
+      "lines": 37
+    },
+    {
+      "path": "docs/initial_audit.md",
+      "bytes": 5377,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "3a3230e97f72e6cb5282f50b606ecb3cf7575a8def20048ef6eeb2403bcb05e8",
+      "lines": 103
+    },
+    {
+      "path": "docs/localization.md",
+      "bytes": 2877,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "076bc1069fcbdc0674498a6092b02ff4935bc4b59e095777ccbcb3c24348d80f",
+      "lines": 28
+    },
+    {
+      "path": "docs/maps_setup.md",
+      "bytes": 3410,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "00eb577319d4963cefe7954756efcbd40463358f279f968d24068693968250ca",
+      "lines": 27
+    },
+    {
+      "path": "docs/ml_validation_report.md",
+      "bytes": 2179,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "17ea99d59b7aba7b22db0783443436d7f03963d41aff53344e88552f535e7b42",
+      "lines": 50
+    },
+    {
+      "path": "docs/performance_observability.md",
+      "bytes": 5185,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "8999d858bfceb0f6f7b47f4235d87166dfe48c3826fd0ba1425fd99be2b93cea",
+      "lines": 72
+    },
+    {
+      "path": "docs/phase_1_safety_report.md",
+      "bytes": 2939,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "7b043b8d5908aee10ffe36de493c2677d3e0826417d3c2f8168fa616f53dc57a",
+      "lines": 62
+    },
+    {
+      "path": "docs/pilot_feedback_template.md",
+      "bytes": 1013,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "9dc70d50d42f91ab082d1d990865473ff9b149b53fa46ad92db329c6447e27cf",
+      "lines": 20
+    },
+    {
+      "path": "docs/privacy_policy_template.md",
+      "bytes": 4931,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "458514d3c9828039fda831082dd24fef3f30ed6f69d63f90630449ef55a561ea",
+      "lines": 59
+    },
+    {
+      "path": "docs/release_process.md",
+      "bytes": 803,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "d96a2eb4a94a79ede66c2069f0be0e16b1674ec04b15ce806040cf3cfa90d0b5",
+      "lines": 13
+    },
+    {
+      "path": "docs/repository_migration_plan.md",
+      "bytes": 519,
+      "category": "docs",
+      "content_excluded": false,
+      "sha256": "b39e92916480d218b98ffd6ecbbf0494ad69462cc52c5c5a5de54f008ff7beef",
+      "lines": 5
+    },
+    {
+      "path": "driveawake/.gitignore",
+      "bytes": 813,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "fd2095d44e0c658c41ba3018d851d8d459370a2be5064fe445eeab09f368bb6d",
+      "lines": 50
+    },
+    {
+      "path": "driveawake/.metadata",
+      "bytes": 1706,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "2be0592f4f679dcb485692ae985fcbf038d0363d0f87accb927db7de7ac891de",
+      "lines": 45
+    },
+    {
+      "path": "driveawake/README.md",
+      "bytes": 4232,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "ccf39908271578bc26cb1ff633a256e17680cb03cb9f43940af5bfe1b15e12c1",
+      "lines": 123
+    },
+    {
+      "path": "driveawake/analysis_options.yaml",
+      "bytes": 1448,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "b63207cf529949ec4727b68c23dbb38ce255b6f6f4ae1effcb5c1dcf2852d238",
+      "lines": 28
+    },
+    {
+      "path": "driveawake/android/.gitignore",
+      "bytes": 267,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c9af75dbc2c8aa867476a09426c80b178c4aeed8b9393ae48503eedfa3273d71",
+      "lines": 14
+    },
+    {
+      "path": "driveawake/android/app/build.gradle.kts",
+      "bytes": 2981,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "50227e8996b4ed660a0c20c2c654441b78c57fae1cd250a793d3d7dcd5d34a3d",
+      "lines": 96
+    },
+    {
+      "path": "driveawake/android/app/proguard-rules.pro",
+      "bytes": 548,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "b81b7596bedf41d614273dd8af142e3391a2ff94ce5e23f48bb6cfe5d8bedbf4"
+    },
+    {
+      "path": "driveawake/android/app/src/debug/AndroidManifest.xml",
+      "bytes": 385,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "b01a4541a8144c15bc617bab7eb267c99fa1476368fbbda5a12cdbf4e316a34c",
+      "lines": 7
+    },
+    {
+      "path": "driveawake/android/app/src/main/AndroidManifest.xml",
+      "bytes": 2284,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "6ee8b54545945c244d4a2dc95325a0adbb109f351c604860ab018c02b024a5cb",
+      "lines": 56
+    },
+    {
+      "path": "driveawake/android/app/src/main/kotlin/com/magicdrive/alert/MainActivity.kt",
+      "bytes": 5863,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "994539606789e070d98af9472a6ff18c9b128c9e6b421e8ed3991da76b2ddbbf",
+      "lines": 153
+    },
+    {
+      "path": "driveawake/android/app/src/main/res/drawable-v21/launch_background.xml",
+      "bytes": 450,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "dca312ec77de83e43ef70a825c299b51451247286c29167d62f19165750b8793",
+      "lines": 12
+    },
+    {
+      "path": "driveawake/android/app/src/main/res/drawable/launch_background.xml",
+      "bytes": 446,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "2df60e2cfbee873ce2858088cf003e6b93498f2f568476da437610467ea1a9d7",
+      "lines": 12
+    },
+    {
+      "path": "driveawake/android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "bytes": 5775,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "fafce37e90b80f93abe15279d870dc880a2ce477bca064fd1a1ab72d8f545f1b"
+    },
+    {
+      "path": "driveawake/android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "bytes": 2930,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "bd177f175b5467441f07b58f79f1ac9ca3e930d897fc5294f42b2febfa56026b"
+    },
+    {
+      "path": "driveawake/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "bytes": 9822,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "4ae9c347e18a645acda17f3e44b6b23b974732de341b51aa2d4546d9a5c6aac7"
+    },
+    {
+      "path": "driveawake/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "bytes": 21758,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "67c400e0d0d41b32b10c93193427797452c4e8586cdac7dae3b8514f148bb177"
+    },
+    {
+      "path": "driveawake/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "bytes": 38624,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "3de88cd1b3f253616b595d852c6aab108368254f9be23e60bb7f1337857ba1cb"
+    },
+    {
+      "path": "driveawake/android/app/src/main/res/raw/magicdrive_alarm.wav",
+      "bytes": 211724,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "3fe2a3f0b2c9c324c51344f5f348dc2e6ebb679e553c9a78fc1189b495409b6b"
+    },
+    {
+      "path": "driveawake/android/app/src/main/res/values-night/styles.xml",
+      "bytes": 1013,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "ea763597dc1a84c8034251caee98d7753e0fbf57340ffc94677427de4b537516",
+      "lines": 18
+    },
+    {
+      "path": "driveawake/android/app/src/main/res/values/styles.xml",
+      "bytes": 1014,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "cca15a99b59380a548bf6a890f7ca5380ee509b1f9bbb2f5f9ec3589fa25c2f7",
+      "lines": 18
+    },
+    {
+      "path": "driveawake/android/app/src/profile/AndroidManifest.xml",
+      "bytes": 385,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "b01a4541a8144c15bc617bab7eb267c99fa1476368fbbda5a12cdbf4e316a34c",
+      "lines": 7
+    },
+    {
+      "path": "driveawake/android/build.gradle.kts",
+      "bytes": 561,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "218f400e3fff31c9c986a2535dfb974560e1b4d33cc27b7c1fee96a2b7e44454",
+      "lines": 24
+    },
+    {
+      "path": "driveawake/android/gradle.properties",
+      "bytes": 192,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "212083a7203adfc481b2fa343fd724afa6b295ca85073ddccc0dccff93302b13",
+      "lines": 4
+    },
+    {
+      "path": "driveawake/android/gradle/wrapper/gradle-wrapper.properties",
+      "bytes": 206,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "a23faf39f936281e98c22c568a812ded3684a61fcf683bbd1aac2e85691622ac",
+      "lines": 5
+    },
+    {
+      "path": "driveawake/android/key.properties.example",
+      "bytes": 120,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "04b542e40f7a5383bffc5b76597c52426d2afdb4fdb09dc7033fd075767e5cde"
+    },
+    {
+      "path": "driveawake/android/settings.gradle.kts",
+      "bytes": 865,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "5ba9e6708e4d5e4eee79bb1eb2bb11ddaee33fd39545e4baa90b19e9384d792e",
+      "lines": 27
+    },
+    {
+      "path": "driveawake/assets/audio/magicdrive_alarm.wav",
+      "bytes": 211724,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "3fe2a3f0b2c9c324c51344f5f348dc2e6ebb679e553c9a78fc1189b495409b6b"
+    },
+    {
+      "path": "driveawake/assets/logo.png",
+      "bytes": 1072116,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "717842cc621ac16a8d9899fe441875e07682f7a0e7f28f0f83cfff0f40416ced"
+    },
+    {
+      "path": "driveawake/assets/models/drowsiness_mlp.tflite",
+      "bytes": 37552,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "e29e3b6017ad897a319afe7968b5bca3213f12a5551a3853b9e3cb5671f1c34f"
+    },
+    {
+      "path": "driveawake/assets/models/model_manifest.json",
+      "bytes": 510,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "da629cb5b03ae4e41020e28c683bc2a5c336a75e333ff53e64b16f6cf76df92e",
+      "lines": 12
+    },
+    {
+      "path": "driveawake/assets/models/preprocessing_metadata.json",
+      "bytes": 18410,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "50af70956328a60905003b40d6f139d2eeed0f66d280bdebed5609ef8ed7f0d0",
+      "lines": 747
+    },
+    {
+      "path": "driveawake/docs/PRIVACY_POLICY.md",
+      "bytes": 2760,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "14e4aa962a757f34123b3889421f3c3c51c20b6300244f2e5d6619194767d753",
+      "lines": 84
+    },
+    {
+      "path": "driveawake/docs/RELEASE_SIGNING.md",
+      "bytes": 1147,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "9761a22a6b3a125cbeca1b776238edd636e3c46a85cf52e90533893bd260d04f",
+      "lines": 51
+    },
+    {
+      "path": "driveawake/docs/VALIDATION_PROTOCOL.md",
+      "bytes": 2245,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c4d0253be5870738326f1911fe6eb4675c22d1f050d62c85166527436b539b94",
+      "lines": 60
+    },
+    {
+      "path": "driveawake/docs/VALIDATION_RESULTS_2026-05-24.md",
+      "bytes": 1727,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "3ca854ae582b603d23c0378dc05d784e36065ecb016b125c11f521a13ab1188f",
+      "lines": 56
+    },
+    {
+      "path": "driveawake/ios/.gitignore",
+      "bytes": 603,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "e85b4db8ba6ed14708e5f7d3c60336e5a3067ce11329b84aa8ba5d98603ee253",
+      "lines": 34
+    },
+    {
+      "path": "driveawake/ios/Flutter/AppFrameworkInfo.plist",
+      "bytes": 800,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "88e403d33087654522431733ad261741f836f92c94a50ee792820b4f1ed89716",
+      "lines": 26
+    },
+    {
+      "path": "driveawake/ios/Flutter/Debug.xcconfig",
+      "bytes": 31,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c0d1da54718e75f2028962b689258ecc741abf7cdaed50483aa5225264d0a7d7",
+      "lines": 1
+    },
+    {
+      "path": "driveawake/ios/Flutter/Release.xcconfig",
+      "bytes": 31,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c0d1da54718e75f2028962b689258ecc741abf7cdaed50483aa5225264d0a7d7",
+      "lines": 1
+    },
+    {
+      "path": "driveawake/ios/Runner.xcodeproj/project.pbxproj",
+      "bytes": 24282,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "041afebd8fc4ff641139a77c3cc42bc380c7cb7aa90ee69b04aac51ce17cdd81",
+      "lines": 616
+    },
+    {
+      "path": "driveawake/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+      "bytes": 142,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "ac28b35c2b940210bec0fff8e424b07fd0efe9112ab178a10533583f251a386c"
+    },
+    {
+      "path": "driveawake/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
+      "bytes": 246,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30",
+      "lines": 8
+    },
+    {
+      "path": "driveawake/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings",
+      "bytes": 234,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74"
+    },
+    {
+      "path": "driveawake/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme",
+      "bytes": 3934,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "570c49fd61c67330efb75097018d1b0df0c68d03667631105a5acf5621112b1b"
+    },
+    {
+      "path": "driveawake/ios/Runner.xcworkspace/contents.xcworkspacedata",
+      "bytes": 159,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "706a4c812f2a1e220e6785c27580020d58048e2ae4d30d1280f3c43344ce6b38"
+    },
+    {
+      "path": "driveawake/ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
+      "bytes": 246,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30",
+      "lines": 8
+    },
+    {
+      "path": "driveawake/ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings",
+      "bytes": 234,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "dd64c0308ab2971c456871b990b24a008bdc3ece09833e8dbe9675e33a496e74"
+    },
+    {
+      "path": "driveawake/ios/Runner/AppDelegate.swift",
+      "bytes": 404,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "13e99dab5435148efc15d9177ba505da3d24859a6ba663767510622fdf7a97fa",
+      "lines": 13
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json",
+      "bytes": 2641,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "5f8b941b774bde4496d73347c1f79cbdd786bb76fbdab9ed1f3f0cb78a0fb0d3",
+      "lines": 122
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png",
+      "bytes": 1002174,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "ea05a5f3f361097c62d24a9bb1fd5aaf813f2934488934b9e66370b70e959652"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png",
+      "bytes": 790,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "2dbf6caf23383f34e2e79f3fb3374825fd0f26368e40fa13f0d401ebb67a6883"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png",
+      "bytes": 2192,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "dc43e74c1eb60698ace7f4b7e36381e370dc278c37c6f1029c42290d9323c465"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png",
+      "bytes": 4212,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "0b91145f1a4815766c9c9f012c43e6674c4eb08eb5c459ce6542308ac2c38fbd"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png",
+      "bytes": 1348,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "739d065e6ef8952b20a0e0efca3e8ebdc70fad576ceae44800c8a4ee4576efa8"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png",
+      "bytes": 3954,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "9396873654c5da647a62052d83c1ee6ae32a76ff9d1ffab580946fa81109e7c3"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png",
+      "bytes": 8255,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "7f89aa77d28ee631bf1986c5b9c5a0b8a014038fa1a801fbf46213b89d5b3dc9"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png",
+      "bytes": 2192,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "dc43e74c1eb60698ace7f4b7e36381e370dc278c37c6f1029c42290d9323c465"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png",
+      "bytes": 6955,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "baf4a5fa3a4412ccd45ad89afab9172fe6835d8a0e6399dc4009bb60a7b96557"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png",
+      "bytes": 15133,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "109a2c3ae19dd635819f98b8508e561ababf7cc277caaf5215f93412aaa6da10"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png",
+      "bytes": 15133,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "109a2c3ae19dd635819f98b8508e561ababf7cc277caaf5215f93412aaa6da10"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png",
+      "bytes": 33949,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "dea1977c3a2ecb13323f3bb8af7648ee682c0f4cd458d5dff0c894b5b05603bc"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png",
+      "bytes": 6352,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "91b1f62ec74a85227f7248bbb835006565c764ee2728d1fb00b95fa9aaefdf5d"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png",
+      "bytes": 24000,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "935527d804c7a749439896b641ad00cad7989a0051946b96399418990c894811"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png",
+      "bytes": 29307,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "4a9882b39a55ced6d88c96fc86bf313ea9bf72e8773ee735669f18a8532dd260"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json",
+      "bytes": 414,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "fbd112a9f3b541a1d811f71ac8e4fe68b6176687d973a5f4d99b7aa4a722e94e",
+      "lines": 23
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png",
+      "bytes": 68,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "93ae7d494fad0fb30cbf3ae746a39c4bc7a0f8bbf87fbb587a3f3c01f3c5ce20"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png",
+      "bytes": 68,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "93ae7d494fad0fb30cbf3ae746a39c4bc7a0f8bbf87fbb587a3f3c01f3c5ce20"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png",
+      "bytes": 68,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "93ae7d494fad0fb30cbf3ae746a39c4bc7a0f8bbf87fbb587a3f3c01f3c5ce20"
+    },
+    {
+      "path": "driveawake/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md",
+      "bytes": 340,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "853ac958e2416fe2540f6f61165283a3618b71a7ba5f85f65ac41c2158dfcd21",
+      "lines": 5
+    },
+    {
+      "path": "driveawake/ios/Runner/Base.lproj/LaunchScreen.storyboard",
+      "bytes": 2414,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "bc3644fbb251ff1e18de25a4932c927850ae1a025be3dd1447940429633fe4b2"
+    },
+    {
+      "path": "driveawake/ios/Runner/Base.lproj/Main.storyboard",
+      "bytes": 1631,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "dcea4686c02065e56217fd19fcfb73d7509b41872e7486126149d47a18559363"
+    },
+    {
+      "path": "driveawake/ios/Runner/Info.plist",
+      "bytes": 1791,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "de4d0d24cc7c9346ecd5026c4d2e5902cdff26ea0dc8f5b28d72d2aae3aa3364",
+      "lines": 54
+    },
+    {
+      "path": "driveawake/ios/Runner/Runner-Bridging-Header.h",
+      "bytes": 39,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "efe657d8b27f7f8595a0d416bffb33fe7d93bd2869d81f7353b556c439d7a1a7",
+      "lines": 1
+    },
+    {
+      "path": "driveawake/ios/RunnerTests/RunnerTests.swift",
+      "bytes": 297,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c0e04141287eb7f9c9f3d31cf5be8cb626a9ea71351206c9121578e8b8f480c3",
+      "lines": 12
+    },
+    {
+      "path": "driveawake/lib/app/app.dart",
+      "bytes": 1316,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "384771e17982c5eb59940d4ea4ec886a3ca9044d7f89dd7af6a09d3e14a31df6",
+      "lines": 39,
+      "declarations": [
+        "AppConductoresApp"
+      ]
+    },
+    {
+      "path": "driveawake/lib/app/app_config.dart",
+      "bytes": 225,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c0ba23d4e95e0404f77a189b1dcb6d6b7f211a091fcf98350b770c8b6892890c",
+      "lines": 7,
+      "declarations": [
+        "AppConfig"
+      ]
+    },
+    {
+      "path": "driveawake/lib/app/app_theme.dart",
+      "bytes": 3433,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "0e033faa4ce09f93b0aacdaaf89d0bd3971d2292c29d832d4ebd6d14784257a1",
+      "lines": 115,
+      "declarations": [
+        "RiskTheme",
+        "AppTheme"
+      ]
+    },
+    {
+      "path": "driveawake/lib/data/database/database_provider.dart",
+      "bytes": 442,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "6ded1f71390f6dc727f5bdb9a505082a7f70675a54b64461ecbdb89e3c3cdb04",
+      "lines": 20,
+      "declarations": [
+        "DatabaseProvider"
+      ]
+    },
+    {
+      "path": "driveawake/lib/data/database/driver_awake_database.dart",
+      "bytes": 6813,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "ca03d8c0fc09c9c2cebaa328a49ca9ffbca4185d4eb253909e1e205ec7c8d6ed",
+      "lines": 185,
+      "declarations": [
+        "Trips",
+        "TripEvents",
+        "SessionDrafts",
+        "Calibrations",
+        "AppSettings",
+        "ModelMetadata",
+        "FleetOutbox",
+        "RestSessions",
+        "DriverAwakeDatabase"
+      ]
+    },
+    {
+      "path": "driveawake/lib/data/database/driver_awake_database.g.dart",
+      "bytes": 257349,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "08425acda62ded7167388b1a13c8700b23b2439f9d3c6f30ca547f02b828ef93",
+      "lines": 7749,
+      "declarations": [
+        "TripRow",
+        "TripsCompanion",
+        "TripEventRow",
+        "TripEventsCompanion",
+        "SessionDraftRow",
+        "SessionDraftsCompanion",
+        "CalibrationRow",
+        "CalibrationsCompanion",
+        "AppSettingRow",
+        "AppSettingsCompanion",
+        "ModelMetadataRow",
+        "ModelMetadataCompanion",
+        "FleetOutboxData",
+        "FleetOutboxCompanion",
+        "RestSessionRow",
+        "RestSessionsCompanion",
+        "_"
+      ]
+    },
+    {
+      "path": "driveawake/lib/data/migration/database_bootstrap.dart",
+      "bytes": 447,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "8c1df8033fc7ff80872779675c9490e476a778fdfaefc3dbbc0fd12a903a6203",
+      "lines": 16,
+      "declarations": [
+        "DatabaseBootstrap"
+      ]
+    },
+    {
+      "path": "driveawake/lib/data/migration/legacy_preferences_migrator.dart",
+      "bytes": 7111,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "aa3f125053685bad166acbb4d34b5b96f3a09aec26934ff462c6f80686163d92",
+      "lines": 219,
+      "declarations": [
+        "LegacyPreferencesMigrator"
+      ]
+    },
+    {
+      "path": "driveawake/lib/data/repositories/drift_trip_repository.dart",
+      "bytes": 9603,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "ce4e54c3b35ec1ceffb91d03427d667710407173aaaffaff89319927bac80227",
+      "lines": 256,
+      "declarations": [
+        "DriftTripRepository"
+      ]
+    },
+    {
+      "path": "driveawake/lib/features/drive/application/controlled_recovery.dart",
+      "bytes": 1027,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "80b73ce78abf01b58da61be819ef818238e5f101421cf16fcc39350b3b092065",
+      "lines": 35,
+      "declarations": [
+        "RecoveryOutcome",
+        "RecoveryAttempt",
+        "ControlledRecovery"
+      ]
+    },
+    {
+      "path": "driveawake/lib/features/drive/application/drive_ports.dart",
+      "bytes": 944,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "407c0087a1d23ec9c69dd6b4896d709884c70910eb917da738e56192e9ad203b",
+      "lines": 40,
+      "declarations": [
+        "Clock",
+        "SystemClock",
+        "Logger",
+        "LifecycleController",
+        "DebugLogger"
+      ]
+    },
+    {
+      "path": "driveawake/lib/features/drive/application/drive_repositories.dart",
+      "bytes": 1884,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "bb54453f801a08335882abbc343388e5d77f0c1093ed84ac04a8e3c15778d06d",
+      "lines": 66,
+      "declarations": [
+        "CameraRepository",
+        "FaceDetectionRepository",
+        "DrowsinessAnalyzer",
+        "RiskEngine",
+        "AlarmController",
+        "TripRepository",
+        "SessionDraftRepository",
+        "TelemetryRepository"
+      ]
+    },
+    {
+      "path": "driveawake/lib/features/drive/application/drive_session_controller.dart",
+      "bytes": 6912,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "597391de9cb55b9ccad100e09318d57b0bacae073402a0231741500dedf35f2a",
+      "lines": 228,
+      "declarations": [
+        "DriveSessionResources",
+        "DriveDelay",
+        "DriveSessionController"
+      ]
+    },
+    {
+      "path": "driveawake/lib/features/drive/application/drive_state.dart",
+      "bytes": 5592,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "5f9f78a9b7e173d5eb2f45cc9b90ddfb2fe575e8754fa2527a57628c8d700566",
+      "lines": 161,
+      "declarations": [
+        "DriveSessionPhase",
+        "DriveCameraStatus",
+        "DriveStreamStatus",
+        "DriveProcessingStatus",
+        "DriveAlarmStatus",
+        "DriveThermalStatus",
+        "DriveState"
+      ]
+    },
+    {
+      "path": "driveawake/lib/features/drive/application/monitoring_watchdog.dart",
+      "bytes": 4688,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "cba414018037e2449667f0d51729d982157acffbf0508260a8deffb61ea6a85f",
+      "lines": 143,
+      "declarations": [
+        "MonitoringHealth",
+        "MonitoringWatchdogConfig",
+        "MonitoringAssessment",
+        "MonitoringWatchdog"
+      ]
+    },
+    {
+      "path": "driveawake/lib/features/drive/application/performance_monitor.dart",
+      "bytes": 8472,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "ceaf8a14c75a3bcba5f685c6753b977123dbcaa86821c951fb2c4d5cc96df76d",
+      "lines": 321,
+      "declarations": [
+        "ProcessingStage",
+        "MonotonicClock",
+        "StopwatchMonotonicClock",
+        "StageLatencyStats",
+        "CircularBuffer",
+        "PerformanceSnapshot",
+        "PerformanceMonitor"
+      ]
+    },
+    {
+      "path": "driveawake/lib/features/drive/infrastructure/flutter_drive_session_resources.dart",
+      "bytes": 21764,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "590028aba31823aa969727eb6d1236b8cbd3ad8719f2aa567308fccf341c193b",
+      "lines": 655,
+      "declarations": [
+        "FlutterDriveSessionResources"
+      ]
+    },
+    {
+      "path": "driveawake/lib/features/drive/infrastructure/service_adapters.dart",
+      "bytes": 4875,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "499786cf77bcc420d5a26c46f73acd36f88adffd656a886ca4ec40507867bb0d",
+      "lines": 140,
+      "declarations": [
+        "CameraServiceAdapter",
+        "FaceDetectionServiceAdapter",
+        "DrowsinessServiceAdapter",
+        "AlertServiceAdapter",
+        "TripSessionServiceAdapter",
+        "TripDraftServiceAdapter",
+        "DeviceTelemetryServiceAdapter"
+      ]
+    },
+    {
+      "path": "driveawake/lib/fleet/authorized_cloud_sync.dart",
+      "bytes": 1418,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "bb990714f7a04039428576e88cde8c8f96e9e53cdcc84ed05e5e9f14059fd949",
+      "lines": 47,
+      "declarations": [
+        "FleetSender",
+        "AuthorizedCloudSync"
+      ]
+    },
+    {
+      "path": "driveawake/lib/fleet/fleet_service.dart",
+      "bytes": 14536,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "487bf01b90523609860bec018298c0e2fc2293425f7c9ef478cf944424c332ef",
+      "lines": 424,
+      "declarations": [
+        "AssignedFleetTrip",
+        "FleetService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/fleet/incident_classifier.dart",
+      "bytes": 2133,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "661d0bcb74c8669c707834a5094ff8d8667ba0aa0f5976acf7f94380ea3c7b2d",
+      "lines": 65,
+      "declarations": [
+        "IncidentClassifier"
+      ]
+    },
+    {
+      "path": "driveawake/lib/fleet/incident_repository.dart",
+      "bytes": 2309,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "7c09f6a31d6af5c5896fa0d5e6a4b6bdb9848d8e8dce5ec132a369b1421ec61d",
+      "lines": 72,
+      "declarations": [
+        "IncidentRepository"
+      ]
+    },
+    {
+      "path": "driveawake/lib/fleet/local_outbox.dart",
+      "bytes": 3792,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "47a392bd13b069c40a51be658013bbcc89778d44d6185a931f66f8d5027593f1",
+      "lines": 120,
+      "declarations": [
+        "LocalOutbox"
+      ]
+    },
+    {
+      "path": "driveawake/lib/l10n/app_strings.dart",
+      "bytes": 3001,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c2de7d9bb7f89e3ceda12d1081d7c1dec6f5d50f481a50848a69e8b162b35b13",
+      "lines": 89,
+      "declarations": [
+        "AppStrings",
+        "_MessageTemplate",
+        "_StringsDelegate"
+      ]
+    },
+    {
+      "path": "driveawake/lib/l10n/locale_controller.dart",
+      "bytes": 1964,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "1a798616b4dd3df4af43d99f6c8319f7731e9a09d7eddc1ec5fad7d39fc81210",
+      "lines": 60,
+      "declarations": [
+        "LocaleController"
+      ]
+    },
+    {
+      "path": "driveawake/lib/l10n/localized_text.dart",
+      "bytes": 1316,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "10c10d42753d008d5080bfe26574169ec7cd68a8da67e8820201604731dc954e",
+      "lines": 50,
+      "declarations": [
+        "LocalizedText"
+      ]
+    },
+    {
+      "path": "driveawake/lib/l10n/messages.dart",
+      "bytes": 35489,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d7a3a662c249bda40593955065e920258316991e99b0d702399d3f21d1cc4651",
+      "lines": 586
+    },
+    {
+      "path": "driveawake/lib/main.dart",
+      "bytes": 352,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "4867b177415471acdd78c9b78f76406ca7bce0e40284d95084de2863337b2f0f",
+      "lines": 12
+    },
+    {
+      "path": "driveawake/lib/models/app_settings.dart",
+      "bytes": 4352,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "69b7f2b7ff1d4a123a8d621931179bb36be29025630993aee93abed042e4011d",
+      "lines": 139,
+      "declarations": [
+        "SensitivityLevel",
+        "HistoryRetention",
+        "AppSettings"
+      ]
+    },
+    {
+      "path": "driveawake/lib/models/cloud_trip_report.dart",
+      "bytes": 2954,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "7c84779e1dc8a96a6297949efad7cb1ee9525cb8afe261d8159bb19e5aed7a9f",
+      "lines": 80,
+      "declarations": [
+        "CloudTripReport"
+      ]
+    },
+    {
+      "path": "driveawake/lib/models/device_telemetry_snapshot.dart",
+      "bytes": 1499,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "9cc43f51284cb9655560235d908867feb77f020970be04f668630da473635347",
+      "lines": 45,
+      "declarations": [
+        "DeviceTelemetrySnapshot"
+      ]
+    },
+    {
+      "path": "driveawake/lib/models/drowsiness_event.dart",
+      "bytes": 2053,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "131ecba2781a4e0909c1a9df56dab5c9631bd7d3179af6a68cb68860e3eff3ff",
+      "lines": 68,
+      "declarations": [
+        "DrowsinessEvent"
+      ]
+    },
+    {
+      "path": "driveawake/lib/models/drowsiness_frame_metrics.dart",
+      "bytes": 1163,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "60e0eccfe239212ed0a08d6f634f2d2ffc3fceaa4bb38061cd6bba397db8720b",
+      "lines": 49,
+      "declarations": [
+        "DrowsinessFrameMetrics"
+      ]
+    },
+    {
+      "path": "driveawake/lib/models/drowsiness_state.dart",
+      "bytes": 8998,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "a706b748cdcf6be4257fee29d9b32742b3bec47d9120478b4d8d56b090084585",
+      "lines": 272,
+      "declarations": [
+        "DrowsinessLevel",
+        "DrowsinessState"
+      ]
+    },
+    {
+      "path": "driveawake/lib/models/ml_prediction.dart",
+      "bytes": 620,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c901864cd2ac5155d194617a238393cd89f0898e99fb816ec2384ba4f0cbfff3",
+      "lines": 28,
+      "declarations": [
+        "MlPrediction"
+      ]
+    },
+    {
+      "path": "driveawake/lib/models/technical_session_report.dart",
+      "bytes": 5102,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "a242ea16d548702d57499e3291427d48c196ad3c6fcfb10f555fa730732f07d9",
+      "lines": 154,
+      "declarations": [
+        "TechnicalSessionReport"
+      ]
+    },
+    {
+      "path": "driveawake/lib/models/trip_session_draft.dart",
+      "bytes": 3170,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "577406f8cd29dd506cdf92f36303fbd8836808712d55e8fa991c3ef581922ead",
+      "lines": 97,
+      "declarations": [
+        "TripSessionDraft"
+      ]
+    },
+    {
+      "path": "driveawake/lib/models/trip_session_summary.dart",
+      "bytes": 2283,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "a8cdb2640779cfa02b4cbdcdfa70845bbf01d9732021d9c855f5a1a6405ccc17",
+      "lines": 81,
+      "declarations": [
+        "TripSessionSummary"
+      ]
+    },
+    {
+      "path": "driveawake/lib/navigation/guardian_map.dart",
+      "bytes": 7001,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c9b2005b8bf1fb5e085031a1ee3ff4999a8b824dc5b915bbf53ae6a149b9cbf6",
+      "lines": 225,
+      "declarations": [
+        "OpenStreetMapProvider",
+        "GuardianMap",
+        "_GuardianMapState"
+      ]
+    },
+    {
+      "path": "driveawake/lib/navigation/navigation_contracts.dart",
+      "bytes": 3556,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "5d500690f9c3e06f457978ee6a359534849f78dcb60cd56c341bcf4523839de2",
+      "lines": 142,
+      "declarations": [
+        "GeoPoint",
+        "LocationFix",
+        "Destination",
+        "NearbyPlace",
+        "RoadRoute",
+        "GpsState",
+        "LocationProvider",
+        "DestinationSearchProvider",
+        "RoutingProvider",
+        "NearbyPlacesProvider",
+        "MapProvider",
+        "ProviderFailure"
+      ]
+    },
+    {
+      "path": "driveawake/lib/navigation/navigation_providers.dart",
+      "bytes": 9370,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "32dd15fe576f8f05794e869a4b65052be70b5c8d6b79e7d0d609e59f4b583d8f",
+      "lines": 272,
+      "declarations": [
+        "DeviceLocationProvider",
+        "NoInternalRouting",
+        "OpenStreetMapServices"
+      ]
+    },
+    {
+      "path": "driveawake/lib/navigation/rest_recommendation_engine.dart",
+      "bytes": 2540,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "75296f8b6861e6bb0c80d863968c0798a5af1257c443a281902c27c453760fe2",
+      "lines": 82,
+      "declarations": [
+        "RestRecommendation",
+        "RestRecommendationEngine"
+      ]
+    },
+    {
+      "path": "driveawake/lib/navigation/rest_repository.dart",
+      "bytes": 2779,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "8cee31ec45fb81c2360fe9e975d07a4d5e721026cb16229b8f21197554573327",
+      "lines": 87,
+      "declarations": [
+        "RestRepository"
+      ]
+    },
+    {
+      "path": "driveawake/lib/navigation/smart_navigation.dart",
+      "bytes": 12333,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "421761f5f489994f83570fce3d496d570135439fcfa01517bdc07aebabdda9cf",
+      "lines": 411,
+      "declarations": [
+        "SmartNavigation"
+      ]
+    },
+    {
+      "path": "driveawake/lib/navigation/voice_assistant.dart",
+      "bytes": 3967,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "449d9191a69e1480d3a27af0cba0a6cada5a3e8eb792e6ea6fe67881096058b7",
+      "lines": 140,
+      "declarations": [
+        "VoiceOutput",
+        "LocalVoiceOutput",
+        "VoiceAssistant"
+      ]
+    },
+    {
+      "path": "driveawake/lib/screens/app_entry_screen.dart",
+      "bytes": 2141,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "e90428c03adb5b31389a8ea8e3eb7f97e7a92d3e31a3a2470c367f9087341075",
+      "lines": 87,
+      "declarations": [
+        "AppEntryScreen",
+        "_AppEntryScreenState"
+      ]
+    },
+    {
+      "path": "driveawake/lib/screens/cloud_reports_screen.dart",
+      "bytes": 12838,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "a346094d7a75892d6e4188d7e8e17aac3f386f06299a744897574e6db1021669",
+      "lines": 342,
+      "declarations": [
+        "CloudReportsScreen",
+        "_CloudReportsScreenState"
+      ]
+    },
+    {
+      "path": "driveawake/lib/screens/drive_mode_screen.dart",
+      "bytes": 38912,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "7081571a08680809f81318434f8759b80ca2b5cf99b9a93b630617513f52861d",
+      "lines": 1087,
+      "declarations": [
+        "DriveModeScreen",
+        "_DriveModeScreenState",
+        "_ExitAction",
+        "_DriveBackdrop",
+        "_DriveTopBar",
+        "_CameraViewfinder",
+        "_CameraPreviewCover",
+        "_Chip",
+        "_MonitoringHealthBar",
+        "_ActionBar",
+        "_LoadingPanel",
+        "_PausedOverlay",
+        "_UnavailableOverlay",
+        "_CalibrationOverlay",
+        "_MetricsSheet",
+        "_TechnicalPerformance",
+        "_ErrorView"
+      ]
+    },
+    {
+      "path": "driveawake/lib/screens/fleet_screen.dart",
+      "bytes": 7090,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "ac8c140da65ec0a6beb3c14d5ff981d266f78a0eb87eb8ca50e8a00483afbb81",
+      "lines": 186,
+      "declarations": [
+        "FleetScreen",
+        "_FleetScreenState"
+      ]
+    },
+    {
+      "path": "driveawake/lib/screens/history_screen.dart",
+      "bytes": 20569,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "31b6db0e838913b4f90876ec779f5d753690f5d67e0c613a19ffb97994b22430",
+      "lines": 622,
+      "declarations": [
+        "HistoryScreen",
+        "_HistoryScreenState",
+        "_ExportFormat",
+        "_HistoryDayGroup",
+        "_FilterBar",
+        "_DaySection",
+        "_EventTile",
+        "_EmptyHistory",
+        "_DetailRow"
+      ]
+    },
+    {
+      "path": "driveawake/lib/screens/home_screen.dart",
+      "bytes": 63982,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "4e2ea9817b6e3926b3192669be8a81b68fe3fb7bdb5b316ac0919fe6f45a6dd1",
+      "lines": 2088,
+      "declarations": [
+        "HomeScreen",
+        "_HomeScreenState",
+        "_DashboardBackdrop",
+        "_DashboardBackdropPainter",
+        "_DashboardTopBar",
+        "_GradientTitle",
+        "_GlassIconButton",
+        "_IntroMonitoringPanel",
+        "_ReadyScanFramePainter",
+        "_ReadinessMetric",
+        "_LiveMonitoringPanel",
+        "_LiveMonitoringPanelState",
+        "_LiveCameraCard",
+        "_HomeCameraPreviewSurface",
+        "_CameraPlaceholder",
+        "_CameraChip",
+        "_CameraAlertBanner",
+        "_LiveInsightStrip",
+        "_InsightPill",
+        "_SignalStatusList",
+        "_SignalStatus",
+        "_SignalDivider",
+        "_BreakCard",
+        "_StartTripButton",
+        "_SecondaryActions",
+        "_SecondaryButton",
+        "_TelemetryDock",
+        "_DockMetric",
+        "_DockDivider",
+        "_PrivacyStrip",
+        "_GlassPanel"
+      ]
+    },
+    {
+      "path": "driveawake/lib/screens/login_screen.dart",
+      "bytes": 12478,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "466afc8f44f5f0f11b1203a05252d522d7b0832f2ff58a5035342419132465d7",
+      "lines": 326,
+      "declarations": [
+        "LoginScreen",
+        "_LoginScreenState"
+      ]
+    },
+    {
+      "path": "driveawake/lib/screens/navigation_screen.dart",
+      "bytes": 19286,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d9870e5e11a6690e1bf42b12c2c28265ff58b54b0886d058d6b9662d356baaa9",
+      "lines": 487,
+      "declarations": [
+        "NavigationScreen",
+        "_NavigationScreenState"
+      ]
+    },
+    {
+      "path": "driveawake/lib/screens/privacy_policy_screen.dart",
+      "bytes": 8626,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "61fe1fc281272bb97e87c3e84ae9fea41b1fa57e0a22e3a99eb7f1062fd2140e",
+      "lines": 174,
+      "declarations": [
+        "PrivacyPolicyScreen",
+        "_PolicyHeader",
+        "_NoticeCard",
+        "_PolicySection"
+      ]
+    },
+    {
+      "path": "driveawake/lib/screens/saved_trips_screen.dart",
+      "bytes": 3719,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "dcb303b706ed5fa71bd5dacb1f6149fe7c3a81d7487b4a978c05af2a47dcd701",
+      "lines": 106,
+      "declarations": [
+        "SavedTripsScreen",
+        "_SavedTripsScreenState"
+      ]
+    },
+    {
+      "path": "driveawake/lib/screens/settings_screen.dart",
+      "bytes": 10913,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "febc3e4a71a62e2e84c5d3309fc34290f1be0186194305741b0e7300392a57e0",
+      "lines": 312,
+      "declarations": [
+        "SettingsScreen",
+        "_SettingsScreenState",
+        "_SectionTitle",
+        "_SettingsCard"
+      ]
+    },
+    {
+      "path": "driveawake/lib/screens/trip_summary_screen.dart",
+      "bytes": 10151,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "fc57e71599c06c91f4a6f7985406695ecd5869d52f9b5c1d135bd3173e3769ca",
+      "lines": 288,
+      "declarations": [
+        "TripSummaryScreen",
+        "_SummaryGrid",
+        "_SummaryTile",
+        "_SummaryItem"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/account_session.dart",
+      "bytes": 218,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "38e4475e74c3cde247673b58cc950e7b91bf20061a00f14be5d34b62bc4d2866",
+      "lines": 6,
+      "declarations": [
+        "AccountSession"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/alarm_service.dart",
+      "bytes": 73,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "0eaca50849835c944c74dd4e712a56d2bb93cfd521c444c88d8c9f11bf3fa03b",
+      "lines": 3,
+      "declarations": [
+        "AlarmService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/alert_service.dart",
+      "bytes": 5176,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "b4aed588a8a215389a1ddff725d0f473d3b6b2dc5d3206586865fec1036823d0",
+      "lines": 198,
+      "declarations": [
+        "AlertService",
+        "AlertActuator",
+        "DeviceAlertActuator",
+        "AlertCooldownGate"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/calibration_service.dart",
+      "bytes": 12187,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "a095cfa01cd8bfe457c7e65821fcf44916a6292632a92bfa5ab10c80aa8010fc",
+      "lines": 392,
+      "declarations": [
+        "CalibrationService",
+        "CalibrationObservation"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/camera_service.dart",
+      "bytes": 3791,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "21c07667d735fbf85565776673e56b2e782ea17901c76ec83c935c8ad54d2e32",
+      "lines": 129,
+      "declarations": [
+        "CameraService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/cloud_report_service.dart",
+      "bytes": 6712,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "e811ee71f05177b5af1e344d5f50ed7f36d22d4640ba8145d69e79b95cf71f1e",
+      "lines": 192,
+      "declarations": [
+        "CloudReportService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/device_telemetry_service.dart",
+      "bytes": 1882,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "7f90f12388f4b9aaac8446a92ff7412f7ec2ef9683c015642d0477a8bc2876e7",
+      "lines": 76,
+      "declarations": [
+        "DeviceTelemetryService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/drowsiness_engine.dart",
+      "bytes": 9653,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "ae9966871033ffdb76a77ce459c83efe9d15b2125b21029be2655e06c842291a",
+      "lines": 343,
+      "declarations": [
+        "DrowsinessEngine",
+        "DrowsinessSignalSnapshot",
+        "RiskDecision",
+        "RollingValueSmoother",
+        "DurationTracker"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/drowsiness_model_service.dart",
+      "bytes": 7830,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "e5d28a38423cc9c5cd9a3268835d4ed91a9613f5431c27a4e9b102d9bc6bc29c",
+      "lines": 226,
+      "declarations": [
+        "DrowsinessModelService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/drowsiness_service.dart",
+      "bytes": 19106,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "7e0ba856628162e33a750c795e4167a5a40ff6a6d56669dfc49596354ccc7a94",
+      "lines": 623,
+      "declarations": [
+        "DrowsinessService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/emergency_service.dart",
+      "bytes": 1288,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "b370db01bc31f6fc9af0de82a2a10d83a423991498ce43eafea5f6af185e2b84",
+      "lines": 39,
+      "declarations": [
+        "EmergencyService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/face_detection_service.dart",
+      "bytes": 614,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "b4fdd5a102ef1de12d451ca4e65daf32aea000c15ca32d0d5482f63567cc461c",
+      "lines": 24,
+      "declarations": [
+        "FaceDetectionService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/feature_window_service.dart",
+      "bytes": 11653,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "48a8de0379af1a519ef30397955464d75f509c0c3f9e0b03e486994e5446d776",
+      "lines": 345,
+      "declarations": [
+        "FeatureWindowService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/history_export_service.dart",
+      "bytes": 17150,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "4fefd837824f5cbbedae1b8e179cc2173533694a61a8ac776f8b2baa25181b94",
+      "lines": 575,
+      "declarations": [
+        "HistoryExportService",
+        "_DailySummary",
+        "_MetricSummary"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/local_history_service.dart",
+      "bytes": 4389,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d5c4af8115ab70eec2d51ed09e04cbdfc474c88c922b46fda4382b3e857e8c86",
+      "lines": 128,
+      "declarations": [
+        "LocalHistoryService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/model_input_preprocessor.dart",
+      "bytes": 1654,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "75c670e60791fb4dd1830bf9b093698852db79698354d922e3b48ba1662e5429",
+      "lines": 46,
+      "declarations": [
+        "ModelInputPreprocessor"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/personal_calibration_service.dart",
+      "bytes": 4347,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c38155af79161958c36fbb2dc01cd61d9ebbe0c871b8c4e3740a0b1d6d84084f",
+      "lines": 161,
+      "declarations": [
+        "PersonalCalibrationService",
+        "_CalibrationSample"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/settings_service.dart",
+      "bytes": 3082,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d8b8d7e4057836479208b87c67a7d3abf0be8363af150484f6783fd40d1925d4",
+      "lines": 98,
+      "declarations": [
+        "SettingsService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/technical_report_export_service.dart",
+      "bytes": 1414,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "f108b29c847aa1251885e94dd8fa32917086646186d63b091770d9fdbcbc4f86",
+      "lines": 47,
+      "declarations": [
+        "ShareConfirmation",
+        "TechnicalReportExportService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/trip_session_draft_service.dart",
+      "bytes": 1674,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c0457dffe41eec26e52c7960406033cba88a72f31b9aee0485a7c855781bcf3f",
+      "lines": 56,
+      "declarations": [
+        "TripSessionDraftService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/services/trip_session_service.dart",
+      "bytes": 11802,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "e80623c42a775dbc5980d267be2bbe1a937b4e9aecf5af0154fe3fe0d942f323",
+      "lines": 382,
+      "declarations": [
+        "TripSessionService"
+      ]
+    },
+    {
+      "path": "driveawake/lib/utils/adaptive_frame_scheduler.dart",
+      "bytes": 2337,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "f826cc280334e582bf99327028542680206fb7d8f5387e71afa56d7ce88d5dfc",
+      "lines": 79,
+      "declarations": [
+        "ThermalLoad",
+        "AdaptiveFrameScheduler"
+      ]
+    },
+    {
+      "path": "driveawake/lib/utils/drowsiness_thresholds.dart",
+      "bytes": 1615,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "2d9bd0a2cf3d8c420dafaeb5852195c6147f8e2ee0778f48bfbd649fa0701bb3",
+      "lines": 33,
+      "declarations": [
+        "DrowsinessThresholds"
+      ]
+    },
+    {
+      "path": "driveawake/lib/utils/input_image_converter.dart",
+      "bytes": 4527,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "b63b02f2f90af456e43448ba32043a59aced94f8381296cd4f0d3144342cb559",
+      "lines": 159,
+      "declarations": [
+        "InputImageConverter",
+        "_ImageBytes"
+      ]
+    },
+    {
+      "path": "driveawake/lib/utils/perclos_tracker.dart",
+      "bytes": 5092,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "7ad20cd9615d7bc298254a994ff2d49a088f44deca7f3e5343cea9e8967456eb",
+      "lines": 168,
+      "declarations": [
+        "PerclosTracker",
+        "PerclosSnapshot",
+        "PerclosSample"
+      ]
+    },
+    {
+      "path": "driveawake/lib/widgets/account_card.dart",
+      "bytes": 2442,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "278ec91e8b644d9c9954c61f53cb83d37830128105e58f038dd2c95fceba109d",
+      "lines": 75,
+      "declarations": [
+        "AccountCard"
+      ]
+    },
+    {
+      "path": "driveawake/lib/widgets/alert_overlay.dart",
+      "bytes": 5650,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "6c3f1481e2450cd3b0adee6f2ee7091bb06afa74958e78d8f1a157ba50dd3b56",
+      "lines": 138,
+      "declarations": [
+        "AlertOverlay"
+      ]
+    },
+    {
+      "path": "driveawake/lib/widgets/debug_metrics_panel.dart",
+      "bytes": 7334,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "488c3f03bd7ff4fc2c4f81f93aa26e52ab629967df07b3c9ecff02149a0e4ee0",
+      "lines": 229,
+      "declarations": [
+        "DebugMetricsPanel",
+        "_MetricTile",
+        "_Metric"
+      ]
+    },
+    {
+      "path": "driveawake/lib/widgets/face_landmark_overlay.dart",
+      "bytes": 10184,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "656fbdf1937bf4aeef9e10f1a96ccea102cfbe658ac8376840d3c0815c7295d6",
+      "lines": 324,
+      "declarations": [
+        "FaceLandmarkOverlayData",
+        "FaceLandmarkOverlayPainter"
+      ]
+    },
+    {
+      "path": "driveawake/lib/widgets/guardian_navigation_card.dart",
+      "bytes": 3845,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "fbebfc88fedfd070db9b165481d9a19b5868eeb54ef3bab6403ef339e75adf74",
+      "lines": 107,
+      "declarations": [
+        "GuardianNavigationCard"
+      ]
+    },
+    {
+      "path": "driveawake/lib/widgets/language_selector.dart",
+      "bytes": 1492,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "4ed1fe0529e221f3c6fce46e3b2240f9bf8125b6edec958f8b297bbc51c54263",
+      "lines": 48,
+      "declarations": [
+        "LanguageSelector"
+      ]
+    },
+    {
+      "path": "driveawake/lib/widgets/navigation_readout.dart",
+      "bytes": 4548,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "45ab095afe4019d38ead6e234ab4dd2633a8d06b9a008a6422cabbcf4eb498ea",
+      "lines": 137,
+      "declarations": [
+        "NavigationReadout",
+        "_NavigationReadoutState"
+      ]
+    },
+    {
+      "path": "driveawake/lib/widgets/status_card.dart",
+      "bytes": 7036,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "58b5b0d7794688bb556d474f6ac86c284d03e6f7bb01e7f1c008cc9fd1253a85",
+      "lines": 212,
+      "declarations": [
+        "StatusCard",
+        "_RiskBadge",
+        "_RiskBar"
+      ]
+    },
+    {
+      "path": "driveawake/linux/.gitignore",
+      "bytes": 19,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d7bbeac6ba86e2d94d8ccc63a1a2fbbac5ee7467f52f75c168165412d6ac3b60",
+      "lines": 1
+    },
+    {
+      "path": "driveawake/linux/CMakeLists.txt",
+      "bytes": 4887,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "f203a030682bb4852efdc30c0f6ab763c6a474e79ce28ac0a74f6a279925530b",
+      "lines": 128
+    },
+    {
+      "path": "driveawake/linux/flutter/CMakeLists.txt",
+      "bytes": 2903,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "4eb17836308c1cd53f6b2bb8edb3b7b30610bff3b1d9df7fecc9317f9109700c",
+      "lines": 88
+    },
+    {
+      "path": "driveawake/linux/flutter/generated_plugin_registrant.cc",
+      "bytes": 736,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "760962ec4a49878e664850a1856e62219bce027164f22ca27ea4cfa3601cd094",
+      "lines": 19
+    },
+    {
+      "path": "driveawake/linux/flutter/generated_plugin_registrant.h",
+      "bytes": 303,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "00f93bb5b1faefdede8f6065df327522900fb0b8efee86bacf424fd947ed14bb",
+      "lines": 15
+    },
+    {
+      "path": "driveawake/linux/flutter/generated_plugins.cmake",
+      "bytes": 800,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "cb2f335de6e908669979a539b51dde15d5d5fcd798c07ddf2b79a1c5edac5c93",
+      "lines": 26
+    },
+    {
+      "path": "driveawake/linux/runner/CMakeLists.txt",
+      "bytes": 1000,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "81ecf2604c50f480c23d460b2ddf653ecd39df29cc5b2fe4913f1a59f008a5a7",
+      "lines": 26
+    },
+    {
+      "path": "driveawake/linux/runner/main.cc",
+      "bytes": 186,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "905b4dfa4eab584c1eb6244899b7d5ef56d0bceaf3bffb5ea335ed7e0ba3c549",
+      "lines": 6
+    },
+    {
+      "path": "driveawake/linux/runner/my_application.cc",
+      "bytes": 5498,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "7884a590830b642d4e1cc0fca88d4c8841443b532703c0746442a089471e701a",
+      "lines": 144
+    },
+    {
+      "path": "driveawake/linux/runner/my_application.h",
+      "bytes": 406,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "b9be2b58ead9fa2fa3422636120e85ea8ee2a600aa0b42e268cb8ff0ae4b9b5d",
+      "lines": 18
+    },
+    {
+      "path": "driveawake/macos/.gitignore",
+      "bytes": 96,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "236a523a43625a2d63af3cd0f2ce8600a3668846f8cb278c1c7c5cbfd4aa4088",
+      "lines": 7
+    },
+    {
+      "path": "driveawake/macos/Flutter/Flutter-Debug.xcconfig",
+      "bytes": 49,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "7e9b3ee3961b7d7718b418ceaed812a5f06a4e4cec894aae712a78e159c32ab0",
+      "lines": 1
+    },
+    {
+      "path": "driveawake/macos/Flutter/Flutter-Release.xcconfig",
+      "bytes": 49,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "7e9b3ee3961b7d7718b418ceaed812a5f06a4e4cec894aae712a78e159c32ab0",
+      "lines": 1
+    },
+    {
+      "path": "driveawake/macos/Flutter/GeneratedPluginRegistrant.swift",
+      "bytes": 1583,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "a589835bdfdaeb5ba6ef84537599dd8318ceae3ec4bdaba89093a84eff986609",
+      "lines": 34
+    },
+    {
+      "path": "driveawake/macos/Runner.xcodeproj/project.pbxproj",
+      "bytes": 27090,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "af8038cebeab472ce2aaa4f80194beacf90b283ed9138da5bf0b3d1afc93f7d8",
+      "lines": 705
+    },
+    {
+      "path": "driveawake/macos/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
+      "bytes": 246,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30",
+      "lines": 8
+    },
+    {
+      "path": "driveawake/macos/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme",
+      "bytes": 3798,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "8271e654441ead850f3da7a378bfdce44765dc8b6579d79e1eaec997de738b4a"
+    },
+    {
+      "path": "driveawake/macos/Runner.xcworkspace/contents.xcworkspacedata",
+      "bytes": 159,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "706a4c812f2a1e220e6785c27580020d58048e2ae4d30d1280f3c43344ce6b38"
+    },
+    {
+      "path": "driveawake/macos/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
+      "bytes": 246,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d557c2c32fc6258ec28981fa45dc847b76c9968beb90a2e26d13ef9c4ea45c30",
+      "lines": 8
+    },
+    {
+      "path": "driveawake/macos/Runner/AppDelegate.swift",
+      "bytes": 324,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "5b9cbdcb563ad8578a99b7c283958490e4af537322e9092fe1efbb3c29ab3e1b",
+      "lines": 13
+    },
+    {
+      "path": "driveawake/macos/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json",
+      "bytes": 1359,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "992ba63d183dfb8f8e3af38ac203d834d23c004da1417c438b4c5a3d7d1d7103",
+      "lines": 68
+    },
+    {
+      "path": "driveawake/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png",
+      "bytes": 1002174,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "ea05a5f3f361097c62d24a9bb1fd5aaf813f2934488934b9e66370b70e959652"
+    },
+    {
+      "path": "driveawake/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_128.png",
+      "bytes": 17176,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c1e9b360953a8d085931c071e803091eec7ed0d9ea14c45ebc8f81d38ae57444"
+    },
+    {
+      "path": "driveawake/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_16.png",
+      "bytes": 611,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "b74d34735e1720e319dbed48d9a4b9c3b0101619cbd1fc9869654422d33fa92a"
+    },
+    {
+      "path": "driveawake/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_256.png",
+      "bytes": 69298,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "2dafffef3b7b52bde6912db8a6f956b0d04a72b09dbe90a3124fc137a1e0cc4b"
+    },
+    {
+      "path": "driveawake/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_32.png",
+      "bytes": 1579,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "93c21baea3738fcdcd5c2ef92a8f678e70399f02beb668b65b24b981c765b1b6"
+    },
+    {
+      "path": "driveawake/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_512.png",
+      "bytes": 272475,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "4c615493b481cf42c4137386142eeefe5674f57603b7bc0efed6b84785294b17"
+    },
+    {
+      "path": "driveawake/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_64.png",
+      "bytes": 4716,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c12c862ec90b6552f82cf4329520eaa4247029b0e1b225461c2b079f34947699"
+    },
+    {
+      "path": "driveawake/macos/Runner/Base.lproj/MainMenu.xib",
+      "bytes": 24072,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "776c35481f6581f14148b90071558b25f6ce6262e771988985e9fe8d3e70a472"
+    },
+    {
+      "path": "driveawake/macos/Runner/Configs/AppInfo.xcconfig",
+      "bytes": 622,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "b885deb6e6c1453e015f92acb4a86eb8fac9a407240477f6e706f53e1805ce24",
+      "lines": 14
+    },
+    {
+      "path": "driveawake/macos/Runner/Configs/Debug.xcconfig",
+      "bytes": 79,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "86be603022e2a385dd7884fce4cc29255676c3dda579d3d4a56c958bf1e57de0",
+      "lines": 2
+    },
+    {
+      "path": "driveawake/macos/Runner/Configs/Release.xcconfig",
+      "bytes": 81,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d1bf3f0349aadd5c58ee9d46c0ce4ce45467127c438936e9bb481d861d296565",
+      "lines": 2
+    },
+    {
+      "path": "driveawake/macos/Runner/Configs/Warnings.xcconfig",
+      "bytes": 593,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "aa8ded4c14068cb05f51f5446509fe56805cf1e29961ad6d5a97233bb0632bc1",
+      "lines": 13
+    },
+    {
+      "path": "driveawake/macos/Runner/DebugProfile.entitlements",
+      "bytes": 360,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "b2aa41d03e18907d360b721b7bb3edb302897c8a3de98ec47b6665033fea0b0e"
+    },
+    {
+      "path": "driveawake/macos/Runner/Info.plist",
+      "bytes": 1092,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "047f9cb0f1122c04589483beaedbbe23492fdc8946b94e09bb13080736af4f93",
+      "lines": 32
+    },
+    {
+      "path": "driveawake/macos/Runner/MainFlutterWindow.swift",
+      "bytes": 403,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "8178ad756f958f986f794a8bb06e321a6630ceaaf8f235b3b4ae3936e415dc7c",
+      "lines": 15
+    },
+    {
+      "path": "driveawake/macos/Runner/Release.entitlements",
+      "bytes": 248,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "c3b881c72aa4cca9cf50da6654c4d675dec929056692af46a6fbecd00aef5990"
+    },
+    {
+      "path": "driveawake/macos/RunnerTests/RunnerTests.swift",
+      "bytes": 302,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "8a0ff977c64ceac0750fffa48087988b7b4125d1b1c49019221e7fffb574423e",
+      "lines": 12
+    },
+    {
+      "path": "driveawake/pubspec.lock",
+      "bytes": 40113,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "82fd807dcb75d6b035ff950b18d973a5732f4e33728429281a8d8e7b5c91d736",
+      "lines": 1351
+    },
+    {
+      "path": "driveawake/pubspec.yaml",
+      "bytes": 1228,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "f4948a5bcdac201bde239d100ef18f802218200bf7071e188ec7f027335125ce",
+      "lines": 58
+    },
+    {
+      "path": "driveawake/test/adaptive_frame_scheduler_test.dart",
+      "bytes": 2138,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "bbb49a7f9ec54dd8c9e77446c56f5972ddcf3c12af82a07fde4768ebbb4d8bde",
+      "lines": 77,
+      "test_titles": [
+        "uses 4-5 FPS during normal monitoring",
+        "raises sampling while suspicious and throttles on heat",
+        "uses hysteresis before leaving critical thermal load",
+        "reduces FPS on low battery when not charging"
+      ]
+    },
+    {
+      "path": "driveawake/test/alert_cooldown_test.dart",
+      "bytes": 475,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "1e752fb0286c7894b104802d58d86c29392a585c2dbf4cd240cdc48b6fb0083b",
+      "lines": 13,
+      "test_titles": [
+        "cooldown evita disparos repetidos"
+      ]
+    },
+    {
+      "path": "driveawake/test/alert_service_test.dart",
+      "bytes": 1423,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "26d5f159b5896b5215bb1c5ddf24faf926dfd5c88a777b5de487e7869f87bde6",
+      "lines": 60,
+      "declarations": [
+        "_FakeAlertActuator"
+      ],
+      "test_titles": [
+        "stopAllAlerts detiene audio y vibracion de forma idempotente",
+        "dispose detiene alertas y libera el actuador"
+      ]
+    },
+    {
+      "path": "driveawake/test/cloud_trip_report_test.dart",
+      "bytes": 2810,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "adca95747670cd9ba4f2b01904114900e4aadba9b5955bdfd25083436ab478a6",
+      "lines": 99,
+      "test_titles": [
+        "report round trip preserves timing, risk, counts and optional telemetry",
+        "cloud payload has an explicit schema without frames, location or credentials",
+        "repeated backup uses the same ID after decoding persisted data",
+        "unknown report versions are rejected",
+        "timeout message does not claim a queued cloud write was cancelled"
+      ]
+    },
+    {
+      "path": "driveawake/test/controlled_recovery_test.dart",
+      "bytes": 2435,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "6c77736bd8928ede827e0af109d24ced6758699d560b340e13d3093f0cb54889",
+      "lines": 92,
+      "test_titles": [
+        "successful recovery stops after first valid attempt",
+        "exhausted recovery is limited and uses growing backoff",
+        "pause during recovery invalidates the pending generation",
+        "background before recovery prevents camera attempt",
+        "finish during recovery prevents further attempts"
+      ]
+    },
+    {
+      "path": "driveawake/test/drift_persistence_test.dart",
+      "bytes": 10548,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "b4d83c803f29dea3df66c91d00843c29d7b2ea8fb7e9919d5f9278176ac921fd",
+      "lines": 262,
+      "test_titles": [
+        "migra datos realistas, conserva corruptos y marca finalizacion",
+        "ejecutar migracion dos veces no duplica eventos",
+        "JSON global corrupto no bloquea la migracion",
+        "finalizar guarda viaje y elimina borrador atomico",
+        "informes recuperan m?tricas sin incluir viajes activos y respetan borrado",
+        "recupera borrador despues de recrear repositorio",
+        "descartar elimina borrador, viaje y eventos asociados",
+        "retencion elimina viaje vencido y conserva el reciente",
+        "datos sobreviven reinicio de la base SQLite"
+      ]
+    },
+    {
+      "path": "driveawake/test/drive_mode_screen_test.dart",
+      "bytes": 4412,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "30453a902d31805f038f1a7a41dec750fb68b0423c36f01bb9c588136b4f7d79",
+      "lines": 135,
+      "declarations": [
+        "_WidgetResources"
+      ],
+      "test_titles": [
+        "la pantalla observa estado y envia pausa al controlador",
+        "estado NORMAL is prohibited when monitoring is unavailable",
+        "finish requires confirmation and cancel retains the trip",
+        "compact landscape layout keeps primary controls visible without overflow"
+      ]
+    },
+    {
+      "path": "driveawake/test/drive_session_controller_test.dart",
+      "bytes": 7305,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "e4da4dc2c7f01d6cded4e91e413fd63adf1545f996137fd9cd5ed0d4692d0596",
+      "lines": 234,
+      "declarations": [
+        "_FakeResources"
+      ],
+      "test_titles": [
+        "inicia una sesion y activa monitoreo",
+        "pausa doble es idempotente",
+        "reanudacion doble ejecuta una unica cuenta y stream",
+        "background durante reanudacion cancela el inicio",
+        "finalizacion doble es idempotente",
+        "descarte usa una sola ruta y no finaliza",
+        "error de camara queda como recuperable y limpia recursos",
+        "error de procesamiento repetido se propaga desde recursos",
+        "pausa silencia una alarma activa"
+      ]
+    },
+    {
+      "path": "driveawake/test/drowsiness_engine_test.dart",
+      "bytes": 4070,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "dc7120ddf56cd58363a5c698988ec97385c28c31eff927339051c7dd8aeb0494",
+      "lines": 133,
+      "test_titles": [
+        "ojos cerrados mas de 3 segundos fuerza peligro",
+        "modelo somnoliento con baja confianza no decide solo",
+        "modelo con confianza alta suma riesgo sin saltar a peligro solo",
+        "mala iluminacion no genera peligro por si sola",
+        "sin rostro no infiere somnolencia incluso después de peligro"
+      ]
+    },
+    {
+      "path": "driveawake/test/emergency_service_test.dart",
+      "bytes": 1783,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "2eacdc770ccbe4fa409238074a7977df4a388e1904f8961630318cb83360bc74",
+      "lines": 41,
+      "test_titles": [
+        "emergency contact remains local, validates digits and can be removed",
+        "dialer passes a validated contact or opens an empty dialer"
+      ]
+    },
+    {
+      "path": "driveawake/test/fleet_outbox_test.dart",
+      "bytes": 10383,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "076cc196ac764c2b66c354c83c8f4b1383760a8fdae55b7599363f4d63ee9bbd",
+      "lines": 336,
+      "test_titles": [
+        "stable IDs deduplicate without modifying original payload",
+        "offline failure persists with bounded exponential backoff; reconnect retries same ID",
+        "lost acknowledgement does not create a second server incident",
+        "revoked consent blocks sends and removes local queue",
+        "data erased after worker snapshot is not sent",
+        "FIFO keeps completion behind failed incident, batches at most ten",
+        "retention applies to queued and synced records",
+        "outbox survives SQLite file close/reopen and v1 migration preserves history",
+        "incident cooldown survives repository restart and critical escalation bypasses it",
+        "missing face is signal unavailable, never fatigue or critical evidence",
+        "classifier requires reliable visible face and repeated yawns, ignores aggregate alarms"
+      ]
+    },
+    {
+      "path": "driveawake/test/history_retention_test.dart",
+      "bytes": 1660,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "be64fbaaeb7cfd0dab39a8a2e7cd52934ab393958c6f39e3ec7c23dfc4c206dd",
+      "lines": 45,
+      "test_titles": [
+        "retention removes expired events from persistent storage"
+      ]
+    },
+    {
+      "path": "driveawake/test/home_camera_startup_test.dart",
+      "bytes": 5574,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "3f9f783e9d72b4bb401d7dee24a60d91d3625eee67a470dd876c974e2d3984c8",
+      "lines": 171,
+      "declarations": [
+        "_Camera",
+        "_Drowsiness"
+      ],
+      "test_titles": [
+        "abre cámara al inicio y continúa después de 25 segundos",
+        "pausa en segundo plano y reinicia al volver",
+        "diálogo de permiso no duplica inicialización pendiente",
+        "permission denial shows retry without a zero risk reading",
+        "background during opening cancels stream and resume opens once"
+      ]
+    },
+    {
+      "path": "driveawake/test/local_history_fallback_test.dart",
+      "bytes": 1671,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "32d1c592a25693113fbe314e86522d16a1c5a843dace811227ad7cc3e7fb25f8",
+      "lines": 43,
+      "test_titles": [
+        "async SQLite read error reaches legacy history fallback with no retention query"
+      ]
+    },
+    {
+      "path": "driveawake/test/localization_test.dart",
+      "bytes": 7628,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "1980e20e9c1a6850cb82bb12d9fdd10a80ec4877174906815bea87e2d203b8b3",
+      "lines": 224,
+      "declarations": [
+        "_Session"
+      ],
+      "test_titles": [
+        "language preference survives a new controller and resolves device locale",
+        "catalog preserves every placeholder and translates dynamic messages",
+        "selector translates login in place, preserving entered data and validation",
+        "locale changes preserve the active route and translate constant privacy sections",
+        "account and safety messages fit a narrow phone in $language"
+      ]
+    },
+    {
+      "path": "driveawake/test/localized_export_test.dart",
+      "bytes": 2455,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "433660d5404a1851fc8aafbb6bd21fcc931adfc50e066ef7021c2dc3c041226c",
+      "lines": 71,
+      "test_titles": [
+        "PDF contains $language labels and translates existing stored notes"
+      ]
+    },
+    {
+      "path": "driveawake/test/model_input_preprocessor_test.dart",
+      "bytes": 2713,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "34487999e7ec714faae1372fafbe96616f8b9742ef40d040d3289dfb110f39e5",
+      "lines": 84,
+      "test_titles": [
+        "golden compartido conserva orden, imputacion y escalado",
+        "rechaza metadata con longitudes incompatibles",
+        "imputa NaN antes de escalar"
+      ]
+    },
+    {
+      "path": "driveawake/test/monitoring_watchdog_test.dart",
+      "bytes": 3388,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "eaa22de968b3e56d525dca0da30a839c72948df01a808ded990cdc1cde617bb4",
+      "lines": 112,
+      "declarations": [
+        "PerformanceFixture",
+        "FakeClock"
+      ],
+      "test_titles": [
+        "healthy with recent valid frames and acceptable latency",
+        "degraded when total P95 is high",
+        "degraded when drop ratio is excessive",
+        "recovering has explicit priority",
+        "unavailable after recovery attempts are exhausted",
+        "unavailable when valid frame is critically stale"
+      ]
+    },
+    {
+      "path": "driveawake/test/navigation_live_test.dart",
+      "bytes": 2337,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "ce6924d090dc99837ba338d67a9c7ed3f5988f0223e8f4675419cf7957cdb79d",
+      "lines": 58,
+      "declarations": [
+        "_RealNetwork"
+      ],
+      "test_titles": [
+        "live OSM destination, nearby response and one actual PNG tile"
+      ]
+    },
+    {
+      "path": "driveawake/test/perclos_tracker_test.dart",
+      "bytes": 5381,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "277c0e6e6b30869762afd413df33100c1b885af57554fd03ef1b5dbc56f50355",
+      "lines": 179,
+      "test_titles": [
+        "calcula ojos cerrados continuos",
+        "calcula ojos abiertos continuos",
+        "calcula cambio abierto a cerrado ponderado por tiempo",
+        "rostro ausente rompe el segmento entre muestras validas",
+        "intervalo superior a 600 ms no se integra",
+        "timestamps duplicados o fuera de orden se ignoran",
+        "tracker vacio devuelve snapshot determinista",
+        "cobertura insuficiente no habilita PERCLOS",
+        "reset elimina muestras y estado de suficiencia",
+        "pausa y reanudacion pueden reiniciar el tracker"
+      ]
+    },
+    {
+      "path": "driveawake/test/performance_monitor_test.dart",
+      "bytes": 3594,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "296dbb85129b163b0850e0345624c46afd97658022efc1fb0c2f331070628d33",
+      "lines": 111,
+      "declarations": [
+        "FakeMonotonicClock"
+      ],
+      "test_titles": [
+        "percentiles with zero samples are zero",
+        "percentiles with one sample equal that sample",
+        "circular buffer keeps only newest samples in order",
+        "reset clears counters, timestamps and latency samples",
+        "tracks busy and scheduler drops separately",
+        "negative out-of-order latency is ignored",
+        "actual FPS uses monotonic processed-frame timestamps",
+        "frames without a face do not count as a valid monitoring frame"
+      ]
+    },
+    {
+      "path": "driveawake/test/privacy_policy_screen_test.dart",
+      "bytes": 886,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "004953a7b5e79f98511499bfca545a39337890b062b3e75c0de54ee5753f7860",
+      "lines": 24,
+      "test_titles": [
+        "privacy notice is honest about pending legal identity"
+      ]
+    },
+    {
+      "path": "driveawake/test/recovery_alarm_integration_test.dart",
+      "bytes": 4649,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "0341b99b2604670ef6dd51c4520a03c18c832f3103679953a09dfa1ced675c0b",
+      "lines": 160,
+      "declarations": [
+        "FakeMonotonicClock",
+        "FakeWallClock",
+        "FakeCamera",
+        "FakeFaceDetection",
+        "FakeAnalyzer",
+        "FakeAlarm",
+        "FakeTrip",
+        "FakeTelemetry"
+      ],
+      "test_titles": [
+        "alarm is stopped when watchdog enters recovery"
+      ]
+    },
+    {
+      "path": "driveawake/test/settings_migration_test.dart",
+      "bytes": 1456,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "ec8a95b1d75d47c41d3948351a02ed8514fc07016a5d5fc74b30bbeea517180a",
+      "lines": 43,
+      "test_titles": [
+        "migrates legacy settings without losing values",
+        "old maps receive safe retention default"
+      ]
+    },
+    {
+      "path": "driveawake/test/signal_status_card_test.dart",
+      "bytes": 1198,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "944c5dbaed40f83f784bb169dbfe7bc45e304e1de92bcd5c95eaaf29d29e06fd",
+      "lines": 36,
+      "test_titles": [
+        "unreliable observation is not presented as normal; reliable critical warning remains"
+      ]
+    },
+    {
+      "path": "driveawake/test/smart_navigation_test.dart",
+      "bytes": 12872,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "2e1fb16d362d87328ac1c6a4e5d0713d8d33cb216976856ea8932b4b9488c345",
+      "lines": 417,
+      "declarations": [
+        "_Location",
+        "_DelayedLocation",
+        "_DelayedStopLocation"
+      ],
+      "test_titles": [
+        "a late foreground stop cannot undo a newer background stop",
+        "background invalidates a GPS permission request still in flight",
+        "only valid recent accurate GPS is usable; unknown speed remains unknown",
+        "external navigation URI uses bounded coordinates and safe parameters",
+        "no internal route provider returns no invented road distance or ETA",
+        "GPS authorization ${state.name} never starts a position stream",
+        "GPS stream staleness and app background clear live position",
+        "destination search is explicit bounded cached and URL encoded",
+        "empty destination is a genuine empty result; invalid request avoids network",
+        "provider HTTP $code surfaces failure without fabricated results",
+        "offline search and malformed server JSON are handled",
+        "nearby query is limited/cached; missing truck suitability stays unknown",
+        "critical recommendation is immediate and does not need GPS or a place search",
+        "missing face never becomes a fatigue diagnosis; warning needs sustained window",
+        "declared rest persists, cannot duplicate open interval, and closes idempotently"
+      ]
+    },
+    {
+      "path": "driveawake/test/technical_session_report_test.dart",
+      "bytes": 1670,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "436b7bfbbc9524bde0377b7a507b88b03e9f8d362029f46e15f31efd203ce258",
+      "lines": 47,
+      "test_titles": [
+        "technical report exports sanitized JSON without sensitive data"
+      ]
+    },
+    {
+      "path": "driveawake/test/trip_session_draft_test.dart",
+      "bytes": 1837,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "a86643608522e9d9148b92210b4ee5e0b90b2a28cf5f56238f7b76be5bafe340",
+      "lines": 60,
+      "test_titles": [
+        "serializa y restaura todos los contadores del borrador",
+        "servicio guarda, carga y elimina un borrador"
+      ]
+    },
+    {
+      "path": "driveawake/test/voice_assistant_test.dart",
+      "bytes": 3464,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "3c85df0bcef4652b1d82585176ad11a6ad0e7c514c191be4c963435de15cc71b",
+      "lines": 107,
+      "declarations": [
+        "_Output"
+      ],
+      "test_titles": [
+        "pause cancels speech waiting for offline engine configuration",
+        "critical speech bypasses global cooldown and cancels lower priority",
+        "selected English locale translates the safety message",
+        "missing offline voice remains recoverable without consuming cooldown",
+        "disabling voice invalidates pending speech"
+      ]
+    },
+    {
+      "path": "driveawake/test/widget_test.dart",
+      "bytes": 6391,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "6e80d40da72ba60931ce87a64c126dfd047886a2096b52d07d401f78da0551d2",
+      "lines": 204,
+      "declarations": [
+        "_Session"
+      ],
+      "test_titles": [
+        "signed out launch shows login and allows local use",
+        "restored session opens dashboard",
+        "guest can enter while account restoration is pending",
+        "valid login enters dashboard; empty fields never call auth",
+        "registration checks confirmation and keeps login on network failure",
+        "account actions fit a narrow phone and have visible labels"
+      ]
+    },
+    {
+      "path": "driveawake/web/favicon.png",
+      "bytes": 1579,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "93c21baea3738fcdcd5c2ef92a8f678e70399f02beb668b65b24b981c765b1b6"
+    },
+    {
+      "path": "driveawake/web/icons/Icon-192.png",
+      "bytes": 38624,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "3de88cd1b3f253616b595d852c6aab108368254f9be23e60bb7f1337857ba1cb"
+    },
+    {
+      "path": "driveawake/web/icons/Icon-512.png",
+      "bytes": 272475,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "4c615493b481cf42c4137386142eeefe5674f57603b7bc0efed6b84785294b17"
+    },
+    {
+      "path": "driveawake/web/icons/Icon-maskable-192.png",
+      "bytes": 38624,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "3de88cd1b3f253616b595d852c6aab108368254f9be23e60bb7f1337857ba1cb"
+    },
+    {
+      "path": "driveawake/web/icons/Icon-maskable-512.png",
+      "bytes": 272475,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "4c615493b481cf42c4137386142eeefe5674f57603b7bc0efed6b84785294b17"
+    },
+    {
+      "path": "driveawake/web/index.html",
+      "bytes": 1295,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "75157c5355d2322a72178b9f60f843914aa0ab7f302d986acee8b2ea2ef6c479",
+      "lines": 38
+    },
+    {
+      "path": "driveawake/web/manifest.json",
+      "bytes": 990,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "336d892dc17ab99b6eff9edeb633c6b38eaaf2e284c2f02dd3e36cce644b766d",
+      "lines": 35
+    },
+    {
+      "path": "driveawake/windows/.gitignore",
+      "bytes": 308,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "955e3110cb16494ee76e1cd5df47e2c212309eb94a49a123fe87f718de413cb8",
+      "lines": 17
+    },
+    {
+      "path": "driveawake/windows/CMakeLists.txt",
+      "bytes": 4264,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "19ab86b8b6b2f976fdd3ced6cf4fb3459e677a5e73fcdc015f4835bece5f7ea2",
+      "lines": 108
+    },
+    {
+      "path": "driveawake/windows/flutter/CMakeLists.txt",
+      "bytes": 3851,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "bd05e3268b2f246bcbafdb778165fe67a7bafdba04eb73599502563a67b8ae7e",
+      "lines": 109
+    },
+    {
+      "path": "driveawake/windows/flutter/generated_plugin_registrant.cc",
+      "bytes": 1691,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "a6ab84e1d29429045c9139fba604de43d8def65d3e2f1f113b509c00e2e0b03d",
+      "lines": 38
+    },
+    {
+      "path": "driveawake/windows/flutter/generated_plugin_registrant.h",
+      "bytes": 302,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "dbc11635d7b1ba1887adf40df5b83d634e9c3ab0bee34510c71528bb4d73602a",
+      "lines": 15
+    },
+    {
+      "path": "driveawake/windows/flutter/generated_plugins.cmake",
+      "bytes": 933,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "33cba00adc173d029e3dac44f6966d1158fcadc5f14110e8e1fc03b06cfd11d1",
+      "lines": 33
+    },
+    {
+      "path": "driveawake/windows/runner/CMakeLists.txt",
+      "bytes": 1836,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d765fdd05f63ad099e585a2cced0cbff13ec3229b7de68c8681b2107db850089",
+      "lines": 40
+    },
+    {
+      "path": "driveawake/windows/runner/Runner.rc",
+      "bytes": 3160,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "8e7bcb8fe2ec510da665c75649af033514993c7902c427733c35b8f6c912ed42"
+    },
+    {
+      "path": "driveawake/windows/runner/flutter_window.cpp",
+      "bytes": 2193,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d615eedc06ae37321e59c2c00c7687d1887dcd97904eb7225fafd8dcb5b83da6",
+      "lines": 71
+    },
+    {
+      "path": "driveawake/windows/runner/flutter_window.h",
+      "bytes": 961,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "0252b804f5da380c7709cbe1daff2b8d18daf6c49d7e6dd43e5af3c99c19f56c",
+      "lines": 33
+    },
+    {
+      "path": "driveawake/windows/runner/main.cpp",
+      "bytes": 1307,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "1644978a60453716ad4dd54e2cf6272ccdf4ac04a994482bdc71c8c07bf693f1",
+      "lines": 43
+    },
+    {
+      "path": "driveawake/windows/runner/resource.h",
+      "bytes": 448,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d0e8bf7835468b4b6b1f8f0747f2e8f25c19841f2df2ac60aaa584ddae3aa7c6",
+      "lines": 16
+    },
+    {
+      "path": "driveawake/windows/runner/resources/app_icon.ico",
+      "bytes": 96412,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "44fda14c607297cdfd4839f773d0fb252e5258a1a66ad8a279c3309e6a821ab3"
+    },
+    {
+      "path": "driveawake/windows/runner/runner.exe.manifest",
+      "bytes": 616,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "639a56233fcd8cbcb8bbefcd93e4680ec2664f32d9acfb3d2ec1d8726a96e090"
+    },
+    {
+      "path": "driveawake/windows/runner/utils.cpp",
+      "bytes": 1862,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "fbb18524c22593d0ce7869b0733e237be38e668fe045e3023bcf2d0b31784fa3",
+      "lines": 65
+    },
+    {
+      "path": "driveawake/windows/runner/utils.h",
+      "bytes": 691,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "832e246b6758253f89016fb0374b30791242e97ad950d27fc678b3d9feacfdc4",
+      "lines": 19
+    },
+    {
+      "path": "driveawake/windows/runner/win32_window.cpp",
+      "bytes": 8822,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "4e4f4dcf8e86ea6e097562cb3476039e693449bd8045367538afee579c017511",
+      "lines": 288
+    },
+    {
+      "path": "driveawake/windows/runner/win32_window.h",
+      "bytes": 3624,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "d154cf89ba85f820631a9b5bedacbe64fc5815e428fe6bc5da579ce649f69841",
+      "lines": 102
+    },
+    {
+      "path": "firebase.json",
+      "bytes": 705,
+      "category": "root",
+      "content_excluded": false,
+      "sha256": "a2e6a91c05e48219762be1f4a4bea0139e555fcdc3e33f747c607f952de73236",
+      "lines": 23
+    },
+    {
+      "path": "proyecto.md",
+      "bytes": 4311,
+      "category": "root",
+      "content_excluded": false,
+      "sha256": "31950e781c3d1ca0f105cd69ea05e0e53f5ed35c117bba19b81da6f2ddd93c85",
+      "lines": 44
+    },
+    {
+      "path": "scripts/check_repository_hygiene.py",
+      "bytes": 1458,
+      "category": "scripts",
+      "content_excluded": false,
+      "sha256": "2eec80a1865a40355f0cbba3375605172b47b6287d33eee7591f4ae82370d56e",
+      "lines": 52,
+      "declarations": [
+        "tracked_files",
+        "violations",
+        "main"
+      ]
+    },
+    {
+      "path": "scripts/firebase_smoke_test.mjs",
+      "bytes": 5113,
+      "category": "scripts",
+      "content_excluded": false,
+      "sha256": "448b468556253ee8f206328d349fb7ba86c77a3661564db38d26f220d12187f0",
+      "lines": 87,
+      "declarations": [
+        "request",
+        "field"
+      ]
+    },
+    {
+      "path": "shared/model_contract/README.md",
+      "bytes": 565,
+      "category": "shared",
+      "content_excluded": false,
+      "sha256": "58703a45d6048ad4d870b2fb3bb16b34227586afd0074e7c3514c3674b854633",
+      "lines": 11
+    },
+    {
+      "path": "shared/model_contract/feature_schema.json",
+      "bytes": 26643,
+      "category": "shared",
+      "content_excluded": false,
+      "sha256": "24e260947caecc20880573a4cc7f8296abe2e264395265db9939d4b6b588ac8e",
+      "lines": 1278
+    },
+    {
+      "path": "shared/model_contract/model_contract.json",
+      "bytes": 6907,
+      "category": "shared",
+      "content_excluded": false,
+      "sha256": "18f51060cb4cd2eff0801f3ae95f37c230f233beb0a6a5476a8682783d60a49e",
+      "lines": 240
+    },
+    {
+      "path": "shared/test_vectors/expected_base_features.json",
+      "bytes": 123,
+      "category": "shared",
+      "content_excluded": false,
+      "sha256": "aca5ad23d1a7845e9dfc9ffe0c22fa4c6e7687df0c0c1fe69b8a3ef10a53eff6",
+      "lines": 6
+    },
+    {
+      "path": "shared/test_vectors/expected_probabilities.json",
+      "bytes": 218,
+      "category": "shared",
+      "content_excluded": false,
+      "sha256": "32b16183a9ee1056f216d61d3b746a26c4bdad12d722176e1df5618dcd878773",
+      "lines": 6
+    },
+    {
+      "path": "shared/test_vectors/expected_scaled_input.json",
+      "bytes": 4673,
+      "category": "shared",
+      "content_excluded": false,
+      "sha256": "8888fece051affbf8d9ea2fd43184f3f765ba4ea6308ca8242252af5bee2653b",
+      "lines": 186
+    },
+    {
+      "path": "shared/test_vectors/expected_temporal_features.json",
+      "bytes": 199,
+      "category": "shared",
+      "content_excluded": false,
+      "sha256": "cede3f6e96aea7eb13a0ee4fa5e45fdc2d5a5c9747df53b8d12c1f7637e0dd27",
+      "lines": 5
+    },
+    {
+      "path": "shared/test_vectors/frame_metrics.json",
+      "bytes": 194,
+      "category": "shared",
+      "content_excluded": false,
+      "sha256": "1f66987c7b49d9baf54096ec8d0b659064b0baa77b06a70b513e4f142c6bd801",
+      "lines": 5
+    },
+    {
+      "path": "shared/test_vectors/manifest.json",
+      "bytes": 463,
+      "category": "shared",
+      "content_excluded": false,
+      "sha256": "414e5e17b67e02afb7b94a109369d193d48b5aad8f262a4bccb18259794a4809",
+      "lines": 15
+    },
+    {
+      "path": "shared/test_vectors/raw_features.json",
+      "bytes": 7502,
+      "category": "shared",
+      "content_excluded": false,
+      "sha256": "30f441635da9acdc3fcc1a19f0d5986c7653e80dfd9dbedc7718b13e86007d98",
+      "lines": 186
+    }
+  ],
+  "sqlite_schema_version": 3,
+  "sqlite_tables": [
+    {
+      "class": "Trips",
+      "columns": [
+        {
+          "type": "TextColumn",
+          "name": "id"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "startedAt"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "endedAt"
+        },
+        {
+          "type": "TextColumn",
+          "name": "status"
+        },
+        {
+          "type": "IntColumn",
+          "name": "drivingDurationMs"
+        },
+        {
+          "type": "IntColumn",
+          "name": "warningAlerts"
+        },
+        {
+          "type": "IntColumn",
+          "name": "dangerAlerts"
+        },
+        {
+          "type": "IntColumn",
+          "name": "yawnCount"
+        },
+        {
+          "type": "IntColumn",
+          "name": "noFaceEvents"
+        },
+        {
+          "type": "IntColumn",
+          "name": "normalSamples"
+        },
+        {
+          "type": "IntColumn",
+          "name": "warningSamples"
+        },
+        {
+          "type": "IntColumn",
+          "name": "dangerSamples"
+        },
+        {
+          "type": "IntColumn",
+          "name": "sampleCount"
+        },
+        {
+          "type": "RealColumn",
+          "name": "riskSum"
+        },
+        {
+          "type": "RealColumn",
+          "name": "maxRisk"
+        },
+        {
+          "type": "IntColumn",
+          "name": "closedEyeDurationMs"
+        },
+        {
+          "type": "RealColumn",
+          "name": "startBatteryLevel"
+        },
+        {
+          "type": "RealColumn",
+          "name": "endBatteryLevel"
+        },
+        {
+          "type": "RealColumn",
+          "name": "startTemperatureC"
+        },
+        {
+          "type": "RealColumn",
+          "name": "endTemperatureC"
+        },
+        {
+          "type": "RealColumn",
+          "name": "maxTemperatureC"
+        },
+        {
+          "type": "BoolColumn",
+          "name": "isCharging"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "createdAt"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "updatedAt"
+        }
+      ]
+    },
+    {
+      "class": "TripEvents",
+      "columns": [
+        {
+          "type": "TextColumn",
+          "name": "id"
+        },
+        {
+          "type": "TextColumn",
+          "name": "tripId"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "occurredAt"
+        },
+        {
+          "type": "TextColumn",
+          "name": "level"
+        },
+        {
+          "type": "TextColumn",
+          "name": "eventType"
+        },
+        {
+          "type": "RealColumn",
+          "name": "durationSeconds"
+        },
+        {
+          "type": "RealColumn",
+          "name": "riskScore"
+        },
+        {
+          "type": "RealColumn",
+          "name": "perclos"
+        },
+        {
+          "type": "TextColumn",
+          "name": "modelPrediction"
+        },
+        {
+          "type": "RealColumn",
+          "name": "modelConfidence"
+        },
+        {
+          "type": "TextColumn",
+          "name": "notes"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "createdAt"
+        }
+      ]
+    },
+    {
+      "class": "SessionDrafts",
+      "columns": [
+        {
+          "type": "TextColumn",
+          "name": "tripId"
+        },
+        {
+          "type": "TextColumn",
+          "name": "payloadJson"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "startedAt"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "updatedAt"
+        },
+        {
+          "type": "BoolColumn",
+          "name": "incomplete"
+        }
+      ]
+    },
+    {
+      "class": "Calibrations",
+      "columns": [
+        {
+          "type": "TextColumn",
+          "name": "id"
+        },
+        {
+          "type": "IntColumn",
+          "name": "version"
+        },
+        {
+          "type": "TextColumn",
+          "name": "payloadJson"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "updatedAt"
+        }
+      ]
+    },
+    {
+      "class": "AppSettings",
+      "columns": [
+        {
+          "type": "TextColumn",
+          "name": "id"
+        },
+        {
+          "type": "IntColumn",
+          "name": "version"
+        },
+        {
+          "type": "TextColumn",
+          "name": "payloadJson"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "updatedAt"
+        }
+      ]
+    },
+    {
+      "class": "ModelMetadata",
+      "columns": [
+        {
+          "type": "TextColumn",
+          "name": "id"
+        },
+        {
+          "type": "TextColumn",
+          "name": "payloadJson"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "updatedAt"
+        }
+      ]
+    },
+    {
+      "class": "FleetOutbox",
+      "columns": [
+        {
+          "type": "TextColumn",
+          "name": "id"
+        },
+        {
+          "type": "TextColumn",
+          "name": "organizationId"
+        },
+        {
+          "type": "TextColumn",
+          "name": "ownerId"
+        },
+        {
+          "type": "TextColumn",
+          "name": "cloudTripId"
+        },
+        {
+          "type": "TextColumn",
+          "name": "localTripId"
+        },
+        {
+          "type": "TextColumn",
+          "name": "kind"
+        },
+        {
+          "type": "TextColumn",
+          "name": "payloadJson"
+        },
+        {
+          "type": "TextColumn",
+          "name": "syncStatus"
+        },
+        {
+          "type": "IntColumn",
+          "name": "attempts"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "nextAttemptAt"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "createdAt"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "updatedAt"
+        },
+        {
+          "type": "TextColumn",
+          "name": "lastError"
+        }
+      ]
+    },
+    {
+      "class": "RestSessions",
+      "columns": [
+        {
+          "type": "TextColumn",
+          "name": "id"
+        },
+        {
+          "type": "TextColumn",
+          "name": "tripId"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "startedAt"
+        },
+        {
+          "type": "DateTimeColumn",
+          "name": "endedAt"
+        },
+        {
+          "type": "IntColumn",
+          "name": "durationMs"
+        },
+        {
+          "type": "TextColumn",
+          "name": "recommendationReason"
+        },
+        {
+          "type": "BoolColumn",
+          "name": "voluntarilyConfirmed"
+        },
+        {
+          "type": "TextColumn",
+          "name": "fleetBindingJson"
+        }
+      ]
+    }
+  ],
+  "web_lock_versions": {
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "firebase": "12.19.0",
+    "typescript": "5.9.3",
+    "tailwindcss": "4.3.3",
+    "vitest": "3.2.7",
+    "@playwright/test": "1.64.1"
+  },
+  "ml_contract": {
+    "contract_version": 1,
+    "model_version": "experimental-2026-05-23",
+    "extractor_version": "legacy-mediapipe-v1",
+    "deployment_status": "disabled_by_default",
+    "compatibility": {
+      "minimum_app_version": "1.0.0",
+      "flutter_extractor": "mlkit-flutter-v1",
+      "parity_verified": false
+    },
+    "model": {
+      "asset": "driveawake/assets/models/drowsiness_mlp.tflite",
+      "sha256": "e29e3b6017ad897a319afe7968b5bca3213f12a5551a3853b9e3cb5671f1c34f",
+      "input_shape": [
+        1,
+        181
+      ],
+      "output_shape": [
+        1,
+        3
+      ],
+      "quantization": "unknown"
+    },
+    "dataset": {
+      "name": "UTA-RLDD Fold5",
+      "version": null,
+      "training_commit": null,
+      "limitations": [
+        "No existe commit Git disponible.",
+        "Las metricas historicas usaron splits por video y no son held-out por sujeto."
+      ]
+    },
+    "features": {
+      "schema": "feature_schema.json",
+      "count": 181,
+      "order": [
+        "face_ratio",
+        "no_face_ratio",
+        "ear_mean",
+        "ear_min",
+        "ear_max",
+        "ear_std",
+        "mar_mean",
+        "mar_max",
+        "mar_std",
+        "perclos",
+        "blink_count",
+        "max_eye_closed_duration",
+        "yawn_count",
+        "yawn_ratio",
+        "yaw_proxy_mean",
+        "yaw_proxy_max_abs",
+        "pitch_proxy_mean",
+        "pitch_proxy_max",
+        "valid_frame_count",
+        "total_frame_count",
+        "valid_frame_ratio",
+        "invalid_frame_count",
+        "ear_range",
+        "ear_mean_to_min_gap",
+        "ear_closed_intensity_mean",
+        "ear_closed_intensity_min",
+        "ear_stability_ratio",
+        "mar_open_intensity_mean",
+        "mar_open_intensity_max",
+        "mar_activity_ratio",
+        "blink_rate",
+        "yawn_rate",
+        "closed_duration_ratio",
+        "closed_frames_estimated",
+        "head_yaw_abs_mean_proxy",
+        "head_pitch_abs_mean_proxy",
+        "head_pose_intensity",
+        "fatigue_eye_score",
+        "fatigue_mouth_score",
+        "fatigue_pose_score",
+        "fatigue_combined_score",
+        "perclos_x_yawn_ratio",
+        "perclos_x_closed_duration",
+        "perclos_x_head_pose",
+        "mar_x_head_pose",
+        "blink_per_valid_frame",
+        "yawn_per_valid_frame",
+        "ear_mean_diff1",
+        "ear_mean_abs_diff1",
+        "ear_min_diff1",
+        "ear_min_abs_diff1",
+        "mar_mean_diff1",
+        "mar_mean_abs_diff1",
+        "mar_max_diff1",
+        "mar_max_abs_diff1",
+        "perclos_diff1",
+        "perclos_abs_diff1",
+        "yaw_proxy_mean_diff1",
+        "yaw_proxy_mean_abs_diff1",
+        "pitch_proxy_mean_diff1",
+        "pitch_proxy_mean_abs_diff1",
+        "face_ratio_roll3_mean",
+        "face_ratio_roll3_max",
+        "face_ratio_roll3_min",
+        "no_face_ratio_roll3_mean",
+        "no_face_ratio_roll3_max",
+        "no_face_ratio_roll3_min",
+        "ear_mean_roll3_mean",
+        "ear_mean_roll3_max",
+        "ear_mean_roll3_min",
+        "ear_min_roll3_mean",
+        "ear_min_roll3_max",
+        "ear_min_roll3_min",
+        "ear_std_roll3_mean",
+        "ear_std_roll3_max",
+        "ear_std_roll3_min",
+        "mar_mean_roll3_mean",
+        "mar_mean_roll3_max",
+        "mar_mean_roll3_min",
+        "mar_max_roll3_mean",
+        "mar_max_roll3_max",
+        "mar_max_roll3_min",
+        "perclos_roll3_mean",
+        "perclos_roll3_max",
+        "perclos_roll3_min",
+        "max_eye_closed_duration_roll3_mean",
+        "max_eye_closed_duration_roll3_max",
+        "max_eye_closed_duration_roll3_min",
+        "yawn_ratio_roll3_mean",
+        "yawn_ratio_roll3_max",
+        "yawn_ratio_roll3_min",
+        "yaw_proxy_max_abs_roll3_mean",
+        "yaw_proxy_max_abs_roll3_max",
+        "yaw_proxy_max_abs_roll3_min",
+        "pitch_proxy_max_roll3_mean",
+        "pitch_proxy_max_roll3_max",
+        "pitch_proxy_max_roll3_min",
+        "blink_count_roll3_sum",
+        "yawn_count_roll3_sum",
+        "face_ratio_roll6_mean",
+        "face_ratio_roll6_max",
+        "face_ratio_roll6_min",
+        "no_face_ratio_roll6_mean",
+        "no_face_ratio_roll6_max",
+        "no_face_ratio_roll6_min",
+        "ear_mean_roll6_mean",
+        "ear_mean_roll6_max",
+        "ear_mean_roll6_min",
+        "ear_min_roll6_mean",
+        "ear_min_roll6_max",
+        "ear_min_roll6_min",
+        "ear_std_roll6_mean",
+        "ear_std_roll6_max",
+        "ear_std_roll6_min",
+        "mar_mean_roll6_mean",
+        "mar_mean_roll6_max",
+        "mar_mean_roll6_min",
+        "mar_max_roll6_mean",
+        "mar_max_roll6_max",
+        "mar_max_roll6_min",
+        "perclos_roll6_mean",
+        "perclos_roll6_max",
+        "perclos_roll6_min",
+        "max_eye_closed_duration_roll6_mean",
+        "max_eye_closed_duration_roll6_max",
+        "max_eye_closed_duration_roll6_min",
+        "yawn_ratio_roll6_mean",
+        "yawn_ratio_roll6_max",
+        "yawn_ratio_roll6_min",
+        "yaw_proxy_max_abs_roll6_mean",
+        "yaw_proxy_max_abs_roll6_max",
+        "yaw_proxy_max_abs_roll6_min",
+        "pitch_proxy_max_roll6_mean",
+        "pitch_proxy_max_roll6_max",
+        "pitch_proxy_max_roll6_min",
+        "blink_count_roll6_sum",
+        "yawn_count_roll6_sum",
+        "face_ratio_roll12_mean",
+        "face_ratio_roll12_max",
+        "face_ratio_roll12_min",
+        "no_face_ratio_roll12_mean",
+        "no_face_ratio_roll12_max",
+        "no_face_ratio_roll12_min",
+        "ear_mean_roll12_mean",
+        "ear_mean_roll12_max",
+        "ear_mean_roll12_min",
+        "ear_min_roll12_mean",
+        "ear_min_roll12_max",
+        "ear_min_roll12_min",
+        "ear_std_roll12_mean",
+        "ear_std_roll12_max",
+        "ear_std_roll12_min",
+        "mar_mean_roll12_mean",
+        "mar_mean_roll12_max",
+        "mar_mean_roll12_min",
+        "mar_max_roll12_mean",
+        "mar_max_roll12_max",
+        "mar_max_roll12_min",
+        "perclos_roll12_mean",
+        "perclos_roll12_max",
+        "perclos_roll12_min",
+        "max_eye_closed_duration_roll12_mean",
+        "max_eye_closed_duration_roll12_max",
+        "max_eye_closed_duration_roll12_min",
+        "yawn_ratio_roll12_mean",
+        "yawn_ratio_roll12_max",
+        "yawn_ratio_roll12_min",
+        "yaw_proxy_max_abs_roll12_mean",
+        "yaw_proxy_max_abs_roll12_max",
+        "yaw_proxy_max_abs_roll12_min",
+        "pitch_proxy_max_roll12_mean",
+        "pitch_proxy_max_roll12_max",
+        "pitch_proxy_max_roll12_min",
+        "blink_count_roll12_sum",
+        "yawn_count_roll12_sum",
+        "perclos_minus_roll3",
+        "perclos_minus_roll6",
+        "ear_mean_minus_roll3",
+        "mar_max_minus_roll3",
+        "fatigue_accumulation_3",
+        "fatigue_accumulation_6"
+      ],
+      "normalization": {
+        "type": "standard_scaler",
+        "missing_value_strategy": "median",
+        "metadata_asset": "driveawake/assets/models/preprocessing_metadata.json"
+      }
+    },
+    "classes": [
+      "despierto",
+      "cansancio",
+      "somnoliento"
+    ],
+    "recommended_thresholds": {
+      "status": "not_validated_by_subject",
+      "values": null
+    },
+    "failure_policy": {
+      "non_finite_input": "impute_median",
+      "non_finite_output": "disable_model_for_session",
+      "shape_mismatch": "disable_model_for_session",
+      "hash_mismatch": "disable_model_for_session"
+    }
+  },
+  "mobile_declared_assets": [
+    {
+      "path": "driveawake/assets/audio/magicdrive_alarm.wav",
+      "bytes": 211724,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "3fe2a3f0b2c9c324c51344f5f348dc2e6ebb679e553c9a78fc1189b495409b6b"
+    },
+    {
+      "path": "driveawake/assets/logo.png",
+      "bytes": 1072116,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "717842cc621ac16a8d9899fe441875e07682f7a0e7f28f0f83cfff0f40416ced"
+    },
+    {
+      "path": "driveawake/assets/models/drowsiness_mlp.tflite",
+      "bytes": 37552,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "e29e3b6017ad897a319afe7968b5bca3213f12a5551a3853b9e3cb5671f1c34f"
+    },
+    {
+      "path": "driveawake/assets/models/model_manifest.json",
+      "bytes": 510,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "da629cb5b03ae4e41020e28c683bc2a5c336a75e333ff53e64b16f6cf76df92e",
+      "lines": 12
+    },
+    {
+      "path": "driveawake/assets/models/preprocessing_metadata.json",
+      "bytes": 18410,
+      "category": "driveawake",
+      "content_excluded": false,
+      "sha256": "50af70956328a60905003b40d6f139d2eeed0f66d280bdebed5609ef8ed7f0d0",
+      "lines": 747
+    }
+  ],
+  "debug_apk": {
+    "path": "driveawake/build/app/outputs/flutter-apk/app-debug.apk",
+    "exists": true,
+    "bytes": 242518875,
+    "sha256": "a7898fce0b4bd9c9e5f0a84bd298f254662ceef6fda323293573148ad5868224"
+  },
+  "local_categories_not_expanded": [
+    "Data/ raw videos",
+    "app_conductores_ml/data/ raw, features and processed",
+    "models/*.joblib and *.keras and historical reports",
+    "driveawake/.idea and *.iml",
+    "node_modules",
+    "build, out and .next",
+    ".dart_tool, .dart-tool and .flutter caches",
+    ".git, .agents and .codex",
+    "private Firebase/env/signing files",
+    "test artifacts and logs"
+  ]
+}

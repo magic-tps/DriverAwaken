@@ -331,7 +331,9 @@ class DrowsinessService {
         perclos: perclos,
         yawnCountWindow: _yawnEvents.length,
         closedEyeDuration: Duration.zero,
-        noFaceDuration: noFaceDuration,
+        noFaceDuration: noFaceDuration == Duration.zero
+            ? const Duration(microseconds: 1)
+            : noFaceDuration,
         headDownDuration: Duration.zero,
         distractedDuration: Duration.zero,
         lowLight: lowLight,

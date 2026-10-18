@@ -43,14 +43,23 @@ class DriveSessionController extends ChangeNotifier
   Future<void>? _pauseOperation;
   Future<void>? _finishOperation;
   Future<void>? _resumeOperation;
+  Future<void>? _startOperation;
+  Future<void>? _monitoringStart;
 
   DriveState get state => _state;
 
-  Future<void> start({TripSessionDraft? recoveredDraft}) async {
+  Future<void> start({TripSessionDraft? recoveredDraft}) =>
+      _startOperation ??= _startOnce(
+        recoveredDraft: recoveredDraft,
+      ).whenComplete(() => _startOperation = null);
+
+  Future<void> _startOnce({TripSessionDraft? recoveredDraft}) async {
     if (_state.phase != DriveSessionPhase.idle) return;
+    final generation = ++_operationGeneration;
     _emit(_state.copyWith(phase: DriveSessionPhase.starting));
     try {
       await _resources.prepare(recoveredDraft: recoveredDraft);
+      if (_disposed || generation != _operationGeneration) return;
       if (recoveredDraft != null) {
         await _resources.pauseMonitoring();
         _emit(
@@ -58,9 +67,14 @@ class DriveSessionController extends ChangeNotifier
         );
         return;
       }
-      await _resources.startMonitoring();
-      _emit(_resources.resourceState.copyWith(phase: DriveSessionPhase.active));
+      await _beginMonitoring();
+      if (!_disposed && generation == _operationGeneration) {
+        _emit(
+          _resources.resourceState.copyWith(phase: DriveSessionPhase.active),
+        );
+      }
     } catch (error, stackTrace) {
+      if (_disposed || generation != _operationGeneration) return;
       _logger.error('Fallo al iniciar sesion', error, stackTrace);
       await _safePause();
       _emit(
@@ -72,7 +86,9 @@ class DriveSessionController extends ChangeNotifier
     }
   }
 
-  Future<void> pause() => _pauseOperation ??= _pauseOnce();
+  Future<void> pause() => _pauseOperation ??= _pauseOnce().whenComplete(
+    () => _pauseOperation = null,
+  );
 
   Future<void> _pauseOnce() async {
     try {
@@ -82,14 +98,30 @@ class DriveSessionController extends ChangeNotifier
         return;
       }
       _operationGeneration += 1;
+      _emit(
+        _state.copyWith(phase: DriveSessionPhase.paused, clearCountdown: true),
+      );
+      await _settleStartup();
       await _resources.pauseMonitoring();
-      _emit(_resources.resourceState.copyWith(phase: DriveSessionPhase.paused));
+      _emit(
+        _resources.resourceState.copyWith(
+          phase: DriveSessionPhase.paused,
+          clearCountdown: true,
+        ),
+      );
     } finally {
       _pauseOperation = null;
     }
   }
 
-  Future<void> resume() => _resumeOperation ??= _resumeOnce();
+  Future<void> resume() {
+    final pendingPause = _pauseOperation;
+    return _resumeOperation ??=
+        (pendingPause == null
+                ? _resumeOnce()
+                : pendingPause.then((_) => _resumeOnce()))
+            .whenComplete(() => _resumeOperation = null);
+  }
 
   Future<void> _resumeOnce() async {
     try {
@@ -111,7 +143,7 @@ class DriveSessionController extends ChangeNotifier
       }
       if (generation != _operationGeneration) return;
       try {
-        await _resources.startMonitoring();
+        await _beginMonitoring();
         if (generation == _operationGeneration) {
           _emit(
             _resources.resourceState.copyWith(
@@ -122,6 +154,7 @@ class DriveSessionController extends ChangeNotifier
           );
         }
       } catch (error, stackTrace) {
+        if (_disposed || generation != _operationGeneration) return;
         _logger.error('Fallo al reanudar sesion', error, stackTrace);
         await _safePause();
         _emit(
@@ -138,6 +171,19 @@ class DriveSessionController extends ChangeNotifier
   }
 
   Future<void> appMovedToBackground() => movedToBackground();
+
+  Future<void> _beginMonitoring() => _monitoringStart ??= _resources
+      .startMonitoring()
+      .whenComplete(() => _monitoringStart = null);
+
+  Future<void> _settleStartup() async {
+    try {
+      await _startOperation;
+      await _monitoringStart;
+    } catch (_) {
+      // The owning start/resume operation reports the error. Cleanup still runs.
+    }
+  }
 
   @override
   Future<void> movedToBackground() => pause();
@@ -160,6 +206,7 @@ class DriveSessionController extends ChangeNotifier
       }
       _operationGeneration += 1;
       _emit(_state.copyWith(phase: DriveSessionPhase.finishing));
+      await _settleStartup();
       if (discard) {
         await _resources.discardMonitoring();
         _emit(
@@ -208,7 +255,15 @@ class DriveSessionController extends ChangeNotifier
             resourceState.phase == DriveSessionPhase.fatalError
         ? resourceState.phase
         : _state.phase;
-    _emit(resourceState.copyWith(phase: phase));
+    _emit(
+      resourceState.copyWith(
+        phase: phase,
+        resumeCountdown: phase == DriveSessionPhase.resuming
+            ? _state.resumeCountdown
+            : null,
+        clearCountdown: phase != DriveSessionPhase.resuming,
+      ),
+    );
   }
 
   void _emit(DriveState value) {

@@ -107,6 +107,42 @@ class ModelMetadata extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+// Detection payloads are immutable. Only delivery metadata changes on retry.
+// This table also stores ordered, bounded trip-health messages.
+class FleetOutbox extends Table {
+  TextColumn get id => text()();
+  TextColumn get organizationId => text()();
+  TextColumn get ownerId => text()();
+  TextColumn get cloudTripId => text()();
+  TextColumn get localTripId => text()();
+  TextColumn get kind => text()();
+  TextColumn get payloadJson => text()();
+  TextColumn get syncStatus => text().withDefault(const Constant('QUEUED'))();
+  IntColumn get attempts => integer().withDefault(const Constant(0))();
+  DateTimeColumn get nextAttemptAt => dateTime()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  TextColumn get lastError => text().nullable()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('RestSessionRow')
+class RestSessions extends Table {
+  TextColumn get id => text()();
+  TextColumn get tripId =>
+      text().references(Trips, #id, onDelete: KeyAction.cascade)();
+  DateTimeColumn get startedAt => dateTime()();
+  DateTimeColumn get endedAt => dateTime().nullable()();
+  IntColumn get durationMs => integer().withDefault(const Constant(0))();
+  TextColumn get recommendationReason => text()();
+  BoolColumn get voluntarilyConfirmed => boolean()();
+  TextColumn get fleetBindingJson => text().nullable()();
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: <Type>[
     Trips,
@@ -115,6 +151,8 @@ class ModelMetadata extends Table {
     Calibrations,
     AppSettings,
     ModelMetadata,
+    FleetOutbox,
+    RestSessions,
   ],
 )
 class DriverAwakeDatabase extends _$DriverAwakeDatabase {
@@ -122,13 +160,14 @@ class DriverAwakeDatabase extends _$DriverAwakeDatabase {
     : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (migrator) async => migrator.createAll(),
     onUpgrade: (migrator, from, to) async {
-      // Future schema changes must be added here without destructive resets.
+      if (from < 2) await migrator.createTable(fleetOutbox);
+      if (from < 3) await migrator.createTable(restSessions);
     },
     beforeOpen: (details) async {
       await customStatement('PRAGMA foreign_keys = ON');

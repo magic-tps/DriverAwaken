@@ -3341,6 +3341,1323 @@ class ModelMetadataCompanion extends UpdateCompanion<ModelMetadataRow> {
   }
 }
 
+class $FleetOutboxTable extends FleetOutbox
+    with TableInfo<$FleetOutboxTable, FleetOutboxData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FleetOutboxTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _organizationIdMeta = const VerificationMeta(
+    'organizationId',
+  );
+  @override
+  late final GeneratedColumn<String> organizationId = GeneratedColumn<String>(
+    'organization_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _ownerIdMeta = const VerificationMeta(
+    'ownerId',
+  );
+  @override
+  late final GeneratedColumn<String> ownerId = GeneratedColumn<String>(
+    'owner_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cloudTripIdMeta = const VerificationMeta(
+    'cloudTripId',
+  );
+  @override
+  late final GeneratedColumn<String> cloudTripId = GeneratedColumn<String>(
+    'cloud_trip_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _localTripIdMeta = const VerificationMeta(
+    'localTripId',
+  );
+  @override
+  late final GeneratedColumn<String> localTripId = GeneratedColumn<String>(
+    'local_trip_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _payloadJsonMeta = const VerificationMeta(
+    'payloadJson',
+  );
+  @override
+  late final GeneratedColumn<String> payloadJson = GeneratedColumn<String>(
+    'payload_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _syncStatusMeta = const VerificationMeta(
+    'syncStatus',
+  );
+  @override
+  late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
+    'sync_status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('QUEUED'),
+  );
+  static const VerificationMeta _attemptsMeta = const VerificationMeta(
+    'attempts',
+  );
+  @override
+  late final GeneratedColumn<int> attempts = GeneratedColumn<int>(
+    'attempts',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _nextAttemptAtMeta = const VerificationMeta(
+    'nextAttemptAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> nextAttemptAt =
+      GeneratedColumn<DateTime>(
+        'next_attempt_at',
+        aliasedName,
+        false,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastErrorMeta = const VerificationMeta(
+    'lastError',
+  );
+  @override
+  late final GeneratedColumn<String> lastError = GeneratedColumn<String>(
+    'last_error',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    organizationId,
+    ownerId,
+    cloudTripId,
+    localTripId,
+    kind,
+    payloadJson,
+    syncStatus,
+    attempts,
+    nextAttemptAt,
+    createdAt,
+    updatedAt,
+    lastError,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'fleet_outbox';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FleetOutboxData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('organization_id')) {
+      context.handle(
+        _organizationIdMeta,
+        organizationId.isAcceptableOrUnknown(
+          data['organization_id']!,
+          _organizationIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_organizationIdMeta);
+    }
+    if (data.containsKey('owner_id')) {
+      context.handle(
+        _ownerIdMeta,
+        ownerId.isAcceptableOrUnknown(data['owner_id']!, _ownerIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_ownerIdMeta);
+    }
+    if (data.containsKey('cloud_trip_id')) {
+      context.handle(
+        _cloudTripIdMeta,
+        cloudTripId.isAcceptableOrUnknown(
+          data['cloud_trip_id']!,
+          _cloudTripIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_cloudTripIdMeta);
+    }
+    if (data.containsKey('local_trip_id')) {
+      context.handle(
+        _localTripIdMeta,
+        localTripId.isAcceptableOrUnknown(
+          data['local_trip_id']!,
+          _localTripIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_localTripIdMeta);
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kindMeta);
+    }
+    if (data.containsKey('payload_json')) {
+      context.handle(
+        _payloadJsonMeta,
+        payloadJson.isAcceptableOrUnknown(
+          data['payload_json']!,
+          _payloadJsonMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_payloadJsonMeta);
+    }
+    if (data.containsKey('sync_status')) {
+      context.handle(
+        _syncStatusMeta,
+        syncStatus.isAcceptableOrUnknown(data['sync_status']!, _syncStatusMeta),
+      );
+    }
+    if (data.containsKey('attempts')) {
+      context.handle(
+        _attemptsMeta,
+        attempts.isAcceptableOrUnknown(data['attempts']!, _attemptsMeta),
+      );
+    }
+    if (data.containsKey('next_attempt_at')) {
+      context.handle(
+        _nextAttemptAtMeta,
+        nextAttemptAt.isAcceptableOrUnknown(
+          data['next_attempt_at']!,
+          _nextAttemptAtMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_nextAttemptAtMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('last_error')) {
+      context.handle(
+        _lastErrorMeta,
+        lastError.isAcceptableOrUnknown(data['last_error']!, _lastErrorMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  FleetOutboxData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FleetOutboxData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      organizationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}organization_id'],
+      )!,
+      ownerId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}owner_id'],
+      )!,
+      cloudTripId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}cloud_trip_id'],
+      )!,
+      localTripId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}local_trip_id'],
+      )!,
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      payloadJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payload_json'],
+      )!,
+      syncStatus: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sync_status'],
+      )!,
+      attempts: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}attempts'],
+      )!,
+      nextAttemptAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}next_attempt_at'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      lastError: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_error'],
+      ),
+    );
+  }
+
+  @override
+  $FleetOutboxTable createAlias(String alias) {
+    return $FleetOutboxTable(attachedDatabase, alias);
+  }
+}
+
+class FleetOutboxData extends DataClass implements Insertable<FleetOutboxData> {
+  final String id;
+  final String organizationId;
+  final String ownerId;
+  final String cloudTripId;
+  final String localTripId;
+  final String kind;
+  final String payloadJson;
+  final String syncStatus;
+  final int attempts;
+  final DateTime nextAttemptAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final String? lastError;
+  const FleetOutboxData({
+    required this.id,
+    required this.organizationId,
+    required this.ownerId,
+    required this.cloudTripId,
+    required this.localTripId,
+    required this.kind,
+    required this.payloadJson,
+    required this.syncStatus,
+    required this.attempts,
+    required this.nextAttemptAt,
+    required this.createdAt,
+    required this.updatedAt,
+    this.lastError,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['organization_id'] = Variable<String>(organizationId);
+    map['owner_id'] = Variable<String>(ownerId);
+    map['cloud_trip_id'] = Variable<String>(cloudTripId);
+    map['local_trip_id'] = Variable<String>(localTripId);
+    map['kind'] = Variable<String>(kind);
+    map['payload_json'] = Variable<String>(payloadJson);
+    map['sync_status'] = Variable<String>(syncStatus);
+    map['attempts'] = Variable<int>(attempts);
+    map['next_attempt_at'] = Variable<DateTime>(nextAttemptAt);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || lastError != null) {
+      map['last_error'] = Variable<String>(lastError);
+    }
+    return map;
+  }
+
+  FleetOutboxCompanion toCompanion(bool nullToAbsent) {
+    return FleetOutboxCompanion(
+      id: Value(id),
+      organizationId: Value(organizationId),
+      ownerId: Value(ownerId),
+      cloudTripId: Value(cloudTripId),
+      localTripId: Value(localTripId),
+      kind: Value(kind),
+      payloadJson: Value(payloadJson),
+      syncStatus: Value(syncStatus),
+      attempts: Value(attempts),
+      nextAttemptAt: Value(nextAttemptAt),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      lastError: lastError == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastError),
+    );
+  }
+
+  factory FleetOutboxData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FleetOutboxData(
+      id: serializer.fromJson<String>(json['id']),
+      organizationId: serializer.fromJson<String>(json['organizationId']),
+      ownerId: serializer.fromJson<String>(json['ownerId']),
+      cloudTripId: serializer.fromJson<String>(json['cloudTripId']),
+      localTripId: serializer.fromJson<String>(json['localTripId']),
+      kind: serializer.fromJson<String>(json['kind']),
+      payloadJson: serializer.fromJson<String>(json['payloadJson']),
+      syncStatus: serializer.fromJson<String>(json['syncStatus']),
+      attempts: serializer.fromJson<int>(json['attempts']),
+      nextAttemptAt: serializer.fromJson<DateTime>(json['nextAttemptAt']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      lastError: serializer.fromJson<String?>(json['lastError']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'organizationId': serializer.toJson<String>(organizationId),
+      'ownerId': serializer.toJson<String>(ownerId),
+      'cloudTripId': serializer.toJson<String>(cloudTripId),
+      'localTripId': serializer.toJson<String>(localTripId),
+      'kind': serializer.toJson<String>(kind),
+      'payloadJson': serializer.toJson<String>(payloadJson),
+      'syncStatus': serializer.toJson<String>(syncStatus),
+      'attempts': serializer.toJson<int>(attempts),
+      'nextAttemptAt': serializer.toJson<DateTime>(nextAttemptAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'lastError': serializer.toJson<String?>(lastError),
+    };
+  }
+
+  FleetOutboxData copyWith({
+    String? id,
+    String? organizationId,
+    String? ownerId,
+    String? cloudTripId,
+    String? localTripId,
+    String? kind,
+    String? payloadJson,
+    String? syncStatus,
+    int? attempts,
+    DateTime? nextAttemptAt,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<String?> lastError = const Value.absent(),
+  }) => FleetOutboxData(
+    id: id ?? this.id,
+    organizationId: organizationId ?? this.organizationId,
+    ownerId: ownerId ?? this.ownerId,
+    cloudTripId: cloudTripId ?? this.cloudTripId,
+    localTripId: localTripId ?? this.localTripId,
+    kind: kind ?? this.kind,
+    payloadJson: payloadJson ?? this.payloadJson,
+    syncStatus: syncStatus ?? this.syncStatus,
+    attempts: attempts ?? this.attempts,
+    nextAttemptAt: nextAttemptAt ?? this.nextAttemptAt,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    lastError: lastError.present ? lastError.value : this.lastError,
+  );
+  FleetOutboxData copyWithCompanion(FleetOutboxCompanion data) {
+    return FleetOutboxData(
+      id: data.id.present ? data.id.value : this.id,
+      organizationId: data.organizationId.present
+          ? data.organizationId.value
+          : this.organizationId,
+      ownerId: data.ownerId.present ? data.ownerId.value : this.ownerId,
+      cloudTripId: data.cloudTripId.present
+          ? data.cloudTripId.value
+          : this.cloudTripId,
+      localTripId: data.localTripId.present
+          ? data.localTripId.value
+          : this.localTripId,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      payloadJson: data.payloadJson.present
+          ? data.payloadJson.value
+          : this.payloadJson,
+      syncStatus: data.syncStatus.present
+          ? data.syncStatus.value
+          : this.syncStatus,
+      attempts: data.attempts.present ? data.attempts.value : this.attempts,
+      nextAttemptAt: data.nextAttemptAt.present
+          ? data.nextAttemptAt.value
+          : this.nextAttemptAt,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      lastError: data.lastError.present ? data.lastError.value : this.lastError,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FleetOutboxData(')
+          ..write('id: $id, ')
+          ..write('organizationId: $organizationId, ')
+          ..write('ownerId: $ownerId, ')
+          ..write('cloudTripId: $cloudTripId, ')
+          ..write('localTripId: $localTripId, ')
+          ..write('kind: $kind, ')
+          ..write('payloadJson: $payloadJson, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('attempts: $attempts, ')
+          ..write('nextAttemptAt: $nextAttemptAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('lastError: $lastError')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    organizationId,
+    ownerId,
+    cloudTripId,
+    localTripId,
+    kind,
+    payloadJson,
+    syncStatus,
+    attempts,
+    nextAttemptAt,
+    createdAt,
+    updatedAt,
+    lastError,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FleetOutboxData &&
+          other.id == this.id &&
+          other.organizationId == this.organizationId &&
+          other.ownerId == this.ownerId &&
+          other.cloudTripId == this.cloudTripId &&
+          other.localTripId == this.localTripId &&
+          other.kind == this.kind &&
+          other.payloadJson == this.payloadJson &&
+          other.syncStatus == this.syncStatus &&
+          other.attempts == this.attempts &&
+          other.nextAttemptAt == this.nextAttemptAt &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.lastError == this.lastError);
+}
+
+class FleetOutboxCompanion extends UpdateCompanion<FleetOutboxData> {
+  final Value<String> id;
+  final Value<String> organizationId;
+  final Value<String> ownerId;
+  final Value<String> cloudTripId;
+  final Value<String> localTripId;
+  final Value<String> kind;
+  final Value<String> payloadJson;
+  final Value<String> syncStatus;
+  final Value<int> attempts;
+  final Value<DateTime> nextAttemptAt;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<String?> lastError;
+  final Value<int> rowid;
+  const FleetOutboxCompanion({
+    this.id = const Value.absent(),
+    this.organizationId = const Value.absent(),
+    this.ownerId = const Value.absent(),
+    this.cloudTripId = const Value.absent(),
+    this.localTripId = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.payloadJson = const Value.absent(),
+    this.syncStatus = const Value.absent(),
+    this.attempts = const Value.absent(),
+    this.nextAttemptAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.lastError = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FleetOutboxCompanion.insert({
+    required String id,
+    required String organizationId,
+    required String ownerId,
+    required String cloudTripId,
+    required String localTripId,
+    required String kind,
+    required String payloadJson,
+    this.syncStatus = const Value.absent(),
+    this.attempts = const Value.absent(),
+    required DateTime nextAttemptAt,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.lastError = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       organizationId = Value(organizationId),
+       ownerId = Value(ownerId),
+       cloudTripId = Value(cloudTripId),
+       localTripId = Value(localTripId),
+       kind = Value(kind),
+       payloadJson = Value(payloadJson),
+       nextAttemptAt = Value(nextAttemptAt),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<FleetOutboxData> custom({
+    Expression<String>? id,
+    Expression<String>? organizationId,
+    Expression<String>? ownerId,
+    Expression<String>? cloudTripId,
+    Expression<String>? localTripId,
+    Expression<String>? kind,
+    Expression<String>? payloadJson,
+    Expression<String>? syncStatus,
+    Expression<int>? attempts,
+    Expression<DateTime>? nextAttemptAt,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<String>? lastError,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (organizationId != null) 'organization_id': organizationId,
+      if (ownerId != null) 'owner_id': ownerId,
+      if (cloudTripId != null) 'cloud_trip_id': cloudTripId,
+      if (localTripId != null) 'local_trip_id': localTripId,
+      if (kind != null) 'kind': kind,
+      if (payloadJson != null) 'payload_json': payloadJson,
+      if (syncStatus != null) 'sync_status': syncStatus,
+      if (attempts != null) 'attempts': attempts,
+      if (nextAttemptAt != null) 'next_attempt_at': nextAttemptAt,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (lastError != null) 'last_error': lastError,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FleetOutboxCompanion copyWith({
+    Value<String>? id,
+    Value<String>? organizationId,
+    Value<String>? ownerId,
+    Value<String>? cloudTripId,
+    Value<String>? localTripId,
+    Value<String>? kind,
+    Value<String>? payloadJson,
+    Value<String>? syncStatus,
+    Value<int>? attempts,
+    Value<DateTime>? nextAttemptAt,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<String?>? lastError,
+    Value<int>? rowid,
+  }) {
+    return FleetOutboxCompanion(
+      id: id ?? this.id,
+      organizationId: organizationId ?? this.organizationId,
+      ownerId: ownerId ?? this.ownerId,
+      cloudTripId: cloudTripId ?? this.cloudTripId,
+      localTripId: localTripId ?? this.localTripId,
+      kind: kind ?? this.kind,
+      payloadJson: payloadJson ?? this.payloadJson,
+      syncStatus: syncStatus ?? this.syncStatus,
+      attempts: attempts ?? this.attempts,
+      nextAttemptAt: nextAttemptAt ?? this.nextAttemptAt,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      lastError: lastError ?? this.lastError,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (organizationId.present) {
+      map['organization_id'] = Variable<String>(organizationId.value);
+    }
+    if (ownerId.present) {
+      map['owner_id'] = Variable<String>(ownerId.value);
+    }
+    if (cloudTripId.present) {
+      map['cloud_trip_id'] = Variable<String>(cloudTripId.value);
+    }
+    if (localTripId.present) {
+      map['local_trip_id'] = Variable<String>(localTripId.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (payloadJson.present) {
+      map['payload_json'] = Variable<String>(payloadJson.value);
+    }
+    if (syncStatus.present) {
+      map['sync_status'] = Variable<String>(syncStatus.value);
+    }
+    if (attempts.present) {
+      map['attempts'] = Variable<int>(attempts.value);
+    }
+    if (nextAttemptAt.present) {
+      map['next_attempt_at'] = Variable<DateTime>(nextAttemptAt.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (lastError.present) {
+      map['last_error'] = Variable<String>(lastError.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FleetOutboxCompanion(')
+          ..write('id: $id, ')
+          ..write('organizationId: $organizationId, ')
+          ..write('ownerId: $ownerId, ')
+          ..write('cloudTripId: $cloudTripId, ')
+          ..write('localTripId: $localTripId, ')
+          ..write('kind: $kind, ')
+          ..write('payloadJson: $payloadJson, ')
+          ..write('syncStatus: $syncStatus, ')
+          ..write('attempts: $attempts, ')
+          ..write('nextAttemptAt: $nextAttemptAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('lastError: $lastError, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RestSessionsTable extends RestSessions
+    with TableInfo<$RestSessionsTable, RestSessionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RestSessionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tripIdMeta = const VerificationMeta('tripId');
+  @override
+  late final GeneratedColumn<String> tripId = GeneratedColumn<String>(
+    'trip_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES trips (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _startedAtMeta = const VerificationMeta(
+    'startedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> startedAt = GeneratedColumn<DateTime>(
+    'started_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _endedAtMeta = const VerificationMeta(
+    'endedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> endedAt = GeneratedColumn<DateTime>(
+    'ended_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _durationMsMeta = const VerificationMeta(
+    'durationMs',
+  );
+  @override
+  late final GeneratedColumn<int> durationMs = GeneratedColumn<int>(
+    'duration_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _recommendationReasonMeta =
+      const VerificationMeta('recommendationReason');
+  @override
+  late final GeneratedColumn<String> recommendationReason =
+      GeneratedColumn<String>(
+        'recommendation_reason',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _voluntarilyConfirmedMeta =
+      const VerificationMeta('voluntarilyConfirmed');
+  @override
+  late final GeneratedColumn<bool> voluntarilyConfirmed = GeneratedColumn<bool>(
+    'voluntarily_confirmed',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("voluntarily_confirmed" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _fleetBindingJsonMeta = const VerificationMeta(
+    'fleetBindingJson',
+  );
+  @override
+  late final GeneratedColumn<String> fleetBindingJson = GeneratedColumn<String>(
+    'fleet_binding_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    tripId,
+    startedAt,
+    endedAt,
+    durationMs,
+    recommendationReason,
+    voluntarilyConfirmed,
+    fleetBindingJson,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'rest_sessions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RestSessionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('trip_id')) {
+      context.handle(
+        _tripIdMeta,
+        tripId.isAcceptableOrUnknown(data['trip_id']!, _tripIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tripIdMeta);
+    }
+    if (data.containsKey('started_at')) {
+      context.handle(
+        _startedAtMeta,
+        startedAt.isAcceptableOrUnknown(data['started_at']!, _startedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_startedAtMeta);
+    }
+    if (data.containsKey('ended_at')) {
+      context.handle(
+        _endedAtMeta,
+        endedAt.isAcceptableOrUnknown(data['ended_at']!, _endedAtMeta),
+      );
+    }
+    if (data.containsKey('duration_ms')) {
+      context.handle(
+        _durationMsMeta,
+        durationMs.isAcceptableOrUnknown(data['duration_ms']!, _durationMsMeta),
+      );
+    }
+    if (data.containsKey('recommendation_reason')) {
+      context.handle(
+        _recommendationReasonMeta,
+        recommendationReason.isAcceptableOrUnknown(
+          data['recommendation_reason']!,
+          _recommendationReasonMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recommendationReasonMeta);
+    }
+    if (data.containsKey('voluntarily_confirmed')) {
+      context.handle(
+        _voluntarilyConfirmedMeta,
+        voluntarilyConfirmed.isAcceptableOrUnknown(
+          data['voluntarily_confirmed']!,
+          _voluntarilyConfirmedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_voluntarilyConfirmedMeta);
+    }
+    if (data.containsKey('fleet_binding_json')) {
+      context.handle(
+        _fleetBindingJsonMeta,
+        fleetBindingJson.isAcceptableOrUnknown(
+          data['fleet_binding_json']!,
+          _fleetBindingJsonMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RestSessionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RestSessionRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      tripId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}trip_id'],
+      )!,
+      startedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}started_at'],
+      )!,
+      endedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}ended_at'],
+      ),
+      durationMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}duration_ms'],
+      )!,
+      recommendationReason: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recommendation_reason'],
+      )!,
+      voluntarilyConfirmed: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}voluntarily_confirmed'],
+      )!,
+      fleetBindingJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fleet_binding_json'],
+      ),
+    );
+  }
+
+  @override
+  $RestSessionsTable createAlias(String alias) {
+    return $RestSessionsTable(attachedDatabase, alias);
+  }
+}
+
+class RestSessionRow extends DataClass implements Insertable<RestSessionRow> {
+  final String id;
+  final String tripId;
+  final DateTime startedAt;
+  final DateTime? endedAt;
+  final int durationMs;
+  final String recommendationReason;
+  final bool voluntarilyConfirmed;
+  final String? fleetBindingJson;
+  const RestSessionRow({
+    required this.id,
+    required this.tripId,
+    required this.startedAt,
+    this.endedAt,
+    required this.durationMs,
+    required this.recommendationReason,
+    required this.voluntarilyConfirmed,
+    this.fleetBindingJson,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['trip_id'] = Variable<String>(tripId);
+    map['started_at'] = Variable<DateTime>(startedAt);
+    if (!nullToAbsent || endedAt != null) {
+      map['ended_at'] = Variable<DateTime>(endedAt);
+    }
+    map['duration_ms'] = Variable<int>(durationMs);
+    map['recommendation_reason'] = Variable<String>(recommendationReason);
+    map['voluntarily_confirmed'] = Variable<bool>(voluntarilyConfirmed);
+    if (!nullToAbsent || fleetBindingJson != null) {
+      map['fleet_binding_json'] = Variable<String>(fleetBindingJson);
+    }
+    return map;
+  }
+
+  RestSessionsCompanion toCompanion(bool nullToAbsent) {
+    return RestSessionsCompanion(
+      id: Value(id),
+      tripId: Value(tripId),
+      startedAt: Value(startedAt),
+      endedAt: endedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endedAt),
+      durationMs: Value(durationMs),
+      recommendationReason: Value(recommendationReason),
+      voluntarilyConfirmed: Value(voluntarilyConfirmed),
+      fleetBindingJson: fleetBindingJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fleetBindingJson),
+    );
+  }
+
+  factory RestSessionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RestSessionRow(
+      id: serializer.fromJson<String>(json['id']),
+      tripId: serializer.fromJson<String>(json['tripId']),
+      startedAt: serializer.fromJson<DateTime>(json['startedAt']),
+      endedAt: serializer.fromJson<DateTime?>(json['endedAt']),
+      durationMs: serializer.fromJson<int>(json['durationMs']),
+      recommendationReason: serializer.fromJson<String>(
+        json['recommendationReason'],
+      ),
+      voluntarilyConfirmed: serializer.fromJson<bool>(
+        json['voluntarilyConfirmed'],
+      ),
+      fleetBindingJson: serializer.fromJson<String?>(json['fleetBindingJson']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'tripId': serializer.toJson<String>(tripId),
+      'startedAt': serializer.toJson<DateTime>(startedAt),
+      'endedAt': serializer.toJson<DateTime?>(endedAt),
+      'durationMs': serializer.toJson<int>(durationMs),
+      'recommendationReason': serializer.toJson<String>(recommendationReason),
+      'voluntarilyConfirmed': serializer.toJson<bool>(voluntarilyConfirmed),
+      'fleetBindingJson': serializer.toJson<String?>(fleetBindingJson),
+    };
+  }
+
+  RestSessionRow copyWith({
+    String? id,
+    String? tripId,
+    DateTime? startedAt,
+    Value<DateTime?> endedAt = const Value.absent(),
+    int? durationMs,
+    String? recommendationReason,
+    bool? voluntarilyConfirmed,
+    Value<String?> fleetBindingJson = const Value.absent(),
+  }) => RestSessionRow(
+    id: id ?? this.id,
+    tripId: tripId ?? this.tripId,
+    startedAt: startedAt ?? this.startedAt,
+    endedAt: endedAt.present ? endedAt.value : this.endedAt,
+    durationMs: durationMs ?? this.durationMs,
+    recommendationReason: recommendationReason ?? this.recommendationReason,
+    voluntarilyConfirmed: voluntarilyConfirmed ?? this.voluntarilyConfirmed,
+    fleetBindingJson: fleetBindingJson.present
+        ? fleetBindingJson.value
+        : this.fleetBindingJson,
+  );
+  RestSessionRow copyWithCompanion(RestSessionsCompanion data) {
+    return RestSessionRow(
+      id: data.id.present ? data.id.value : this.id,
+      tripId: data.tripId.present ? data.tripId.value : this.tripId,
+      startedAt: data.startedAt.present ? data.startedAt.value : this.startedAt,
+      endedAt: data.endedAt.present ? data.endedAt.value : this.endedAt,
+      durationMs: data.durationMs.present
+          ? data.durationMs.value
+          : this.durationMs,
+      recommendationReason: data.recommendationReason.present
+          ? data.recommendationReason.value
+          : this.recommendationReason,
+      voluntarilyConfirmed: data.voluntarilyConfirmed.present
+          ? data.voluntarilyConfirmed.value
+          : this.voluntarilyConfirmed,
+      fleetBindingJson: data.fleetBindingJson.present
+          ? data.fleetBindingJson.value
+          : this.fleetBindingJson,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RestSessionRow(')
+          ..write('id: $id, ')
+          ..write('tripId: $tripId, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('endedAt: $endedAt, ')
+          ..write('durationMs: $durationMs, ')
+          ..write('recommendationReason: $recommendationReason, ')
+          ..write('voluntarilyConfirmed: $voluntarilyConfirmed, ')
+          ..write('fleetBindingJson: $fleetBindingJson')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    tripId,
+    startedAt,
+    endedAt,
+    durationMs,
+    recommendationReason,
+    voluntarilyConfirmed,
+    fleetBindingJson,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RestSessionRow &&
+          other.id == this.id &&
+          other.tripId == this.tripId &&
+          other.startedAt == this.startedAt &&
+          other.endedAt == this.endedAt &&
+          other.durationMs == this.durationMs &&
+          other.recommendationReason == this.recommendationReason &&
+          other.voluntarilyConfirmed == this.voluntarilyConfirmed &&
+          other.fleetBindingJson == this.fleetBindingJson);
+}
+
+class RestSessionsCompanion extends UpdateCompanion<RestSessionRow> {
+  final Value<String> id;
+  final Value<String> tripId;
+  final Value<DateTime> startedAt;
+  final Value<DateTime?> endedAt;
+  final Value<int> durationMs;
+  final Value<String> recommendationReason;
+  final Value<bool> voluntarilyConfirmed;
+  final Value<String?> fleetBindingJson;
+  final Value<int> rowid;
+  const RestSessionsCompanion({
+    this.id = const Value.absent(),
+    this.tripId = const Value.absent(),
+    this.startedAt = const Value.absent(),
+    this.endedAt = const Value.absent(),
+    this.durationMs = const Value.absent(),
+    this.recommendationReason = const Value.absent(),
+    this.voluntarilyConfirmed = const Value.absent(),
+    this.fleetBindingJson = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  RestSessionsCompanion.insert({
+    required String id,
+    required String tripId,
+    required DateTime startedAt,
+    this.endedAt = const Value.absent(),
+    this.durationMs = const Value.absent(),
+    required String recommendationReason,
+    required bool voluntarilyConfirmed,
+    this.fleetBindingJson = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       tripId = Value(tripId),
+       startedAt = Value(startedAt),
+       recommendationReason = Value(recommendationReason),
+       voluntarilyConfirmed = Value(voluntarilyConfirmed);
+  static Insertable<RestSessionRow> custom({
+    Expression<String>? id,
+    Expression<String>? tripId,
+    Expression<DateTime>? startedAt,
+    Expression<DateTime>? endedAt,
+    Expression<int>? durationMs,
+    Expression<String>? recommendationReason,
+    Expression<bool>? voluntarilyConfirmed,
+    Expression<String>? fleetBindingJson,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (tripId != null) 'trip_id': tripId,
+      if (startedAt != null) 'started_at': startedAt,
+      if (endedAt != null) 'ended_at': endedAt,
+      if (durationMs != null) 'duration_ms': durationMs,
+      if (recommendationReason != null)
+        'recommendation_reason': recommendationReason,
+      if (voluntarilyConfirmed != null)
+        'voluntarily_confirmed': voluntarilyConfirmed,
+      if (fleetBindingJson != null) 'fleet_binding_json': fleetBindingJson,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  RestSessionsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? tripId,
+    Value<DateTime>? startedAt,
+    Value<DateTime?>? endedAt,
+    Value<int>? durationMs,
+    Value<String>? recommendationReason,
+    Value<bool>? voluntarilyConfirmed,
+    Value<String?>? fleetBindingJson,
+    Value<int>? rowid,
+  }) {
+    return RestSessionsCompanion(
+      id: id ?? this.id,
+      tripId: tripId ?? this.tripId,
+      startedAt: startedAt ?? this.startedAt,
+      endedAt: endedAt ?? this.endedAt,
+      durationMs: durationMs ?? this.durationMs,
+      recommendationReason: recommendationReason ?? this.recommendationReason,
+      voluntarilyConfirmed: voluntarilyConfirmed ?? this.voluntarilyConfirmed,
+      fleetBindingJson: fleetBindingJson ?? this.fleetBindingJson,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (tripId.present) {
+      map['trip_id'] = Variable<String>(tripId.value);
+    }
+    if (startedAt.present) {
+      map['started_at'] = Variable<DateTime>(startedAt.value);
+    }
+    if (endedAt.present) {
+      map['ended_at'] = Variable<DateTime>(endedAt.value);
+    }
+    if (durationMs.present) {
+      map['duration_ms'] = Variable<int>(durationMs.value);
+    }
+    if (recommendationReason.present) {
+      map['recommendation_reason'] = Variable<String>(
+        recommendationReason.value,
+      );
+    }
+    if (voluntarilyConfirmed.present) {
+      map['voluntarily_confirmed'] = Variable<bool>(voluntarilyConfirmed.value);
+    }
+    if (fleetBindingJson.present) {
+      map['fleet_binding_json'] = Variable<String>(fleetBindingJson.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RestSessionsCompanion(')
+          ..write('id: $id, ')
+          ..write('tripId: $tripId, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('endedAt: $endedAt, ')
+          ..write('durationMs: $durationMs, ')
+          ..write('recommendationReason: $recommendationReason, ')
+          ..write('voluntarilyConfirmed: $voluntarilyConfirmed, ')
+          ..write('fleetBindingJson: $fleetBindingJson, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$DriverAwakeDatabase extends GeneratedDatabase {
   _$DriverAwakeDatabase(QueryExecutor e) : super(e);
   $DriverAwakeDatabaseManager get managers => $DriverAwakeDatabaseManager(this);
@@ -3350,6 +4667,8 @@ abstract class _$DriverAwakeDatabase extends GeneratedDatabase {
   late final $CalibrationsTable calibrations = $CalibrationsTable(this);
   late final $AppSettingsTable appSettings = $AppSettingsTable(this);
   late final $ModelMetadataTable modelMetadata = $ModelMetadataTable(this);
+  late final $FleetOutboxTable fleetOutbox = $FleetOutboxTable(this);
+  late final $RestSessionsTable restSessions = $RestSessionsTable(this);
   late final Index tripEventsByTime = Index(
     'trip_events_by_time',
     'CREATE INDEX trip_events_by_time ON trip_events (occurred_at)',
@@ -3373,6 +4692,8 @@ abstract class _$DriverAwakeDatabase extends GeneratedDatabase {
     calibrations,
     appSettings,
     modelMetadata,
+    fleetOutbox,
+    restSessions,
     tripEventsByTime,
     tripEventsByTrip,
     tripEventsByLevel,
@@ -3392,6 +4713,13 @@ abstract class _$DriverAwakeDatabase extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [TableUpdate('session_drafts', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'trips',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('rest_sessions', kind: UpdateKind.delete)],
     ),
   ]);
 }
@@ -3490,6 +4818,25 @@ final class $$TripsTableReferences
     ).filter((f) => f.tripId.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_sessionDraftsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$RestSessionsTable, List<RestSessionRow>>
+  _restSessionsRefsTable(_$DriverAwakeDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.restSessions,
+        aliasName: $_aliasNameGenerator(db.trips.id, db.restSessions.tripId),
+      );
+
+  $$RestSessionsTableProcessedTableManager get restSessionsRefs {
+    final manager = $$RestSessionsTableTableManager(
+      $_db,
+      $_db.restSessions,
+    ).filter((f) => f.tripId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_restSessionsRefsTable($_db));
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -3666,6 +5013,31 @@ class $$TripsTableFilterComposer
           }) => $$SessionDraftsTableFilterComposer(
             $db: $db,
             $table: $db.sessionDrafts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> restSessionsRefs(
+    Expression<bool> Function($$RestSessionsTableFilterComposer f) f,
+  ) {
+    final $$RestSessionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.restSessions,
+      getReferencedColumn: (t) => t.tripId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RestSessionsTableFilterComposer(
+            $db: $db,
+            $table: $db.restSessions,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -3966,6 +5338,31 @@ class $$TripsTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> restSessionsRefs<T extends Object>(
+    Expression<T> Function($$RestSessionsTableAnnotationComposer a) f,
+  ) {
+    final $$RestSessionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.restSessions,
+      getReferencedColumn: (t) => t.tripId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$RestSessionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.restSessions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$TripsTableTableManager
@@ -3981,7 +5378,11 @@ class $$TripsTableTableManager
           $$TripsTableUpdateCompanionBuilder,
           (TripRow, $$TripsTableReferences),
           TripRow,
-          PrefetchHooks Function({bool tripEventsRefs, bool sessionDraftsRefs})
+          PrefetchHooks Function({
+            bool tripEventsRefs,
+            bool sessionDraftsRefs,
+            bool restSessionsRefs,
+          })
         > {
   $$TripsTableTableManager(_$DriverAwakeDatabase db, $TripsTable table)
     : super(
@@ -4109,12 +5510,17 @@ class $$TripsTableTableManager
               )
               .toList(),
           prefetchHooksCallback:
-              ({tripEventsRefs = false, sessionDraftsRefs = false}) {
+              ({
+                tripEventsRefs = false,
+                sessionDraftsRefs = false,
+                restSessionsRefs = false,
+              }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (tripEventsRefs) db.tripEvents,
                     if (sessionDraftsRefs) db.sessionDrafts,
+                    if (restSessionsRefs) db.restSessions,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -4161,6 +5567,27 @@ class $$TripsTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (restSessionsRefs)
+                        await $_getPrefetchedData<
+                          TripRow,
+                          $TripsTable,
+                          RestSessionRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TripsTableReferences
+                              ._restSessionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TripsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).restSessionsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.tripId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -4181,7 +5608,11 @@ typedef $$TripsTableProcessedTableManager =
       $$TripsTableUpdateCompanionBuilder,
       (TripRow, $$TripsTableReferences),
       TripRow,
-      PrefetchHooks Function({bool tripEventsRefs, bool sessionDraftsRefs})
+      PrefetchHooks Function({
+        bool tripEventsRefs,
+        bool sessionDraftsRefs,
+        bool restSessionsRefs,
+      })
     >;
 typedef $$TripEventsTableCreateCompanionBuilder =
     TripEventsCompanion Function({
@@ -5532,6 +6963,769 @@ typedef $$ModelMetadataTableProcessedTableManager =
       ModelMetadataRow,
       PrefetchHooks Function()
     >;
+typedef $$FleetOutboxTableCreateCompanionBuilder =
+    FleetOutboxCompanion Function({
+      required String id,
+      required String organizationId,
+      required String ownerId,
+      required String cloudTripId,
+      required String localTripId,
+      required String kind,
+      required String payloadJson,
+      Value<String> syncStatus,
+      Value<int> attempts,
+      required DateTime nextAttemptAt,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<String?> lastError,
+      Value<int> rowid,
+    });
+typedef $$FleetOutboxTableUpdateCompanionBuilder =
+    FleetOutboxCompanion Function({
+      Value<String> id,
+      Value<String> organizationId,
+      Value<String> ownerId,
+      Value<String> cloudTripId,
+      Value<String> localTripId,
+      Value<String> kind,
+      Value<String> payloadJson,
+      Value<String> syncStatus,
+      Value<int> attempts,
+      Value<DateTime> nextAttemptAt,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<String?> lastError,
+      Value<int> rowid,
+    });
+
+class $$FleetOutboxTableFilterComposer
+    extends Composer<_$DriverAwakeDatabase, $FleetOutboxTable> {
+  $$FleetOutboxTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get organizationId => $composableBuilder(
+    column: $table.organizationId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ownerId => $composableBuilder(
+    column: $table.ownerId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get cloudTripId => $composableBuilder(
+    column: $table.cloudTripId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get localTripId => $composableBuilder(
+    column: $table.localTripId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get syncStatus => $composableBuilder(
+    column: $table.syncStatus,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get attempts => $composableBuilder(
+    column: $table.attempts,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lastError => $composableBuilder(
+    column: $table.lastError,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$FleetOutboxTableOrderingComposer
+    extends Composer<_$DriverAwakeDatabase, $FleetOutboxTable> {
+  $$FleetOutboxTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get organizationId => $composableBuilder(
+    column: $table.organizationId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ownerId => $composableBuilder(
+    column: $table.ownerId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get cloudTripId => $composableBuilder(
+    column: $table.cloudTripId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get localTripId => $composableBuilder(
+    column: $table.localTripId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get syncStatus => $composableBuilder(
+    column: $table.syncStatus,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get attempts => $composableBuilder(
+    column: $table.attempts,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lastError => $composableBuilder(
+    column: $table.lastError,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$FleetOutboxTableAnnotationComposer
+    extends Composer<_$DriverAwakeDatabase, $FleetOutboxTable> {
+  $$FleetOutboxTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get organizationId => $composableBuilder(
+    column: $table.organizationId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get ownerId =>
+      $composableBuilder(column: $table.ownerId, builder: (column) => column);
+
+  GeneratedColumn<String> get cloudTripId => $composableBuilder(
+    column: $table.cloudTripId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get localTripId => $composableBuilder(
+    column: $table.localTripId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get syncStatus => $composableBuilder(
+    column: $table.syncStatus,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get attempts =>
+      $composableBuilder(column: $table.attempts, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get lastError =>
+      $composableBuilder(column: $table.lastError, builder: (column) => column);
+}
+
+class $$FleetOutboxTableTableManager
+    extends
+        RootTableManager<
+          _$DriverAwakeDatabase,
+          $FleetOutboxTable,
+          FleetOutboxData,
+          $$FleetOutboxTableFilterComposer,
+          $$FleetOutboxTableOrderingComposer,
+          $$FleetOutboxTableAnnotationComposer,
+          $$FleetOutboxTableCreateCompanionBuilder,
+          $$FleetOutboxTableUpdateCompanionBuilder,
+          (
+            FleetOutboxData,
+            BaseReferences<
+              _$DriverAwakeDatabase,
+              $FleetOutboxTable,
+              FleetOutboxData
+            >,
+          ),
+          FleetOutboxData,
+          PrefetchHooks Function()
+        > {
+  $$FleetOutboxTableTableManager(
+    _$DriverAwakeDatabase db,
+    $FleetOutboxTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$FleetOutboxTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$FleetOutboxTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$FleetOutboxTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> organizationId = const Value.absent(),
+                Value<String> ownerId = const Value.absent(),
+                Value<String> cloudTripId = const Value.absent(),
+                Value<String> localTripId = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<String> payloadJson = const Value.absent(),
+                Value<String> syncStatus = const Value.absent(),
+                Value<int> attempts = const Value.absent(),
+                Value<DateTime> nextAttemptAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<String?> lastError = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FleetOutboxCompanion(
+                id: id,
+                organizationId: organizationId,
+                ownerId: ownerId,
+                cloudTripId: cloudTripId,
+                localTripId: localTripId,
+                kind: kind,
+                payloadJson: payloadJson,
+                syncStatus: syncStatus,
+                attempts: attempts,
+                nextAttemptAt: nextAttemptAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                lastError: lastError,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String organizationId,
+                required String ownerId,
+                required String cloudTripId,
+                required String localTripId,
+                required String kind,
+                required String payloadJson,
+                Value<String> syncStatus = const Value.absent(),
+                Value<int> attempts = const Value.absent(),
+                required DateTime nextAttemptAt,
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<String?> lastError = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FleetOutboxCompanion.insert(
+                id: id,
+                organizationId: organizationId,
+                ownerId: ownerId,
+                cloudTripId: cloudTripId,
+                localTripId: localTripId,
+                kind: kind,
+                payloadJson: payloadJson,
+                syncStatus: syncStatus,
+                attempts: attempts,
+                nextAttemptAt: nextAttemptAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                lastError: lastError,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$FleetOutboxTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DriverAwakeDatabase,
+      $FleetOutboxTable,
+      FleetOutboxData,
+      $$FleetOutboxTableFilterComposer,
+      $$FleetOutboxTableOrderingComposer,
+      $$FleetOutboxTableAnnotationComposer,
+      $$FleetOutboxTableCreateCompanionBuilder,
+      $$FleetOutboxTableUpdateCompanionBuilder,
+      (
+        FleetOutboxData,
+        BaseReferences<
+          _$DriverAwakeDatabase,
+          $FleetOutboxTable,
+          FleetOutboxData
+        >,
+      ),
+      FleetOutboxData,
+      PrefetchHooks Function()
+    >;
+typedef $$RestSessionsTableCreateCompanionBuilder =
+    RestSessionsCompanion Function({
+      required String id,
+      required String tripId,
+      required DateTime startedAt,
+      Value<DateTime?> endedAt,
+      Value<int> durationMs,
+      required String recommendationReason,
+      required bool voluntarilyConfirmed,
+      Value<String?> fleetBindingJson,
+      Value<int> rowid,
+    });
+typedef $$RestSessionsTableUpdateCompanionBuilder =
+    RestSessionsCompanion Function({
+      Value<String> id,
+      Value<String> tripId,
+      Value<DateTime> startedAt,
+      Value<DateTime?> endedAt,
+      Value<int> durationMs,
+      Value<String> recommendationReason,
+      Value<bool> voluntarilyConfirmed,
+      Value<String?> fleetBindingJson,
+      Value<int> rowid,
+    });
+
+final class $$RestSessionsTableReferences
+    extends
+        BaseReferences<
+          _$DriverAwakeDatabase,
+          $RestSessionsTable,
+          RestSessionRow
+        > {
+  $$RestSessionsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $TripsTable _tripIdTable(_$DriverAwakeDatabase db) => db.trips
+      .createAlias($_aliasNameGenerator(db.restSessions.tripId, db.trips.id));
+
+  $$TripsTableProcessedTableManager get tripId {
+    final $_column = $_itemColumn<String>('trip_id')!;
+
+    final manager = $$TripsTableTableManager(
+      $_db,
+      $_db.trips,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_tripIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$RestSessionsTableFilterComposer
+    extends Composer<_$DriverAwakeDatabase, $RestSessionsTable> {
+  $$RestSessionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get startedAt => $composableBuilder(
+    column: $table.startedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get endedAt => $composableBuilder(
+    column: $table.endedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get durationMs => $composableBuilder(
+    column: $table.durationMs,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recommendationReason => $composableBuilder(
+    column: $table.recommendationReason,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get voluntarilyConfirmed => $composableBuilder(
+    column: $table.voluntarilyConfirmed,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fleetBindingJson => $composableBuilder(
+    column: $table.fleetBindingJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$TripsTableFilterComposer get tripId {
+    final $$TripsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tripId,
+      referencedTable: $db.trips,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TripsTableFilterComposer(
+            $db: $db,
+            $table: $db.trips,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RestSessionsTableOrderingComposer
+    extends Composer<_$DriverAwakeDatabase, $RestSessionsTable> {
+  $$RestSessionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get startedAt => $composableBuilder(
+    column: $table.startedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get endedAt => $composableBuilder(
+    column: $table.endedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get durationMs => $composableBuilder(
+    column: $table.durationMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recommendationReason => $composableBuilder(
+    column: $table.recommendationReason,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get voluntarilyConfirmed => $composableBuilder(
+    column: $table.voluntarilyConfirmed,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fleetBindingJson => $composableBuilder(
+    column: $table.fleetBindingJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$TripsTableOrderingComposer get tripId {
+    final $$TripsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tripId,
+      referencedTable: $db.trips,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TripsTableOrderingComposer(
+            $db: $db,
+            $table: $db.trips,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RestSessionsTableAnnotationComposer
+    extends Composer<_$DriverAwakeDatabase, $RestSessionsTable> {
+  $$RestSessionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get startedAt =>
+      $composableBuilder(column: $table.startedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get endedAt =>
+      $composableBuilder(column: $table.endedAt, builder: (column) => column);
+
+  GeneratedColumn<int> get durationMs => $composableBuilder(
+    column: $table.durationMs,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get recommendationReason => $composableBuilder(
+    column: $table.recommendationReason,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get voluntarilyConfirmed => $composableBuilder(
+    column: $table.voluntarilyConfirmed,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get fleetBindingJson => $composableBuilder(
+    column: $table.fleetBindingJson,
+    builder: (column) => column,
+  );
+
+  $$TripsTableAnnotationComposer get tripId {
+    final $$TripsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.tripId,
+      referencedTable: $db.trips,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TripsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.trips,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$RestSessionsTableTableManager
+    extends
+        RootTableManager<
+          _$DriverAwakeDatabase,
+          $RestSessionsTable,
+          RestSessionRow,
+          $$RestSessionsTableFilterComposer,
+          $$RestSessionsTableOrderingComposer,
+          $$RestSessionsTableAnnotationComposer,
+          $$RestSessionsTableCreateCompanionBuilder,
+          $$RestSessionsTableUpdateCompanionBuilder,
+          (RestSessionRow, $$RestSessionsTableReferences),
+          RestSessionRow,
+          PrefetchHooks Function({bool tripId})
+        > {
+  $$RestSessionsTableTableManager(
+    _$DriverAwakeDatabase db,
+    $RestSessionsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RestSessionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RestSessionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RestSessionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> tripId = const Value.absent(),
+                Value<DateTime> startedAt = const Value.absent(),
+                Value<DateTime?> endedAt = const Value.absent(),
+                Value<int> durationMs = const Value.absent(),
+                Value<String> recommendationReason = const Value.absent(),
+                Value<bool> voluntarilyConfirmed = const Value.absent(),
+                Value<String?> fleetBindingJson = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RestSessionsCompanion(
+                id: id,
+                tripId: tripId,
+                startedAt: startedAt,
+                endedAt: endedAt,
+                durationMs: durationMs,
+                recommendationReason: recommendationReason,
+                voluntarilyConfirmed: voluntarilyConfirmed,
+                fleetBindingJson: fleetBindingJson,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String tripId,
+                required DateTime startedAt,
+                Value<DateTime?> endedAt = const Value.absent(),
+                Value<int> durationMs = const Value.absent(),
+                required String recommendationReason,
+                required bool voluntarilyConfirmed,
+                Value<String?> fleetBindingJson = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RestSessionsCompanion.insert(
+                id: id,
+                tripId: tripId,
+                startedAt: startedAt,
+                endedAt: endedAt,
+                durationMs: durationMs,
+                recommendationReason: recommendationReason,
+                voluntarilyConfirmed: voluntarilyConfirmed,
+                fleetBindingJson: fleetBindingJson,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$RestSessionsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({tripId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (tripId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.tripId,
+                                referencedTable: $$RestSessionsTableReferences
+                                    ._tripIdTable(db),
+                                referencedColumn: $$RestSessionsTableReferences
+                                    ._tripIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$RestSessionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DriverAwakeDatabase,
+      $RestSessionsTable,
+      RestSessionRow,
+      $$RestSessionsTableFilterComposer,
+      $$RestSessionsTableOrderingComposer,
+      $$RestSessionsTableAnnotationComposer,
+      $$RestSessionsTableCreateCompanionBuilder,
+      $$RestSessionsTableUpdateCompanionBuilder,
+      (RestSessionRow, $$RestSessionsTableReferences),
+      RestSessionRow,
+      PrefetchHooks Function({bool tripId})
+    >;
 
 class $DriverAwakeDatabaseManager {
   final _$DriverAwakeDatabase _db;
@@ -5548,4 +7742,8 @@ class $DriverAwakeDatabaseManager {
       $$AppSettingsTableTableManager(_db, _db.appSettings);
   $$ModelMetadataTableTableManager get modelMetadata =>
       $$ModelMetadataTableTableManager(_db, _db.modelMetadata);
+  $$FleetOutboxTableTableManager get fleetOutbox =>
+      $$FleetOutboxTableTableManager(_db, _db.fleetOutbox);
+  $$RestSessionsTableTableManager get restSessions =>
+      $$RestSessionsTableTableManager(_db, _db.restSessions);
 }

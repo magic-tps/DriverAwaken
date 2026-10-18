@@ -206,6 +206,8 @@ class DriftTripRepository {
 
   Future<void> clearHistory() async {
     await database.transaction(() async {
+      await database.delete(database.fleetOutbox).go();
+      await database.delete(database.restSessions).go();
       await database.delete(database.tripEvents).go();
       await (database.delete(
         database.trips,
@@ -215,6 +217,9 @@ class DriftTripRepository {
 
   Future<void> applyRetention(DateTime cutoff) async {
     await database.transaction(() async {
+      await (database.delete(
+        database.fleetOutbox,
+      )..where((table) => table.createdAt.isSmallerThanValue(cutoff))).go();
       await (database.delete(
         database.tripEvents,
       )..where((table) => table.occurredAt.isSmallerThanValue(cutoff))).go();
