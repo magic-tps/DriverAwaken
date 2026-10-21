@@ -88,7 +88,11 @@ export const notifyFleetIncident = onDocumentCreated({
 });
 
 // Optional driver coaching notes. Unrelated to incident detection and alert dispatch above.
-export const driverCoachingNotes = onCall({ region: 'us-central1', timeoutSeconds: 20 }, async request => {
+export const driverCoachingNotes = onCall({
+  region: 'us-central1',
+  timeoutSeconds: 20,
+  secrets: process.env.ATOMICMEMORY_API_URL ? ['ATOMICMEMORY_API_KEY'] : [],
+}, async request => {
   const config = memoryConfig(process.env);
   const db = getFirestore();
   try {
