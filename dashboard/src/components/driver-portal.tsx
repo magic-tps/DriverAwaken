@@ -7,6 +7,8 @@ import { collection, doc, limit, onSnapshot, query, where, type DocumentData, ty
 import { firebaseClient, firebaseError } from '@/lib/firebase';
 import { formatDate, type FleetRestSession, type Incident, type Membership, type Trip, TYPE_LABELS } from '@/lib/domain';
 import { monitoringObservation, reportedRiskLabel } from '@/lib/operations-model';
+import { coachingNotesEnabled } from '@/lib/coaching-notes';
+import { CoachingNotes } from './coaching-notes';
 import styles from './driver-portal.module.css';
 
 type Client = NonNullable<ReturnType<typeof firebaseClient>>;
@@ -206,6 +208,8 @@ export function DriverPortal() {
   const currentTrip = trips.find(item => item.status === 'ACTIVE') ?? trips.find(item => item.status === 'ASSIGNED') ?? trips[0];
   const observation = currentTrip ? monitoringObservation(currentTrip, now) : null;
   const latestRisk = incidents.find(item => item.signalQuality === 'RELIABLE') ?? null;
+  const completedTrips = useMemo(() => trips.filter(item => item.status === 'COMPLETED'), [trips]);
+  const coaching = coachingNotesEnabled();
 
   async function login(form: FormData) {
     if (!client) return;
@@ -239,7 +243,7 @@ export function DriverPortal() {
   return <div className={styles.portal}>
     <header className={styles.header}>
       <Link href="/" className={styles.wordmark} aria-label="DriverAwaken, volver al inicio"><span className={styles.brandMark}>D<span>.</span></span><span>DRIVERAWAKEN<small>PORTAL CONDUCTOR</small></span></Link>
-      <nav aria-label="Navegación del conductor"><a href="#estado">Estado</a><a href="#riesgos">Riesgos</a><a href="#historial">Historial</a></nav>
+      <nav aria-label="Navegación del conductor"><a href="#estado">Estado</a><a href="#riesgos">Riesgos</a><a href="#historial">Historial</a>{coaching && <a href="#notas">Notas</a>}</nav>
       <button type="button" className={styles.logout} onClick={() => void logout()}>Cerrar sesión <span aria-hidden="true">↗</span></button>
     </header>
     <main id="main" className={styles.main}>
@@ -261,6 +265,7 @@ export function DriverPortal() {
         </section>
         <section id="riesgos" className={styles.section} aria-labelledby="risk-title"><div className={styles.sectionHeading}><div><span className={styles.kicker}>02 / EVENTOS RECIBIDOS</span><h2 id="risk-title">Alertas y señales</h2></div><span className={styles.count}>{incidents.length} en esta ventana</span></div>{incidents.length ? <div className={styles.incidentList}>{incidents.slice(0, 8).map(item => <article key={item.id} className={`${styles.incident} ${riskTone(item.severity)}`}><div className={styles.incidentStripe} aria-hidden="true"/><div className={styles.incidentMain}><div className={styles.incidentHeading}><span>{riskLabel(item.severity)}</span><time dateTime={new Date(item.detectedAt).toISOString()}>{displayDate(item.detectedAt)}</time></div><h3>{TYPE_LABELS[item.type] ?? item.type}</h3><p>{item.signalQuality === 'RELIABLE' ? `Índice de riesgo ${reportedRiskLabel(item)} · señal fiable` : 'Señal insuficiente · riesgo no evaluable'}</p></div><div className={styles.incidentMeta}><span>Detectado: {displayDate(item.detectedAt)}</span><span>Recibido: {displayDate(item.receivedAt)}</span></div></article>)}</div> : <EmptyMessage title="No se recibieron alertas en esta ventana" text="La ausencia de registros no confirma ausencia de fatiga. Los eventos aún pendientes en el teléfono no aparecen aquí."/>}<p className={styles.sectionNote}>Se muestran hasta 8 eventos de una ventana de hasta 300 documentos vinculados a tu cuenta, ordenados por detección. Una recepción tardía no cambia la hora del evento.</p></section>
         <section id="historial" className={styles.historyGrid} aria-label="Historial personal"><div className={styles.historyPanel}><div className={styles.sectionHeading}><div><span className={styles.kicker}>03 / TUS TRAYECTOS</span><h2>Viajes</h2></div><span className={styles.count}>{trips.length} cargados</span></div>{trips.length ? <ul className={styles.historyList}>{trips.slice(0, 6).map(item => <li key={item.id}><div><strong>{item.origin} → {item.destination}</strong><span>{displayDate(item.startTime)} · {tripStatusLabel(item.status)}</span></div><small>{monitoringObservation(item, now).label}</small></li>)}</ul> : <EmptyMessage title="Sin viajes vinculados" text="Cuando te asignen un viaje, aparecerá aquí tras confirmarse en Firebase."/>}<p className={styles.sectionNote}>Ventana de hasta 200 viajes tuyos; puede no incluir todo el histórico.</p></div><div className={styles.historyPanel}><div className={styles.sectionHeading}><div><span className={styles.kicker}>04 / DESCANSO VOLUNTARIO</span><h2>Sesiones de descanso</h2></div><span className={styles.count}>{rests.length} cargadas</span></div>{rests.length ? <ul className={styles.historyList}>{rests.slice(0, 6).map(item => <li key={item.id}><div><strong>{displayDate(item.startedAt)}</strong><span>{item.recommendationReason}</span></div><small>{Math.floor(item.durationMs / 60_000)} min</small></li>)}</ul> : <EmptyMessage title="Sin descansos compartidos" text="Solo aparecen sesiones finalizadas que autorizaste compartir. No implica que no hayas descansado."/>}<p className={styles.sectionNote}>Un descanso autodeclarado no demuestra recuperación ni aptitud para conducir.</p></div></section>
+        {coaching && <CoachingNotes app={client.app} uid={user.uid} organizationId={verified.id} completedTrips={completedTrips}/>}
       </>}
       <footer className={styles.footer}><div><strong>DriverAwaken</strong><span>La detección y las alertas inmediatas permanecen en Android.</span></div><a href="https://drive.google.com/drive/folders/1NjN0jGmj71hKqM0LcRYwEPFRaxBtJ92T?hl=es">Abrir APK en Google Drive ↗</a><Link href="/">Volver al inicio ↗</Link></footer>
     </main>

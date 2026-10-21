@@ -55,3 +55,4 @@ Thumbs.db
 **/.next/
 /dashboard/out/
 !/dashboard/.env.example
+!/backend/functions/.env.example

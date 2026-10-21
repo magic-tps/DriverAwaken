@@ -41,3 +41,5 @@ La referencia funcional y técnica del estado actual está en [el informe comple
 
 La configuración Firebase y el uso de copias de informes están documentados en
 [`docs/firebase_setup.md`](docs/firebase_setup.md). Las funciones locales no requieren cuenta.
+
+El portal del conductor admite **notas post-viaje opcionales** guardadas en Atomic Memory con consentimiento explícito y aisladas por conductor. Están desactivadas por defecto y no intervienen en la detección ni en las alertas; ver [DEPLOYMENT.md](DEPLOYMENT.md#notas-post-viaje-opcionales-atomic-memory).

@@ -35,6 +35,10 @@ await store.runTransaction(async tx => {
   tx.create(org.collection('assignments').doc('demo-driver'),{userId:'demo-driver',organizationId:org.id,vehicleId:'BUS-001',status:'ACTIVE'});
   tx.create(org.collection('trips').doc('trip-emulator'),{id:'trip-emulator',organizationId:org.id,vehicleId:'BUS-001',driverId:'demo-driver',
     origin:'Arequipa',destination:'Juliaca',startTime:started,endTime:null,status:'ACTIVE',monitoringStatus:'UNAVAILABLE',lastSeenAt:null,lastEventAt:null});
+  // A finished trip lets the driver portal exercise optional post-trip coaching notes.
+  const finished=AdminTimestamp.fromMillis(started.toMillis()-2*86400000);
+  tx.create(org.collection('trips').doc('trip-emulator-done'),{id:'trip-emulator-done',organizationId:org.id,vehicleId:'BUS-001',driverId:'demo-driver',
+    origin:'Arequipa',destination:'Puno',startTime:finished,endTime:AdminTimestamp.fromMillis(finished.toMillis()+5*3600000),status:'COMPLETED',monitoringStatus:'OFFLINE',lastSeenAt:null,lastEventAt:null});
 });
 // Detection is emitted through the unprivileged driver SDK and real rules.
 const client=initializeApp({projectId,apiKey:'demo-guardian-emulator',appId:'guardian-emulator'},'emulator-fixture');

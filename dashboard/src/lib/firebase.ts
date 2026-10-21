@@ -10,7 +10,7 @@ const config = {
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
 };
 let connected = false;
-function emulatorPort(value: string | undefined, fallback: number) {
+export function emulatorPort(value: string | undefined, fallback: number) {
   const port = value === undefined ? fallback : Number(value);
   if (!Number.isInteger(port) || port < 1024 || port > 65535) throw new Error('Invalid local emulator port.');
   return port;
