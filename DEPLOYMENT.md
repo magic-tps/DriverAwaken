@@ -95,6 +95,29 @@ flutter run --dart-define=GUARDIAN_USE_EMULATORS=true --dart-define=GUARDIAN_EMU
 
 No se verificó en dispositivo. Para hardware físico, configurar acceso local al emulador con un host autorizado; nunca exponer sus puertos públicamente.
 
+## Notas post-viaje opcionales (Atomic Memory)
+
+En `/driver/`, el conductor puede escribir una nota breve sobre un viaje **finalizado** («qué me ayudó»), releerla antes del siguiente, corregirla o eliminarla. Es independiente de la detección, las alertas, los incidentes y `notifyFleetIncident`: ninguna de esas rutas lee estas notas y la central no las consulta.
+
+- **Desactivado por defecto.** La sección solo aparece con `NEXT_PUBLIC_COACHING_NOTES_ENABLED=true` en la web. Si la función no tiene `ATOMICMEMORY_API_URL` y `ATOMICMEMORY_API_KEY`, responde «no configurado» y no guarda nada.
+- **Consentimiento explícito.** No se llama al proveedor hasta que el conductor marca la casilla y activa las notas; la función rechaza guardar sin `consent: true`. Retirar el consentimiento detiene las consultas; las notas guardadas se eliminan una a una.
+- **Identidad verificada en servidor.** La función callable `driverCoachingNotes` usa el `uid` de Firebase Auth, comprueba con Admin SDK una membresía DRIVER activa y una organización activa, y solo acepta viajes `COMPLETED` del propio conductor. El sujeto de memoria es `driverawaken:<organización>:<uid>`; un conductor no puede leer, corregir ni borrar notas de otro.
+- **Resultado veraz.** Una nota solo se muestra como guardada cuando Atomic Memory devuelve su ID y la lectura posterior la contiene. Un tiempo de espera o una respuesta sin ID se informa como «no se pudo confirmar»; una corrección conserva la nota original hasta confirmar la nueva. Cada llamada al proveedor tiene un límite de 2,5 s.
+- **Credenciales.** La clave vive solo en la función. Ver `backend/functions/.env.example`. En producción (requiere plan Blaze, igual que las demás funciones) guardar la clave con `firebase functions:secrets:set ATOMICMEMORY_API_KEY` y configurar `ATOMICMEMORY_API_URL` en el entorno de Functions antes de desplegar. La función vincula el secreto automáticamente cuando esa URL está configurada; sin URL no exige el secreto y permanece desactivada.
+
+Recorrido local con un **fixture HTTP local que no es Atomic Memory** (`backend/functions/tests/atomic-memory-fixture.mjs`):
+
+```bash
+cd backend/functions && node tests/atomic-memory-fixture.mjs 4717   # fixture en 127.0.0.1:4717
+printf 'ATOMICMEMORY_API_URL=http://127.0.0.1:4717\nATOMICMEMORY_API_KEY=fixture-key\n' > .env.local
+cd ../.. && firebase emulators:start --only "auth,firestore,functions" --project demo-guardian
+# Otra terminal: sembrar con FIRESTORE_EMULATOR_HOST/FIREBASE_AUTH_EMULATOR_HOST como arriba,
+# y arrancar la web con las variables de emulador más:
+#   NEXT_PUBLIC_COACHING_NOTES_ENABLED=true NEXT_PUBLIC_FUNCTIONS_EMULATOR_PORT=5001
+```
+
+El seed añade el viaje finalizado ficticio `Arequipa → Puno` para `driver@guardian.test`. Pruebas: `cd backend/functions && npm test` y `cd dashboard && npm test`.
+
 ## Android
 
 ```powershell

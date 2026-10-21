@@ -1,8 +1,10 @@
 import { onDocumentCreated } from 'firebase-functions/v2/firestore';
+import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore, FieldValue, Timestamp } from 'firebase-admin/firestore';
 import { getMessaging } from 'firebase-admin/messaging';
 import { alertText, recipients, shouldDispatch } from './alert-policy.mjs';
+import { CoachingAccessError, createMemoryClient, handleCoachingRequest, memoryConfig } from './coaching-notes.mjs';
 
 initializeApp();
 
@@ -81,6 +83,27 @@ export const notifyFleetIncident = onDocumentCreated({
     await receipt.update({ status: 'SENT', delivered, invalid, updatedAt: FieldValue.serverTimestamp() });
   } catch (error) {
     await receipt.update({ status: 'FAILED', updatedAt: FieldValue.serverTimestamp() });
+    throw error;
+  }
+});
+
+// Optional driver coaching notes. Unrelated to incident detection and alert dispatch above.
+export const driverCoachingNotes = onCall({
+  region: 'us-central1',
+  timeoutSeconds: 20,
+  secrets: process.env.ATOMICMEMORY_API_URL ? ['ATOMICMEMORY_API_KEY'] : [],
+}, async request => {
+  const config = memoryConfig(process.env);
+  const db = getFirestore();
+  try {
+    return await handleCoachingRequest({
+      uid: request.auth?.uid,
+      data: request.data,
+      readDoc: async path => { const snapshot = await db.doc(path).get(); return snapshot.exists ? snapshot.data() : null; },
+      memory: config ? createMemoryClient({ config }) : null,
+    });
+  } catch (error) {
+    if (error instanceof CoachingAccessError) throw new HttpsError(error.code, error.message);
     throw error;
   }
 });
